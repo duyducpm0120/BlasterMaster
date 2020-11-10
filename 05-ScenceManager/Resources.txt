@@ -1,0 +1,140 @@
+[TEXTURES]
+# id	file_path	transparent_color_r	g	b
+0	textures\mario.png	255	255	255
+-100	textures\bbox.png	5	5	5
+20	textures\misc.png	176	224	248
+30	textures\tank.png	243	243	244
+40	textures\Enemies_BlasterMaster.png	243	243	244
+#map_id	file_path	r	g	b	
+1	textures\Area21.png	5	5	5
+2	textures\Area22.png	5	5	5
+4	textures\tilesheet.png	5	5	5
+
+[SPRITES]
+# BIG MARIO 
+# idle right
+10001	246	154	260	181	0
+# walk
+10002	275	154	290	181	0		
+10003	304	154	321	181	0
+# idle left
+10011	186	154	200	181	0
+#walk
+10012	155	154	170	181	0
+10013	125	154	140	181	0
+# die 
+10099	215	120	231	135	0
+# SMALL MARIO
+# idle small right
+10021	247	0	259	15	0
+# walk
+10022	275	0	291	15	0
+10023	306	0	320	15	0
+# idle small left
+10031	187	0	198	15	0
+# walk
+10032	155	0	170	15	0
+10033	125	0	139	15	0
+#BRICK
+20001	408	225	424	241	20
+
+#TANK
+
+#walk left
+50001	109	5	135	23	30	
+50002	77 	5	103	23	30
+50003	44	5	70	23	30
+50004	13	5	39	23	30
+
+#walk right 
+50005	146	5	172	23	30
+50006	178	5	204	23	30
+50007	211	5	237	23	30
+50008	242	5	268	23	30
+
+
+#jump left	
+50009	109	130	135	151	30
+50010	77	130	103	151	30	
+50011	44	130	70	151	30
+50012	10	130	36	151	30
+
+#jump right	
+50013	146	130	172	151	30
+50014	178	130	204	151	30
+50015	211	130	237	151	30
+50016	245	130	271	151	30
+
+#------GOLEM-------
+#walking left
+60001	108	1	122	27	40
+60002	91	2	104	27	40
+
+#walking right
+60003	132	1	146	27	40
+60004	150	2	163	27	40
+
+
+[ANIMATIONS]
+# ==== MARIO =========
+#idle BIG right
+400	10001	100
+#idle BIG left
+401	10011	100
+#idle small right
+402	10021	100
+#idle small left
+403	10031	100
+#walk right big
+500	10001	100	10002	100	10003	100
+#walk left big
+501	10011	100	10012	100	10013	100
+#walk right small
+502	10021	100	10022	100	10023	100
+#walk left small
+503	10031	100	10032	100	10033	100
+#die
+599	10099	100
+
+# ==== BRICK =========
+601	20001	100
+
+#====TANK========
+
+#idle left
+801	50001	40
+#idle right
+802	50005	40
+#walk left
+803	50001	40	50002	40	50003	40	50004	40
+#walk right	
+804	50005	40	50006	40	50007	40	50008	40
+#jump idle left
+805	50009	40
+#jump idle right
+806	50013	40
+#jump left
+807	50009	40	50010	40	50011	40	50012	40
+#jump right
+808	50013	40	50014	40	50015	40	50016	40
+
+
+#-----GOLEM------
+#walking left
+901	60001	100	60002	100
+#walking right
+902	60003	100	60004	100
+
+[ANIMATION_SETS]
+# MARIO
+1	400	401	402	403	500	501	502	503	599
+# BRICK 
+2	601
+
+#TANK
+4	801	802	803	804	805	806	807	808
+
+#GOLEM
+5	901	902	
+
+
