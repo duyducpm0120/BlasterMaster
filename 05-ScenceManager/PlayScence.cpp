@@ -318,9 +318,32 @@ void CPlayScene::Update(DWORD dt)
 	player->GetPosition(cx, cy);
 
 	CGame *game = CGame::GetInstance();
-	cx -= game->GetScreenWidth() / 2;
-	cy -= game->GetScreenHeight() / 2;
-
+	//cx -= game->GetScreenWidth() / 2;
+	//cy -= game->GetScreenHeight() / 2;
+	if (cx + game->GetScreenWidth() / 2 >= 1024)
+		cx = 1024 - game->GetScreenWidth();
+	else
+	{
+		if (cx < game->GetScreenWidth() / 2)
+		{
+			cx = 0;
+		}
+		else
+			cx -= game->GetScreenWidth() / 2;
+	}
+	
+	
+	/*if (cy + game->GetScreenHeight() / 2 >= 238)
+		cy = 238 - game->GetScreenHeight();
+	else
+	{
+		if (cy < game->GetScreenHeight() / 2)
+		{
+			cy = 0;
+		}
+		else
+			cy -= game->GetScreenHeight() / 2;
+	}*/
 	
 	game->SetCamPos(cx, 0);
 
@@ -339,6 +362,7 @@ void CPlayScene::Render()
 
 	{
 		objects[i]->Render();
+		objects[i]->RenderBoundingBox();
 		
 	}
 	
@@ -393,11 +417,11 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		/*jason->nx = 1;*/
 		tank->nx = 1;
-
-		if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
-			tank->SetState(TANK_STATE_JUMP_RIGHT);
-		else
-			tank->SetState(TANK_STATE_WALKING_RIGHT);
+			if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
+				tank->SetState(TANK_STATE_JUMP_RIGHT);
+			else
+				tank->SetState(TANK_STATE_WALKING_RIGHT);
+		
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
 		tank->nx = -1;

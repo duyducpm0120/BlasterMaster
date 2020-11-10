@@ -27,6 +27,8 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Simple fall down
 	vy += TANK_GRAVITY * dt;
 
+
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -126,32 +128,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CTank::Render()
 {
 	int ani;
-
-	/*if (state == TANK_STATE_DIE)
-		ani = TANK_ANI_IDLE_LEFT;
-	else if (state == TANK_STATE_JUMP_LEFT) {
-		ani = TANK_ANI_JUMP_LEFT;
-	}
-	else if (state == TANK_STATE_JUMP_RIGHT)
-		ani = TANK_ANI_JUMP_RIGHT;
-	else if(state == TANK_STATE_WALKING_LEFT)
-	{		
-		ani = TANK_ANI_WALKING_LEFT;
-	}
-	else if (state == TANK_STATE_WALKING_RIGHT)
-	{
-		ani = TANK_ANI_WALKING_RIGHT;
-	}
-	else if (state == TANK_STATE_IDLE_RIGHT)
-	{
-		ani = TANK_ANI_IDLE_RIGHT;
-	}
-	else if(state == TANK_STATE_IDLE_LEFT)
-	{
-		ani = TANK_ANI_IDLE_LEFT;
-	}
-	else {}*/
-
 	switch (state)
 	{
 	case TANK_STATE_WALKING_RIGHT:
