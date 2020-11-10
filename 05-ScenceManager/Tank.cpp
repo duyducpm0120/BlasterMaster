@@ -5,6 +5,7 @@
 #include "Portal.h"
 #include "Goomba.h"
 #include "Utils.h"
+#include "Golem.h"
 
 CTank:: CTank(float x, float y)  : CGameObject()
 {
@@ -79,16 +80,17 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
+			if (dynamic_cast<CGolem*>(e->obj)) // if e->obj is Goomba 
 			{
-				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+				CGolem* golem = dynamic_cast<CGolem*>(e->obj);
 
 				// jump on top >> kill Goomba and deflect a bit 
 				if (e->ny < 0)
 				{
-					if (goomba->GetState() != GOOMBA_STATE_DIE)
+					if (golem->GetState() != GOLEM_STATE_DIE)
 					{
-						goomba->SetState(GOOMBA_STATE_DIE);
+						/*golem->SetState(GOLEM_STATE_DIE);*/
+						SetState(TANK_STATE_DIE);
 						vy = -TANK_JUMP_DEFLECT_SPEED;
 					}
 				}
@@ -96,7 +98,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (untouchable == 0)
 					{
-						if (goomba->GetState() != GOOMBA_STATE_DIE)
+						if (golem->GetState() != GOLEM_STATE_DIE)
 						{
 
 							SetState(TANK_STATE_DIE);

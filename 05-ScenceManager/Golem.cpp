@@ -28,8 +28,8 @@ void CGolem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	x += dx;
 	y += dy;
 
-	if (vx < 0 && x < 0) {
-		x = 0; vx = -vx;
+	if (vx < 0 && x < 50) {
+		x = 50; vx = -vx;
 		SetState(GOLEM_STATE_WALKING_RIGHT);
 	}
 

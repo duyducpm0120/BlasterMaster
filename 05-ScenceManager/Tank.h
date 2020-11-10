@@ -3,7 +3,7 @@
 
 #pragma region define
 
-#define TANK_WALKING_SPEED		0.2f 
+#define TANK_WALKING_SPEED		0.15f 
 //0.1f
 #define TANK_JUMP_SPEED_Y		0.5f
 #define TANK_JUMP_DEFLECT_SPEED 0.2f

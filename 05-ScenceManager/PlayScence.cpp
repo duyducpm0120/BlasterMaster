@@ -322,7 +322,7 @@ void CPlayScene::Update(DWORD dt)
 	cy -= game->GetScreenHeight() / 2;
 
 	
-	game->SetCamPos(cx, cy);
+	game->SetCamPos(cx, 0);
 
 	
 }
