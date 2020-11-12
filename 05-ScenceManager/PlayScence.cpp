@@ -417,17 +417,19 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		/*jason->nx = 1;*/
 		tank->nx = 1;
+		if (tank->vy != 0) {
 			if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
 				tank->SetState(TANK_STATE_JUMP_RIGHT);
-			else
-				tank->SetState(TANK_STATE_WALKING_RIGHT);
-		
+		}
+		else
+			tank->SetState(TANK_STATE_WALKING_RIGHT);		
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
 		tank->nx = -1;
-
-		if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
-			tank->SetState(TANK_STATE_JUMP_LEFT);
+		if (tank->vy != 0) {
+			if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
+				tank->SetState(TANK_STATE_JUMP_LEFT);
+		}
 		else
 			tank->SetState(TANK_STATE_WALKING_LEFT);
 	}

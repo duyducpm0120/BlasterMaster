@@ -3,12 +3,12 @@
 
 #pragma region define
 
-#define TANK_WALKING_SPEED		0.15f 
+#define TANK_WALKING_SPEED		0.1f 
 //0.1f
-#define TANK_JUMP_SPEED_Y		0.5f
-#define TANK_JUMP_DEFLECT_SPEED 0.2f
-#define TANK_GRAVITY			0.002f
-#define TANK_DIE_DEFLECT_SPEED	 0.5f
+#define TANK_JUMP_SPEED_Y		0.35f
+#define TANK_JUMP_DEFLECT_SPEED 0.35f
+#define TANK_GRAVITY			0.001f
+#define TANK_DIE_DEFLECT_SPEED	 0.35f
 
 #define	TANK_STATE_IDLE_LEFT		0
 #define TANK_STATE_IDLE_RIGHT		100
@@ -49,6 +49,7 @@ class CTank : public CGameObject
 	DWORD untouchable_start;
 	float start_x;			// initial position of Tank at scene
 	float start_y;
+	
 public:
 	CTank(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);

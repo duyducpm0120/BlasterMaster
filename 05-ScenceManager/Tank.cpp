@@ -11,7 +11,6 @@ CTank:: CTank(float x, float y)  : CGameObject()
 {
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
-
 	start_x = x;
 	start_y = y;
 	this->x = x;
@@ -26,8 +25,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// Simple fall down
 	vy += TANK_GRAVITY * dt;
-
-
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -82,7 +79,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGolem*>(e->obj)) // if e->obj is Goomba 
+			if (dynamic_cast<CGolem*>(e->obj))
 			{
 				CGolem* golem = dynamic_cast<CGolem*>(e->obj);
 
@@ -114,7 +111,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
 				CGame::GetInstance()->SwitchScene(p->GetSceneId());
 			}
-	
+			
 			
 		}
 	}
