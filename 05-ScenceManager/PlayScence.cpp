@@ -175,7 +175,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
-	case OBJECT_TYPE_GOLEM: obj = new CGolem(); break;
+	//case OBJECT_TYPE_GOLEM: obj = new CGolem(); break;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
@@ -391,6 +391,39 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
+		if (tank->vy <= 0.032000f) {
+			if (tank->GetState() != TANK_STATE_DIE && tank->GetState() != TANK_STATE_JUMP_IDLE_LEFT && tank->GetState() != TANK_STATE_JUMP_IDLE_RIGHT && tank->GetState() != TANK_STATE_JUMP_LEFT && tank->GetState() != TANK_STATE_JUMP_RIGHT)
+				if (tank->nx == -1)
+					tank->SetState(TANK_STATE_JUMP_IDLE_LEFT);
+				else
+					tank->SetState(TANK_STATE_JUMP_IDLE_RIGHT);
+		}
+		break;
+	case DIK_A:
+		tank->SetState(TANK_STATE_IDLE_RIGHT);
+		tank->SetPosition(100.0f, 0.0f);
+		tank->SetSpeed(0, 0);
+		break;
+	case DIK_UP:
+		int w, h;
+		tank->GetDimension(w, h);
+		if (h == 18)
+			tank->y -= 16.0f;
+		tank->SetDimension(TANK_UP_GUN_WIDHT, TANK_UP_GUN_HEIGHT);
+		if (tank->nx == -1)
+			tank->SetState(TANK_STATE_UP_GUN_IDLE_LEFT);
+		else
+			tank->SetState(TANK_STATE_UP_GUN_IDLE_RIGHT);
+		break;
+	
+	}
+}
+
+void CPlayScenceKeyHandler::OnKeyUp(int KeyCode) {
+	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
+	switch (KeyCode)
+	{
+	/*case DIK_SPACE:
 		if (tank->GetState() != TANK_STATE_DIE && tank->GetState() != TANK_STATE_JUMP_IDLE_LEFT && tank->GetState() != TANK_STATE_JUMP_IDLE_RIGHT && tank->GetState() != TANK_STATE_JUMP_LEFT && tank->GetState() != TANK_STATE_JUMP_RIGHT)
 			if (tank->nx == -1)
 				tank->SetState(TANK_STATE_JUMP_IDLE_LEFT);
@@ -401,7 +434,18 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		tank->SetState(TANK_STATE_IDLE_RIGHT);
 		tank->SetPosition(100.0f, 0.0f);
 		tank->SetSpeed(0, 0);
+		break;*/
+	case DIK_UP:
+		//if (tank->vy == 0) {
+			tank->y += 16.0f;
+			tank->SetDimension(TANK_NORMAL_WIDTH, TANK_NORMAL_HEIGHT);
+			//if (tank->nx == -1)
+			//	tank->SetState(TANK_STATE_DOWN_GUN_IDLE_LEFT);
+			//else
+			//	tank->SetState(TANK_STATE_DOWN_GUN_IDLE_RIGHT);
+		//}
 		break;
+
 	}
 }
 
@@ -421,7 +465,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 			if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
 				tank->SetState(TANK_STATE_JUMP_RIGHT);
 		}
-		else
+		else 
 			tank->SetState(TANK_STATE_WALKING_RIGHT);		
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
@@ -433,9 +477,20 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 		else
 			tank->SetState(TANK_STATE_WALKING_LEFT);
 	}
+	else if (game->IsKeyDown(DIK_UP)) {
+		if (tank->vy == 0.0f) {
+			if (tank->nx == -1)
+				tank->SetState(TANK_STATE_UP_GUN_LEFT);
+			else
+				tank->SetState(TANK_STATE_UP_GUN_RIGHT);
+		}
+	}
+	else if (game->IsKeyDown(DIK_SPACE)) {
+		//if(tank->vy == )
+	}
 	else
 	{
-		if (tank->vy == 0)
+		if (tank->vy <= 0.05f)
 			if (tank->nx == -1)
 				tank->SetState(TANK_STATE_IDLE_LEFT);
 			else

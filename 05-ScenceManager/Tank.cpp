@@ -6,11 +6,12 @@
 #include "Goomba.h"
 #include "Utils.h"
 #include "Golem.h"
-
 CTank:: CTank(float x, float y)  : CGameObject()
 {
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
+	tank_width = TANK_NORMAL_WIDTH;
+	tank_height = TANK_NORMAL_HEIGHT;
 	start_x = x;
 	start_y = y;
 	this->x = x;
@@ -19,6 +20,8 @@ CTank:: CTank(float x, float y)  : CGameObject()
 
 void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (state == TANK_STATE_DIE)
+		return;
 	
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
@@ -28,7 +31,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-
 	coEvents.clear();
 
 	// turn off collision when die 
@@ -58,8 +60,8 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// block 
-		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.4f;
+		x += min_tx * dx + nx * 0.6f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.6f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -84,26 +86,27 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CGolem* golem = dynamic_cast<CGolem*>(e->obj);
 
 				// jump on top >> kill Goomba and deflect a bit 
-				if (e->ny < 0)
-				{
-					if (golem->GetState() != GOLEM_STATE_DIE)
-					{
-						/*golem->SetState(GOLEM_STATE_DIE);*/
-						SetState(TANK_STATE_DIE);
-						vy = -TANK_JUMP_DEFLECT_SPEED;
-					}
-				}
-				else if (e->nx != 0)
-				{
-					if (untouchable == 0)
+				if(state!= TANK_STATE_DIE)
+					if (e->ny < 0)
 					{
 						if (golem->GetState() != GOLEM_STATE_DIE)
 						{
-
+							/*golem->SetState(GOLEM_STATE_DIE);*/
 							SetState(TANK_STATE_DIE);
+							//vy = -TANK_JUMP_DEFLECT_SPEED;
 						}
 					}
-				}
+					else if (e->nx != 0)
+					{
+						if (untouchable == 0)
+						{
+							if (golem->GetState() != GOLEM_STATE_DIE)
+							{
+
+								SetState(TANK_STATE_DIE);
+							}
+						}
+					}
 				
 			}
 			else if (dynamic_cast<CPortal*>(e->obj))
@@ -119,14 +122,18 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	DebugOut(L"\n \n  vy: %d \t \n", state);
+	//DebugOut(L"\n \n  state: %d \t \n", state);
 }
 
 void CTank::Render()
 {
+	
 	int ani;
 	switch (state)
 	{
+	case TANK_STATE_DIE:
+		ani = TANK_ANI_DIE;
+		break;
 	case TANK_STATE_WALKING_RIGHT:
 		ani = TANK_ANI_WALKING_RIGHT;
 		break;
@@ -145,15 +152,23 @@ void CTank::Render()
 	case TANK_STATE_IDLE_LEFT:
 		ani = TANK_ANI_IDLE_LEFT;
 		break;
-	case TANK_STATE_DIE:
-		ani = TANK_ANI_IDLE_LEFT;
-		break;
 	case TANK_STATE_JUMP_LEFT:
 		ani = TANK_ANI_JUMP_LEFT;
 		break;
 	case TANK_STATE_JUMP_RIGHT:
 		ani = TANK_ANI_JUMP_RIGHT;
 		break;
+	case TANK_STATE_UP_GUN_IDLE_LEFT:
+		ani = TANK_ANI_UP_GUN_IDLE_LEFT;
+		break;
+	case TANK_STATE_UP_GUN_IDLE_RIGHT:
+		ani = TANK_ANI_UP_GUN_IDLE_RIGHT;
+		break;
+	case TANK_STATE_UP_GUN_LEFT:
+		ani = TANK_ANI_UP_GUN_LEFT;
+		break;
+	case TANK_STATE_UP_GUN_RIGHT:
+		ani = TANK_ANI_UP_GUN_RIGHT;
 	}
 
 
@@ -164,6 +179,10 @@ void CTank::Render()
 	else
 		animations[ani]->Render(x, y, -1, alpha);*/
 	animation_set->at(ani)->Render(x, y, alpha);
+	DebugOut(L"State: %d \n", state);
+	DebugOut(L"Ani: %d \n", ani);
+	DebugOut(L"vy: %f \n ", vy) ;
+	DebugOut(L"dt: %d \n \n", dt);
 	//RenderBoundingBox();
 
 }
@@ -199,7 +218,8 @@ void CTank::SetState(int state)
 		nx = -1;
 		break;
 	case TANK_STATE_DIE:
-		vy = -TANK_DIE_DEFLECT_SPEED;
+		//vy = -TANK_DIE_DEFLECT_SPEED;
+		y -= 23;
 		break;
 	case TANK_STATE_JUMP_LEFT:
 		vx = -TANK_WALKING_SPEED;
@@ -217,8 +237,18 @@ void CTank::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
 	top = y;
-	right = x + TANK_BBOX_WIDTH;
-	bottom = y + TANK_BBOX_HEIGHT;
+	right = x + tank_width;
+	bottom = y + tank_height;
+}
+void CTank::SetDimension(int width, int height)
+{
+	this->tank_width = width;
+	this->tank_height = height;
+}
+void CTank::GetDimension(int& width, int& height)
+{
+	width = this->tank_width;
+	height = this->tank_height;
 }
 void CTank::Reset()
 {
