@@ -391,12 +391,11 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
-		if (tank->vy <= 0.032000f) {
-			if (tank->GetState() != TANK_STATE_DIE && tank->GetState() != TANK_STATE_JUMP_IDLE_LEFT && tank->GetState() != TANK_STATE_JUMP_IDLE_RIGHT && tank->GetState() != TANK_STATE_JUMP_LEFT && tank->GetState() != TANK_STATE_JUMP_RIGHT)
-				if (tank->nx == -1)
-					tank->SetState(TANK_STATE_JUMP_IDLE_LEFT);
-				else
-					tank->SetState(TANK_STATE_JUMP_IDLE_RIGHT);
+		if (tank->vy <= 0.05f && tank->vy >=0) {			
+			if (tank->nx == -1)
+				tank->SetState(TANK_STATE_JUMP_IDLE_LEFT);
+			else
+				tank->SetState(TANK_STATE_JUMP_IDLE_RIGHT);
 		}
 		break;
 	case DIK_A:
@@ -411,9 +410,9 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			tank->y -= 16.0f;
 		tank->SetDimension(TANK_UP_GUN_WIDHT, TANK_UP_GUN_HEIGHT);
 		if (tank->nx == -1)
-			tank->SetState(TANK_STATE_UP_GUN_IDLE_LEFT);
+			tank->SetState(TANK_STATE_UPING_GUN_LEFT);
 		else
-			tank->SetState(TANK_STATE_UP_GUN_IDLE_RIGHT);
+			tank->SetState(TANK_STATE_UPING_GUN_RIGHT);
 		break;
 	
 	}
@@ -423,43 +422,22 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode) {
 	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
 	switch (KeyCode)
 	{
-	/*case DIK_SPACE:
-		if (tank->GetState() != TANK_STATE_DIE && tank->GetState() != TANK_STATE_JUMP_IDLE_LEFT && tank->GetState() != TANK_STATE_JUMP_IDLE_RIGHT && tank->GetState() != TANK_STATE_JUMP_LEFT && tank->GetState() != TANK_STATE_JUMP_RIGHT)
-			if (tank->nx == -1)
-				tank->SetState(TANK_STATE_JUMP_IDLE_LEFT);
-			else
-				tank->SetState(TANK_STATE_JUMP_IDLE_RIGHT);
-		break;
-	case DIK_A:
-		tank->SetState(TANK_STATE_IDLE_RIGHT);
-		tank->SetPosition(100.0f, 0.0f);
-		tank->SetSpeed(0, 0);
-		break;*/
 	case DIK_UP:
-		//if (tank->vy == 0) {
-			tank->y += 16.0f;
-			tank->SetDimension(TANK_NORMAL_WIDTH, TANK_NORMAL_HEIGHT);
-			//if (tank->nx == -1)
-			//	tank->SetState(TANK_STATE_DOWN_GUN_IDLE_LEFT);
-			//else
-			//	tank->SetState(TANK_STATE_DOWN_GUN_IDLE_RIGHT);
-		//}
+		tank->y += 16.0f;
+		tank->SetDimension(TANK_NORMAL_WIDTH, TANK_NORMAL_HEIGHT);
 		break;
-
 	}
 }
 
 void CPlayScenceKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
-	/*CMario mario = ((CPlayScene)scence)->GetPlayer();*/
 	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
 
 	// disable control key when Mario die 
 	if (tank->GetState() == TANK_STATE_DIE) return;
 
-	if (game->IsKeyDown(DIK_RIGHT)) {
-		/*jason->nx = 1;*/
+	if (game->IsKeyDown(DIK_RIGHT) && !game->IsKeyDown(DIK_UP)) {
 		tank->nx = 1;
 		if (tank->vy != 0) {
 			if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
@@ -468,7 +446,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 		else 
 			tank->SetState(TANK_STATE_WALKING_RIGHT);		
 	}
-	else if (game->IsKeyDown(DIK_LEFT)) {
+	else if (game->IsKeyDown(DIK_LEFT) && !game->IsKeyDown(DIK_UP)) {
 		tank->nx = -1;
 		if (tank->vy != 0) {
 			if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
@@ -478,7 +456,13 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 			tank->SetState(TANK_STATE_WALKING_LEFT);
 	}
 	else if (game->IsKeyDown(DIK_UP)) {
-		if (tank->vy == 0.0f) {
+		if (game->IsKeyDown(DIK_UP) && game->IsKeyDown(DIK_RIGHT)) {
+			tank->SetState(TANK_STATE_UP_GUN_WALKING_RIGHT);
+		}
+		else if (game->IsKeyDown(DIK_UP) && game->IsKeyDown(DIK_LEFT)) {
+			tank->SetState(TANK_STATE_UP_GUN_WALKING_LEFT);
+		}
+		else {
 			if (tank->nx == -1)
 				tank->SetState(TANK_STATE_UP_GUN_LEFT);
 			else
@@ -489,11 +473,11 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 		//if(tank->vy == )
 	}
 	else
-	{
-		if (tank->vy <= 0.05f)
-			if (tank->nx == -1)
-				tank->SetState(TANK_STATE_IDLE_LEFT);
-			else
-				tank->SetState(TANK_STATE_IDLE_RIGHT);
+	{	
+		if (tank->nx == -1)
+			tank->SetState(TANK_STATE_IDLE_LEFT);
+		else
+			tank->SetState(TANK_STATE_IDLE_RIGHT);
+
 	}
 }
