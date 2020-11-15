@@ -60,8 +60,8 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// block 
-		x += min_tx * dx + nx * 0.2f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.2f;
+		x += min_tx * dx + nx * 0.02f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.02f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0.00f;
@@ -191,8 +191,6 @@ void CTank::Render()
 	DebugOut(L"vy: %f \n ", vy) ;
 	DebugOut(L"dt: %d \n", dt);
 	DebugOut(L"nx: %d \n", nx);
-
-	DebugOut(L"\n");
 	//RenderBoundingBox();
 
 }

@@ -311,17 +311,17 @@ void CPlayScene::Update(DWORD dt)
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
-	if (player == NULL) return; 
+	if (player == NULL) return;
 
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
 
-	CGame *game = CGame::GetInstance();
+	CGame* game = CGame::GetInstance();
 	//cx -= game->GetScreenWidth() / 2;
 	//cy -= game->GetScreenHeight() / 2;
-	if (cx + game->GetScreenWidth() / 2 >= 1024)
-		cx = 1024 - game->GetScreenWidth();
+	if (cx + game->GetScreenWidth() / 2 >= scene_width - 1)
+		cx = (scene_width - 1) - game->GetScreenWidth();
 	else
 	{
 		if (cx < game->GetScreenWidth() / 2)
@@ -331,10 +331,10 @@ void CPlayScene::Update(DWORD dt)
 		else
 			cx -= game->GetScreenWidth() / 2;
 	}
-	
-	
-	/*if (cy + game->GetScreenHeight() / 2 >= 238)
-		cy = 238 - game->GetScreenHeight();
+
+
+	if (cy + game->GetScreenHeight() / 2 >= (scene_height -1))
+		cy = (scene_height -1) - game->GetScreenHeight();
 	else
 	{
 		if (cy < game->GetScreenHeight() / 2)
@@ -343,11 +343,10 @@ void CPlayScene::Update(DWORD dt)
 		}
 		else
 			cy -= game->GetScreenHeight() / 2;
-	}*/
-	
-	game->SetCamPos(cx, 0);
+	}
 
-	
+	game->SetCamPos(cx, cy);
+
 }
 
 void CPlayScene::Render()
@@ -362,8 +361,7 @@ void CPlayScene::Render()
 
 	{
 		objects[i]->Render();
-		objects[i]->RenderBoundingBox();
-		
+		objects[i]->RenderBoundingBox();		
 	}
 	
 }
@@ -439,8 +437,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 
 	if (game->IsKeyDown(DIK_RIGHT) && !game->IsKeyDown(DIK_UP)) {
 		tank->nx = 1;
-		if (tank->vy != 0) {
-			if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
+		if (tank->vy >= 0.05f) {
 				tank->SetState(TANK_STATE_JUMP_RIGHT);
 		}
 		else 
@@ -448,8 +445,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 	}
 	else if (game->IsKeyDown(DIK_LEFT) && !game->IsKeyDown(DIK_UP)) {
 		tank->nx = -1;
-		if (tank->vy != 0) {
-			if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
+		if (tank->vy >= 0.05f) {
 				tank->SetState(TANK_STATE_JUMP_LEFT);
 		}
 		else
