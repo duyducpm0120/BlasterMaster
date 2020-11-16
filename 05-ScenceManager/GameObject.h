@@ -58,6 +58,8 @@ public:
 
 	int state;
 
+	bool visible;
+
 	DWORD dt; 
 
 	LPANIMATION_SET animation_set;

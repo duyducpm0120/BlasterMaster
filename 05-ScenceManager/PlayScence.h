@@ -36,7 +36,7 @@ public:
 	virtual void Unload();
 
 	CTank * GetPlayer() { return player; } 
-
+	vector<LPGAMEOBJECT>* GetObjects(){ return &objects; }
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:

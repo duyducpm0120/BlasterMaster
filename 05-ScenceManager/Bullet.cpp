@@ -5,20 +5,27 @@ void CBullet::GetBoundingBox(float& left, float& top, float& right, float& botto
 {
 	left = x;
 	top = y;
-	right = x + BULLET_HORIZONTAL_BBOX_WIDTH;	
-	bottom = y + BULLET_HORIZONTAL_BBOX_HEIGHT;
+	if (state == BULLET_STATE_FLYING_LEFT || state == BULLET_STATE_FLYING_RIGHT) {
+		right = x + BULLET_HORIZONTAL_BBOX_WIDTH;
+		bottom = y + BULLET_HORIZONTAL_BBOX_HEIGHT;
+	}
+	else
+	{
+		right = x + BULLET_VERTICAL_BBOX_WIDTH;
+		bottom = y + BULLET_VERTICAL_BBOX_HEIGHT;
+	}
 }
 
 void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-	if (nx < 0) {
+	if (state == BULLET_STATE_FLYING_LEFT) {
 		SetSpeed(-BULLET_SPEED, 0.0f);
 		if (x < startPositionX - BULLET_FLYING_SPACE)
 		{
 			visible = false;
 			return;
-			
+
 		}
 		else {
 			x += dx;
@@ -26,7 +33,7 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 	}
-	else {
+	else if(state== BULLET_STATE_FLYING_RIGHT) {
 		SetSpeed(BULLET_SPEED, 0.0f);
 		if (x > startPositionX + BULLET_FLYING_SPACE) {
 			visible = false;
@@ -39,13 +46,28 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			y += dy;
 		}
 	}
+	else
+	{
+		SetSpeed(0.0f, -BULLET_SPEED);
+		if (y < startPositionY - BULLET_FLYING_SPACE) {
+			visible = false;
+			return;
+
+		}
+		else
+		{
+			x += dx;
+			y += dy;
+		}
+		
+	}
 
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	CalcPotentialCollisions(coObjects, coEvents);
-			
+
 
 	if (coEvents.size() == 0)
 	{
@@ -55,8 +77,10 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else
 	{
 		float min_tx, min_ty, nx = 0, ny;
+		float rtx = 0;
+		float rty = 0;
 
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny,rtx,rty);
 
 		// block 
 		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
@@ -82,7 +106,7 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						goomba->SetState(GOOMBA_STATE_DIE);
 						goomba->visible = false;
 					}
-				}				
+				}
 			}
 		}
 	}
@@ -93,17 +117,33 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CBullet::Render()
 {
 	int ani;
-	if (nx == -1) {
-		ani = BULLET_ANI_FLYING_LV1;
-		animations[ani]->Render(x, y, -1);
+	ani = BULLET_ANI_FLYING_LEFT_LV1;
+	if (state == BULLET_STATE_FLYING_UP) {
+		if (level == 1)
+			ani == BULLET_ANI_FLYING_UP_LV1;
+		else
+			ani = BULLET_ANI_FLYING_UP_LV2;
 	}
-	else
-		animations[0]->Render(x, y, 1);
+	else if (state == BULLET_STATE_FLYING_LEFT) {
+		if (level == 1)
+			ani == BULLET_ANI_FLYING_LEFT_LV1;
+		else
+			ani = BULLET_ANI_FLYING_LEFT_LV2;
+	}
+	else if (state == BULLET_STATE_FLYING_RIGHT) {
+		if (level == 1)
+			ani == BULLET_ANI_FLYING_RIGHT_LV1;
+		else
+			ani = BULLET_ANI_FLYING_RIGHT_LV2;
+	}
+	animation_set->at(ani)->Render(x, y, 255);
 
 }
 
-CBullet::CBullet(int direct, int level)
+CBullet::CBullet(int level , int state) : CGameObject()
 {
+	this->level = level;
+	this->state = state;
 }
 
 void CBullet::SetState(int state)
@@ -112,9 +152,15 @@ void CBullet::SetState(int state)
 	return;
 }
 
-void CBullet::SetStartPositon(float x, float y, int nX)
+void CBullet::SetStartPositon(float x, float y)
 {
 	startPositionX = x;
 	startPositionY = y;
-	nx = nX;
 }
+
+int CBullet::GetState()
+{
+	return this->state;
+}
+
+
