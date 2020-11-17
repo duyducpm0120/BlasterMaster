@@ -1,7 +1,11 @@
 #include "Rocket.h"
+#include <algorithm>
+#include "Golem.h"
+#include "Game.h"
+#include "Butterfly.h"
 CRocket::CRocket()
 {
-	nx = -1;
+	nx = 1;
 	SetState(ROCKET_STATE_WALKING_LEFT);
 }
 
@@ -25,8 +29,6 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->visible = false;
 		return;
 	};
-	x += dx;
-	y += dy;
 
 	if (target_x > x) {
 		if (target_y > y) {
@@ -60,7 +62,94 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+	coEvents.clear();
+	// turn off collision when die 
+	CalcPotentialCollisions(coObjects, coEvents);
 
+	// reset untouchable timer if untouchable time has passed
+
+
+	// No collision occured, proceed normally
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+
+		float rdx = 0;
+		float rdy = 0;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		// block 
+		x += min_tx * dx + nx * 0.02f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.02f;
+
+		if (nx != 0) vx = 0;
+		if (ny != 0) vy = 0.00f;
+
+
+		/*if (vy == 0)
+			if (nx == -1)
+				SetState( TANK_STATE_IDLE_LEFT);
+			else
+				SetState( TANK_STATE_IDLE_RIGHT);*/
+				/*if(vy>0)
+					DebugOut(L"vy: %f \t",vy);*/
+
+
+					// Collision logic with Goombas
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<CGolem*>(e->obj))
+			{
+				CGolem* golem = dynamic_cast<CGolem*>(e->obj);
+
+				// jump on top >> kill Goomba and deflect a bit 
+				if (state != TANK_STATE_DIE)
+					if (e->ny < 0)
+					{
+						if (golem->GetState() != GOLEM_STATE_DIE)
+						{
+							/*golem->SetState(GOLEM_STATE_DIE);*/
+							SetState(TANK_STATE_DIE);
+							//vy = -TANK_JUMP_DEFLECT_SPEED;
+						}
+					}
+					else if (e->nx != 0)
+					{						
+							if (golem->GetState() != GOLEM_STATE_DIE)
+							{
+
+								SetState(TANK_STATE_DIE);
+							}
+					}
+
+			}
+			
+			else if (dynamic_cast<CButterfly*>(e->obj))
+			{
+				CButterfly* butter = dynamic_cast<CButterfly*>(e->obj);
+
+				// jump on top >> kill Goomba and deflect a bit 
+				butter->visible = false;
+				this->visible = false;
+
+			}
+
+
+		}
+	}
+
+	// clean up collision events
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void CRocket::Render()

@@ -7,6 +7,7 @@ CGolem::CGolem()
 
 void CGolem::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	isEnemy = true;
 	left = x;
 	top = y;
 	right = x + GOLEM_BBOX_WIDTH;

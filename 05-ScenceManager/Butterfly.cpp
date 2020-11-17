@@ -1,6 +1,7 @@
 #include "Butterfly.h"
 CButterfly::CButterfly()
 {
+	isEnemy = true;
 	nx = -1;
 	SetState(BUTTERFLY_STATE_WALKING_LEFT);
 }

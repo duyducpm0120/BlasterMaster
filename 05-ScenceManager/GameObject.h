@@ -59,6 +59,8 @@ public:
 	int state;
 
 	bool visible;
+	
+	bool isEnemy;
 
 	DWORD dt; 
 
@@ -70,6 +72,7 @@ public:
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 	float GetDistance(CGameObject* obj);
+	bool IsEnemy() { return isEnemy; };
 
 	int GetState() { return this->state; }
 
