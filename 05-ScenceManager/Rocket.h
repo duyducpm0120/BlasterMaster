@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Tank.h"
 
-#define ROCKET_WALKING_SPEED 0.05f;
+#define ROCKET_WALKING_SPEED 0.08f;
 
 #define ROCKET_BBOX_WIDTH 15
 #define ROCKET_BBOX_HEIGHT 6
@@ -18,14 +18,17 @@ class CRocket : public CGameObject
 {
 	int nx;
 	float target_x, target_y;
-	CGameObject* object;
+	CGameObject* targetObject;
+	vector<LPGAMEOBJECT> *objects;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
 public:
 	CRocket();
+	void findTarget();
+	void SetTargetObjects(vector <LPGAMEOBJECT> *objects);
 	virtual void SetState(int state);
-	void CatchObject();
+	void CatchTargetObject();
 	void SetTargetObject(CGameObject *object);
 };

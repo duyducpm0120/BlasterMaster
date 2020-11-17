@@ -167,7 +167,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
-	//case OBJECT_TYPE_GOLEM: obj = new CGolem(); break;
+	case OBJECT_TYPE_GOLEM: obj = new CGolem(); break;
 	case OBJECT_TYPE_BUTTERFLY: {
 		obj = new CButterfly(); 
 		dynamic_cast<CButterfly*>(obj)->SetPlayer(this->GetPlayer());
