@@ -32,7 +32,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	coEvents.clear();
-
 	// turn off collision when die 
 	if (state != TANK_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);

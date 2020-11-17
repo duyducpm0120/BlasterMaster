@@ -120,19 +120,19 @@ void CBullet::Render()
 	ani = BULLET_ANI_FLYING_LEFT_LV1;
 	if (state == BULLET_STATE_FLYING_UP) {
 		if (level == 1)
-			ani == BULLET_ANI_FLYING_UP_LV1;
+			ani = BULLET_ANI_FLYING_UP_LV1;
 		else
 			ani = BULLET_ANI_FLYING_UP_LV2;
 	}
 	else if (state == BULLET_STATE_FLYING_LEFT) {
 		if (level == 1)
-			ani == BULLET_ANI_FLYING_LEFT_LV1;
+			ani = BULLET_ANI_FLYING_LEFT_LV1;
 		else
 			ani = BULLET_ANI_FLYING_LEFT_LV2;
 	}
 	else if (state == BULLET_STATE_FLYING_RIGHT) {
 		if (level == 1)
-			ani == BULLET_ANI_FLYING_RIGHT_LV1;
+			ani = BULLET_ANI_FLYING_RIGHT_LV1;
 		else
 			ani = BULLET_ANI_FLYING_RIGHT_LV2;
 	}

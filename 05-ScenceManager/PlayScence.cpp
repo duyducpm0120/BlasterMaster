@@ -297,11 +297,10 @@ void CPlayScene::Update(DWORD dt)
 	{
 		if(objects[i]->visible==true)
 			objects[i]->Update(dt, &coObjects);
-		/*else {
-			objects.pop_back();
-			delete objects[i];
-		}*/
-
+		else {
+			CGameObject* obj = objects[i];
+			objects.erase(objects.begin() + i);
+		}
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
@@ -449,13 +448,12 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
 	vector<LPGAMEOBJECT> *objects = ((CPlayScene*)scence)->GetObjects();
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-
 	switch (KeyCode)
 	{
-	case DIK_X: 
-		int width, height;
-		tank->GetDimension(width, height);
-		if (height == TANK_NORMAL_HEIGHT)
+	case DIK_X: 		
+		int width1, height1;
+		tank->GetDimension(width1, height1);
+		if (height1 == TANK_NORMAL_HEIGHT)
 		{
 			if (tank->nx == -1)
 			{
@@ -485,8 +483,49 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			CBullet* bullet = new CBullet(2, BULLET_STATE_FLYING_UP);
 			float x1, y1;
 			tank->GetPosition(x1, y1);
-			bullet->SetPosition(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT);
-			bullet->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT);
+			bullet->SetPosition(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
+			bullet->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
+			LPANIMATION_SET ani_set = animation_sets->Get(6);
+			bullet->SetAnimationSet(ani_set);
+			objects->push_back(bullet);
+		}
+
+		break;
+	case DIK_C:
+		int width3, height3;
+		tank->GetDimension(width3, height3);
+		if (height3 == TANK_NORMAL_HEIGHT)
+		{
+			if (tank->nx == -1)
+			{
+
+				CBullet* bullet = new CBullet(1, BULLET_STATE_FLYING_LEFT);
+				float x1, y1;
+				tank->GetPosition(x1, y1);
+				bullet->SetPosition(x1 - BULLET_HORIZONTAL_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+				bullet->SetStartPositon(x1 - BULLET_HORIZONTAL_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+				LPANIMATION_SET ani_set = animation_sets->Get(6);
+				bullet->SetAnimationSet(ani_set);
+				objects->push_back(bullet);
+			}
+			else
+			{
+				CBullet* bullet = new CBullet(1, BULLET_STATE_FLYING_RIGHT);
+				float x1, y1;
+				tank->GetPosition(x1, y1);
+				bullet->SetPosition(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+				bullet->SetStartPositon(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+				LPANIMATION_SET ani_set = animation_sets->Get(6);
+				bullet->SetAnimationSet(ani_set);
+				objects->push_back(bullet);
+			}
+		}
+		else {
+			CBullet* bullet = new CBullet(1, BULLET_STATE_FLYING_UP);
+			float x1, y1;
+			tank->GetPosition(x1, y1);
+			bullet->SetPosition(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
+			bullet->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
 			LPANIMATION_SET ani_set = animation_sets->Get(6);
 			bullet->SetAnimationSet(ani_set);
 			objects->push_back(bullet);
@@ -507,9 +546,9 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		tank->SetSpeed(0, 0);
 		break;
 	case DIK_UP:
-		int w, h;
-		tank->GetDimension(w, h);
-		if (h == TANK_NORMAL_HEIGHT)
+		int width2, height2;
+		tank->GetDimension(width2, height2);
+		if (height2 == TANK_NORMAL_HEIGHT)
 			tank->y -= 16.0f;
 		tank->SetDimension(TANK_UP_GUN_WIDHT, TANK_UP_GUN_HEIGHT);
 		if (tank->nx == -1)
