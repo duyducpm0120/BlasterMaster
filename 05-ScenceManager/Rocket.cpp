@@ -103,7 +103,7 @@ void CRocket::CatchObject()
 	object->GetPosition(this->target_x, this->target_y);
 }
 
-void CRocket::SetObject(CGameObject* object)
+void CRocket::SetTargetObject(CGameObject* object)
 {
 	this->object = &(*object);
 }

@@ -27,5 +27,5 @@ public:
 	CRocket();
 	virtual void SetState(int state);
 	void CatchObject();
-	void SetObject(CGameObject *object);
+	void SetTargetObject(CGameObject *object);
 };

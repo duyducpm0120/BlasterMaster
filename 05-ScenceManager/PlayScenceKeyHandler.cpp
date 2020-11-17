@@ -11,6 +11,7 @@
 #include "Bullet.h"
 #include "Butterfly.h"
 #include "PlayScenceKeyHandler.h"
+#include "Rocket.h"
 using namespace std;
 
 void CPlayScenceKeyHandler::OnKeyUp(int KeyCode) {
@@ -84,6 +85,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
 	vector<LPGAMEOBJECT> *objects = ((CPlayScene*)scence)->GetObjects();
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	CGameObject* obj = objects->at(0);
 	switch (KeyCode)
 	{
 	case DIK_X: 		
@@ -167,6 +169,63 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			objects->push_back(bullet);
 		}
 
+		break;
+	case DIK_V:
+		int width4, height4;
+		tank->GetDimension(width4, height4);
+		if (height4 == TANK_NORMAL_HEIGHT)
+		{
+			if (tank->nx == -1)
+			{
+
+				CRocket* rocket = new CRocket();
+				float x1, y1;
+				tank->GetPosition(x1, y1);
+				rocket->SetPosition(x1 - ROCKET_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+				float minDistance = 1000.0f;
+				for (int i = 0; i < objects->size(); i++) {
+					if (rocket->GetDistance(objects->at(i)) < minDistance)
+						obj = objects->at(i);
+				}
+				rocket->SetTargetObject(obj);
+				LPANIMATION_SET ani_set = animation_sets->Get(8);
+				rocket->SetAnimationSet(ani_set);
+				objects->push_back(rocket);
+			}
+			else
+			{
+				CRocket* rocket = new CRocket();
+				float x1, y1;
+				tank->GetPosition(x1, y1);
+				rocket->SetPosition(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+				//bullet->SetStartPositon(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+				float minDistance = 1000.0f;
+				for (int i = 0; i < objects->size(); i++) {
+					if (rocket->GetDistance(objects->at(i)) < minDistance)
+						obj = objects->at(i);
+				}
+				rocket->SetTargetObject(obj);
+				LPANIMATION_SET ani_set = animation_sets->Get(8);
+				rocket->SetAnimationSet(ani_set);
+				objects->push_back(rocket);
+			}
+		}
+		else {
+			CRocket* rocket = new CRocket();
+			float x1, y1;
+			tank->GetPosition(x1, y1);
+			rocket->SetPosition(x1 + (TANK_UP_GUN_WIDHT - ROCKET_BBOX_WIDTH) / 2, y1 - ROCKET_BBOX_HEIGHT + 8);
+			//rocket->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
+			float minDistance = 1000.0f;
+			for (int i = 0; i < objects->size(); i++) {
+				if (rocket->GetDistance(objects->at(i)) < minDistance)
+					obj = objects->at(i);
+			}
+			rocket->SetTargetObject(obj);
+			LPANIMATION_SET ani_set = animation_sets->Get(8);
+			rocket->SetAnimationSet(ani_set);
+			objects->push_back(rocket);
+		}
 		break;
 	case DIK_SPACE:
 		if (tank->vy <= 0.05f && tank->vy >= 0) {
