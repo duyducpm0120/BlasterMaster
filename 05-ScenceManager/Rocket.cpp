@@ -75,7 +75,6 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		// block 
 		//x += min_tx * dx + nx * 0.02f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		//y += min_ty * dy + ny * 0.02f;
-
 		x += dx;
 		y += dy;
 
@@ -85,22 +84,10 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-
-			if (dynamic_cast<CGolem*>(e->obj))
-			{
-				CGolem* golem = dynamic_cast<CGolem*>(e->obj);
-				golem->visible = false;
-				visible = false;
-
-			}			
-			else if (dynamic_cast<CButterfly*>(e->obj))
-			{
-				CButterfly* butter = dynamic_cast<CButterfly*>(e->obj);
-				butter->visible = false;
+			if (e->obj->IsEnemy()) {
+				e->obj->visible = false;				//Destroy every enemy
 				this->visible = false;
-
 			}
-
 
 		}
 	/*}*/
@@ -147,7 +134,7 @@ void CRocket::CatchTargetObject()
 {
 	targetObject->GetPosition(this->target_x, this->target_y);
 
-	if (target_x > x) {
+	if (target_x > x-1) {
 		if (target_y > y) {
 			vx = ROCKET_WALKING_SPEED;
 			vy = ROCKET_WALKING_SPEED;
@@ -164,7 +151,7 @@ void CRocket::CatchTargetObject()
 	}
 	else
 	{
-		if (target_y > y) {
+		if (target_y > y-1) {
 			vx = -ROCKET_WALKING_SPEED;
 			vy = ROCKET_WALKING_SPEED;
 			nx = -1;
