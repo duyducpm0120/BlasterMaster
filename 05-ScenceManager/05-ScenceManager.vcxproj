@@ -130,6 +130,7 @@
     <ClCompile Include="Butterfly.cpp" />
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="Koopas.cpp" />
+    <ClCompile Include="PlayScenceKeyHandler.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="Tank.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Butterfly.h" />
     <ClInclude Include="Golem.h" />
     <ClInclude Include="Koopas.h" />
+    <ClInclude Include="PlayScenceKeyHandler.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="Tank.h" />
