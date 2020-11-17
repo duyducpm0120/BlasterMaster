@@ -115,6 +115,11 @@ void CGameObject::FilterCollision(
 }
 
 
+float CGameObject::GetDistance(CGameObject* obj)
+{
+	return sqrt(pow((this->x - obj->x), 2) + pow((this->y - obj->y), 2));
+}
+
 void CGameObject::RenderBoundingBox()
 {
 	D3DXVECTOR3 p(x, y, 0);

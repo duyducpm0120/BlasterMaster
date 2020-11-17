@@ -1,51 +1,78 @@
 #include "Butterfly.h"
-#include "Golem.h"
 CButterfly::CButterfly()
 {
 	nx = -1;
-	SetState(BUTERFLY_STATE_WALKING_LEFT);
+	SetState(BUTTERFLY_STATE_WALKING_LEFT);
 }
 
-void CGolem::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void CButterfly::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
 	top = y;
-	right = x + BUTERFLY_BBOX_WIDTH;
-	bottom = y + BUTERFLY_BBOX_HEIGHT;
+	right = x + BUTTERFLY_BBOX_WIDTH;
+	bottom = y + BUTTERFLY_BBOX_HEIGHT;
 }
 
-void CGolem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CButterfly::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 
 	//
 	// TO-DO: make sure Golem can interact with the world and to each of them too!
 	// 
-
+	CatchPlayer();
+	if (GetDistance(tank) == 0) {
+		this->visible = false;
+		return;
+	};
 	x += dx;
 	y += dy;
 
-	if (vx < 0 && x < 50) {
-		x = 50; vx = -vx;
-		SetState(BUTERFLY_STATE_WALKING_RIGHT);
+	if (target_x > x) {
+		if (target_y > y) {
+			vx = BUTTERFLY_WALKING_SPEED;
+			vy = BUTTERFLY_WALKING_SPEED;
+			nx = 1;
+			SetState(BUTTERFLY_STATE_WALKING_RIGHT);
+		}
+		else
+		{
+			vx = BUTTERFLY_WALKING_SPEED;
+			vy = -BUTTERFLY_WALKING_SPEED;
+			nx = 1;
+			SetState(BUTTERFLY_STATE_WALKING_RIGHT);
+		}
+	}
+	else
+	{
+		if (target_y > y) {
+			vx = -BUTTERFLY_WALKING_SPEED;
+			vy = BUTTERFLY_WALKING_SPEED;
+			nx = -1;
+			SetState(BUTTERFLY_STATE_WALKING_LEFT);
+		}
+		else
+		{
+			vx = -BUTTERFLY_WALKING_SPEED;
+			vy = -BUTTERFLY_WALKING_SPEED;
+			nx = -1;
+			SetState(BUTTERFLY_STATE_WALKING_LEFT);
+		}
 	}
 
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
-		SetState(BUTERFLY_STATE_WALKING_LEFT);
-	}
+
 }
 
-void CGolem::Render()
+void CButterfly ::Render()
 {
 	int ani;
-	if (state == BUTERFLY_STATE_WALKING_LEFT)
-		ani = BUTERFLY_ANI_WALKING_LEFT;
+	if (state == BUTTERFLY_STATE_WALKING_LEFT)
+		ani = BUTTERFLY_ANI_WALKING_LEFT;
 	else
-		ani = BUTERFLY_ANI_WALKING_RIGHT;
+		ani = BUTTERFLY_ANI_WALKING_RIGHT;
 
 
-	/*if (state == BUTERFLY_STATE_DIE) {
+	/*if (state == BUTTERFLY_STATE_DIE) {
 		return;
 	}*/
 
@@ -54,22 +81,30 @@ void CGolem::Render()
 	//RenderBoundingBox();
 }
 
-void CGolem::SetState(int state)
+void CButterfly::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case BUTERFLY_STATE_DIE:
-		//y += BUTERFLY_BBOX_HEIGHT - BUTERFLY_BBOX_HEIGHT_DIE + 1;
+	case BUTTERFLY_STATE_DIE:
+		//y += BUTTERFLY_BBOX_HEIGHT - BUTTERFLY_BBOX_HEIGHT_DIE + 1;
 		//vx = 0;
 		//vy = 0;
 		break;
-	case BUTERFLY_STATE_WALKING_LEFT:
-		nx = -1;
-		vx = -BUTERFLY_WALKING_SPEED;
+	case BUTTERFLY_STATE_WALKING_LEFT:
 		break;
-	case BUTERFLY_STATE_WALKING_RIGHT:
-		nx = 1;
-		vx = BUTERFLY_WALKING_SPEED;
+	case BUTTERFLY_STATE_WALKING_RIGHT:
+		break;
 	}
 }
+
+void CButterfly::CatchPlayer()
+{
+	tank->GetPosition(this->target_x, this->target_y);
+}
+
+void CButterfly::SetPlayer(CTank *tank)
+{
+	this->tank = &(*tank);
+}
+
