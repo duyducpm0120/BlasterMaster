@@ -6,7 +6,7 @@
 30	textures\tank.png	243	243	244
 40	textures\Enemies_BlasterMaster.png	243	243	244
 50	textures\bullet.png	199	200	50
-
+60	textures\Destroyed.png	0	57	115
 
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
@@ -125,6 +125,19 @@
 90003	114	3	129	9	50
 90004	96	4	109	9	50
 
+#Destroyed
+#bullet
+100001	279	102	295	118	60
+100002	296	102	312	118	60
+#Object
+100003	183	93	207	117	60
+100004	166	97	182	113	60
+100005	149	97	165	113	60
+100006	140	101	148	109	60
+#Tank
+100007	159	3	207	43	60
+100008	143	44	207	92	60
+
 
 [ANIMATIONS]
 # ==== BRICK =========
@@ -210,6 +223,13 @@
 #fly right
 1202	90003	100	90004	100
 
+#-----DESTROYED-----
+#bullet
+1301	100001	40	100002	40
+#obj
+1302	100003	40	100004	40	100005	40	100006	40
+#tank
+1303	100007	40	100008	40
 
 [ANIMATION_SETS]
 # MARIO
@@ -231,3 +251,6 @@
 
 #ROCKET
 8	1201	1202
+
+#DESTROYED
+9	1301	1302	1303

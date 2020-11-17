@@ -3,6 +3,7 @@
 #include "Golem.h"
 #include "Game.h"
 #include "Butterfly.h"
+#include "Destroyed.h"
 CRocket::CRocket()
 {
 	nx = 1;
@@ -47,6 +48,16 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//
 	// TO-DO: make sure Golem can interact with the world and to each of them too!
 	// 
+	int check = 0;
+	for (int i = 0; i < objects->size(); i++) {
+		if (objects->at(i)->IsEnemy())
+			check++;
+	}
+	if (check == 0)
+	{
+		this->visible = false;
+		return;
+	}
 	findTarget();
 	CatchTargetObject();
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -87,6 +98,12 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (e->obj->IsEnemy()) {
 				e->obj->visible = false;				//Destroy every enemy
 				this->visible = false;
+				CDestroyed* destroyed = new CDestroyed(2);
+				destroyed->SetPosition(x, y);
+				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+				LPANIMATION_SET ani_set = animation_sets->Get(9);
+				destroyed->SetAnimationSet(ani_set);
+				objects->push_back(destroyed);
 			}
 
 		}
