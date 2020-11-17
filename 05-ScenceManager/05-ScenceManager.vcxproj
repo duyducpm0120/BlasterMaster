@@ -131,6 +131,7 @@
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Golem.h" />
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="Portal.h" />
+    <ClInclude Include="Rocket.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Utils.h" />
