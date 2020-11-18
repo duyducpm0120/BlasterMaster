@@ -5,7 +5,7 @@
 
 #define TANK_WALKING_SPEED		0.1f 
 //0.1f
-#define TANK_JUMP_SPEED_Y		0.30f
+#define TANK_JUMP_SPEED_Y		0.3f
 #define TANK_JUMP_DEFLECT_SPEED 0.35f
 #define TANK_GRAVITY			0.001f
 #define TANK_DIE_DEFLECT_SPEED	 0.35f
@@ -82,8 +82,6 @@ class CTank : public CGameObject
 	int tank_width;
 	int tank_height;
 
-	int health;
-	int damage;
 	
 public:
 	CTank(float x = 0.0f, float y = 0.0f);

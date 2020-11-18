@@ -1,6 +1,8 @@
 #include "Golem.h"
 CGolem::CGolem()
 {
+	damage = 1;
+	health = 2;
 	nx = -1;
 	SetState(GOLEM_STATE_WALKING_LEFT);
 }

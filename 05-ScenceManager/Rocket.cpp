@@ -6,6 +6,7 @@
 #include "Destroyed.h"
 CRocket::CRocket()
 {
+	damage = 9999;
 	nx = 1;
 	SetState(ROCKET_STATE_WALKING_LEFT);
 }

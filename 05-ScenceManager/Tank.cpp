@@ -9,7 +9,7 @@
 CTank:: CTank(float x, float y)  : CGameObject()
 {
 	health = 8;
-	damage = 1;
+	damage = 3;
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
 	tank_width = TANK_NORMAL_WIDTH;
@@ -61,8 +61,8 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// block 
-		x += min_tx * dx + nx * 0.02f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.02f;
+		x += min_tx * dx + nx * 0.04f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.04f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0.00f;
@@ -84,7 +84,11 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			if (e->obj->IsEnemy()) {
 				//e->obj->visible = false;				//Destroy every enemy
-				this->visible = false;
+				health -= e->obj->GetDamage();
+				vx -= 0.3f;
+				//vy -= 0.3f;
+				if (health <= 0)
+					visible = false;
 			}
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{

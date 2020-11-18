@@ -51,7 +51,7 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else
 	{
 		SetSpeed(0.0f, -BULLET_SPEED);
-		if (y < startPositionY - BULLET_FLYING_SPACE) {
+		if (y < (startPositionY - BULLET_FLYING_SPACE)) {
 			visible = false;
 		}
 		else
@@ -132,7 +132,9 @@ void CBullet::Render()
 
 CBullet::CBullet(int level , int state) : CGameObject()
 {
+
 	this->level = level;
+	damage = level;
 	this->state = state;
 }
 
