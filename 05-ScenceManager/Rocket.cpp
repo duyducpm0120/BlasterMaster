@@ -61,6 +61,9 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	findTarget();
 	CatchTargetObject();
+	
+
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	coEvents.clear();
@@ -74,26 +77,28 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		// block 
-		//x += min_tx * dx + nx * 0.02f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		//y += min_ty * dy + ny * 0.02f;
-		x += dx;
-		y += dy;
+	// block 
+	x += min_tx * dx + nx * 0.02f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+	y += min_ty * dy + ny * 0.02f;
+	//x += dx;
+	//y += dy;
 
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0.00f;
+	if (nx != 0) vx = 0;
+	if (ny != 0) vy = 0.00f;
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (e->obj->IsEnemy()) {
-				e->obj->visible = false;				//Destroy every enemy
-				this->visible = false;
-			}
-
+	for (UINT i = 0; i < coEventsResult.size(); i++)
+	{
+		LPCOLLISIONEVENT e = coEventsResult[i];
+		if (e->obj->IsEnemy()) {
+			e->obj->visible = false;				//Destroy every enemy
+			this->visible = false;
 		}
+
+	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
+
+
 
 void CRocket::Render()
 {

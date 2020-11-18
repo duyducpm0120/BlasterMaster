@@ -182,11 +182,11 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 
 				CRocket* rocket = new CRocket();
 				for (int i = 0; i < objects->size(); i++) {
-					if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 1000) {
+					if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 200) {
 						rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
 						float x1, y1;
 						tank->GetPosition(x1, y1);
-						rocket->SetPosition(x1 - ROCKET_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+						rocket->SetPosition(x1 + TANK_NORMAL_WIDTH + 7, y1 - 7);
 						LPANIMATION_SET ani_set = animation_sets->Get(8);
 						rocket->SetAnimationSet(ani_set);
 						objects->push_back(rocket);
@@ -198,11 +198,11 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			{
 				CRocket* rocket = new CRocket();
 				for (int i = 0; i < objects->size(); i++) {
-					if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i))<1000) {
+					if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i))<200) {
 						rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
 						float x1, y1;
 						tank->GetPosition(x1, y1);
-						rocket->SetPosition(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+						rocket->SetPosition(x1 + TANK_NORMAL_WIDTH + 7, y1 - 7);
 						//bullet->SetStartPositon(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
 						LPANIMATION_SET ani_set = animation_sets->Get(8);
 						rocket->SetAnimationSet(ani_set);
@@ -216,7 +216,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		else {
 			CRocket* rocket = new CRocket();
 			for (int i = 0; i < objects->size(); i++) {
-				if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) <1000) {
+				if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 200) {
 					rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
 					float x1, y1;
 					tank->GetPosition(x1, y1);
