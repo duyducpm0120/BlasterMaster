@@ -379,7 +379,7 @@ void CPlayScene::Update(DWORD dt)
 
 	game->SetCamPos(cx, cy);
 
-	hud->Update(cx+5, scene_height/11 + cy, player->GetHealth(), player->GetDamage());
+	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }
 
