@@ -10,6 +10,8 @@
 #include "Tile.h"
 #include "Tank.h"
 #include "Golem.h"
+#include "HealthBar.h"
+#include "HUD.h"
 
 
 class CPlayScene: public CScene
@@ -18,6 +20,7 @@ protected:
 	CTank *player;					// A play scene has to have player, right? 
 
 	vector<LPGAMEOBJECT> objects;
+	HUD* hud;
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);

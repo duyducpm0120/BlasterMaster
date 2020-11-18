@@ -7,6 +7,7 @@
 40	textures\Enemies_BlasterMaster.png	243	243	244
 50	textures\bullet.png	199	200	50
 60	textures\Destroyed.png	0	57	115
+70	textures\healthBar.png	255	255	255
 
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
@@ -139,6 +140,12 @@
 100008	143	44	207	92	60
 
 
+#HEALTHBAR
+110001	32	36	49	126	70
+110002	55	37	71	44	70
+110003	86	36	105	124	70
+110004	111	37	126	44	70
+
 [ANIMATIONS]
 # ==== BRICK =========
 601	20001	100
@@ -231,6 +238,17 @@
 #tank
 1303	100007	40	100008	40
 
+#-----HEALTHBAR-------
+#Gun null
+1401	110001	100
+#Gun add
+1402	110002	100
+#Player null
+1403	110003	100
+#Player add
+1404	110004	100
+
+
 [ANIMATION_SETS]
 # MARIO
 1	400	401	402	403	500	501	502	503	599
@@ -254,3 +272,5 @@
 
 #DESTROYED
 9	1301	1302	1303
+#HEALTHBAR
+10	1401	1402	1403	1404

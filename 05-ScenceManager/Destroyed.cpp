@@ -1,6 +1,7 @@
 #include "Destroyed.h"
 CDestroyed::CDestroyed(int type) :CGameObject()
 {
+	this->type = type;
 	count = 0;
 	switch (type) {
 	case DESTROYED_TYPE_BULLET:	
@@ -21,7 +22,7 @@ CDestroyed::CDestroyed(int type) :CGameObject()
 
 void CDestroyed::Render()
 {
-	int ani = DESTROYED_ANI_BULLET;
+	int ani ;
 	switch (type) {
 	case DESTROYED_TYPE_BULLET:
 		ani = DESTROYED_ANI_BULLET;

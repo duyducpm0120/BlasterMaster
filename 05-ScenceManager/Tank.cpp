@@ -8,6 +8,8 @@
 #include "Golem.h"
 CTank:: CTank(float x, float y)  : CGameObject()
 {
+	health = 8;
+	damage = 1;
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
 	tank_width = TANK_NORMAL_WIDTH;
@@ -80,33 +82,9 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGolem*>(e->obj))
-			{
-				CGolem* golem = dynamic_cast<CGolem*>(e->obj);
-
-				// jump on top >> kill Goomba and deflect a bit 
-				if(state!= TANK_STATE_DIE)
-					if (e->ny < 0)
-					{
-						if (golem->GetState() != GOLEM_STATE_DIE)
-						{
-							/*golem->SetState(GOLEM_STATE_DIE);*/
-							SetState(TANK_STATE_DIE);
-							//vy = -TANK_JUMP_DEFLECT_SPEED;
-						}
-					}
-					else if (e->nx != 0)
-					{
-						if (untouchable == 0)
-						{
-							if (golem->GetState() != GOLEM_STATE_DIE)
-							{
-
-								SetState(TANK_STATE_DIE);
-							}
-						}
-					}
-				
+			if (e->obj->IsEnemy()) {
+				//e->obj->visible = false;				//Destroy every enemy
+				this->visible = false;
 			}
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{
@@ -130,9 +108,9 @@ void CTank::Render()
 	int ani;
 	switch (state)
 	{
-	case TANK_STATE_DIE:
+	/*case TANK_STATE_DIE:
 		ani = TANK_ANI_DIE;
-		break;
+		break;*/
 	case TANK_STATE_WALKING_RIGHT:
 		ani = TANK_ANI_WALKING_RIGHT;
 		break;

@@ -130,6 +130,8 @@
     <ClCompile Include="Butterfly.cpp" />
     <ClCompile Include="Destroyed.cpp" />
     <ClCompile Include="Golem.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="PlayScenceKeyHandler.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -154,6 +156,8 @@
     <ClInclude Include="Butterfly.h" />
     <ClInclude Include="Destroyed.h" />
     <ClInclude Include="Golem.h" />
+    <ClInclude Include="HealthBar.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="PlayScenceKeyHandler.h" />
     <ClInclude Include="Portal.h" />

@@ -66,22 +66,12 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// turn off collision when die 
 	CalcPotentialCollisions(coObjects, coEvents);
 
+	float min_tx, min_ty, nx = 0, ny;
 
+	float rdx = 0;
+	float rdy = 0;
 
-	// No collision occured, proceed normally
-	/*if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	}
-	else
-	{*/
-		float min_tx, min_ty, nx = 0, ny;
-
-		float rdx = 0;
-		float rdy = 0;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+	FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// block 
 		//x += min_tx * dx + nx * 0.02f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
@@ -98,17 +88,9 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (e->obj->IsEnemy()) {
 				e->obj->visible = false;				//Destroy every enemy
 				this->visible = false;
-				CDestroyed* destroyed = new CDestroyed(2);
-				destroyed->SetPosition(x, y);
-				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-				LPANIMATION_SET ani_set = animation_sets->Get(9);
-				destroyed->SetAnimationSet(ani_set);
-				objects->push_back(destroyed);
 			}
 
 		}
-	/*}*/
-	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
@@ -189,4 +171,3 @@ void CRocket::SetTargetObject(CGameObject* object)
 {
 	this->targetObject = &(*object);
 }
-

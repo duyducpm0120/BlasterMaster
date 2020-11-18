@@ -238,6 +238,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_A:
 		tank->SetState(TANK_STATE_IDLE_RIGHT);
+		tank->visible = true;
 		tank->SetPosition(100.0f, 0.0f);
 		tank->SetSpeed(0, 0);
 		break;

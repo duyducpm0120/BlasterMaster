@@ -11,6 +11,7 @@
 #include "Bullet.h"
 #include "Butterfly.h"
 #include "PlayScenceKeyHandler.h"
+#include "Destroyed.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -166,6 +167,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		player = (CTank*)obj;
 
 		DebugOut(L"[INFO] Player object created!\n");
+		hud = new HUD(player->GetHealth(), player->GetDamage());
 		break;
 	case OBJECT_TYPE_GOLEM: obj = new CGolem(); break;
 	case OBJECT_TYPE_BUTTERFLY: {
@@ -307,8 +309,36 @@ void CPlayScene::Update(DWORD dt)
 		if(objects[i]->visible==true)
 			objects[i]->Update(dt, &coObjects);
 		else {
-			CGameObject* obj = objects[i];
-			objects.erase(objects.begin() + i);
+			if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
+
+				if (dynamic_cast<CBullet*>(objects.at(i))) {
+					CDestroyed* destroyed = new CDestroyed(1);
+					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
+					destroyed->SetAnimationSet(ani_set);
+					objects.push_back(destroyed);
+				}
+				else if (dynamic_cast<CTank*>(objects.at(i))) {
+					CDestroyed* destroyed = new CDestroyed(3);
+					destroyed->SetPosition(objects.at(i)->x-19, objects.at(i)->y-30);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
+					destroyed->SetAnimationSet(ani_set);
+					objects.push_back(destroyed);
+				}
+				else {
+					CDestroyed* destroyed = new CDestroyed(2);
+					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
+					destroyed->SetAnimationSet(ani_set);
+					objects.push_back(destroyed);
+				}
+
+			}		
+			objects.erase(objects.begin() + i);//erase obj at (i)
+			return;			
 		}
 	}
 
@@ -349,6 +379,8 @@ void CPlayScene::Update(DWORD dt)
 
 	game->SetCamPos(cx, cy);
 
+	hud->Update(cx+5, scene_height/11 + cy, player->GetHealth(), player->GetDamage());
+
 }
 
 void CPlayScene::Render()
@@ -368,7 +400,7 @@ void CPlayScene::Render()
 			objects[i]->RenderBoundingBox();
 		}
 	}
-	
+	hud->Render(player);
 }
 
 /*

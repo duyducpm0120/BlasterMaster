@@ -1,5 +1,7 @@
 #include "Bullet.h"
 #include "Goomba.h"
+#include "Destroyed.h"
+#include "PlayScence.h"
 
 void CBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -51,8 +53,6 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetSpeed(0.0f, -BULLET_SPEED);
 		if (y < startPositionY - BULLET_FLYING_SPACE) {
 			visible = false;
-			return;
-
 		}
 		else
 		{
@@ -83,8 +83,8 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny,rtx,rty);
 
 		// block 
-		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.4f;
+		//x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		//y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -94,23 +94,13 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
-			{
-				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-
-				// jump on top >> kill Goomba and deflect a bit 
-				if (e->nx != 0)
-				{
-					if (goomba->GetState() != GOOMBA_STATE_DIE)
-					{
-						goomba->SetState(GOOMBA_STATE_DIE);
-						goomba->visible = false;
-					}
-				}
+			if (e->obj->IsEnemy()) {
+				e->obj->visible = false;				//Destroy every enemy
+				this->visible = false;
 			}
 		}
 	}
-
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
 }
 

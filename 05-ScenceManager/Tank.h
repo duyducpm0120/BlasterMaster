@@ -81,9 +81,14 @@ class CTank : public CGameObject
 	float start_y;
 	int tank_width;
 	int tank_height;
+
+	int health;
+	int damage;
 	
 public:
 	CTank(float x = 0.0f, float y = 0.0f);
+	int GetHealth() { return this->health; }
+	int GetDamage() { return this->damage; }
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();
 	void SetState(int state);
