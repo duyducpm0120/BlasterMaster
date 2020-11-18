@@ -82,8 +82,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (e->obj->IsEnemy()) {
-				//e->obj->visible = false;				//Destroy every enemy
+			if (e->obj->IsEnemy()) {		
 				health -= e->obj->GetDamage();
 				vx -= 0.3f;
 				//vy -= 0.3f;
