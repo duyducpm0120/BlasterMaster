@@ -22,6 +22,14 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode) {
 		tank->y += 16.0f;
 		tank->SetDimension(TANK_NORMAL_WIDTH, TANK_NORMAL_HEIGHT);
 		break;
+	case DIK_RIGHT:
+		if (tank->vy <= 0.05f)
+			tank->SetState(TANK_STATE_IDLE_RIGHT);
+		break;
+	case DIK_LEFT:
+		if (tank->vy <= 0.05f)
+			tank->SetState(TANK_STATE_IDLE_LEFT);
+		break;
 	}
 }
 
