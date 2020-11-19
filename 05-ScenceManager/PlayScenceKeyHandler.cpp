@@ -186,7 +186,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 						rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
 						float x1, y1;
 						tank->GetPosition(x1, y1);
-						rocket->SetPosition(x1 + TANK_NORMAL_WIDTH + 7, y1 - 7);
+						rocket->SetPosition(x1 - 15 , (y1 - ROCKET_BBOX_HEIGHT)- 15 );
 						LPANIMATION_SET ani_set = animation_sets->Get(8);
 						rocket->SetAnimationSet(ani_set);
 						objects->push_back(rocket);
@@ -202,8 +202,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 						rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
 						float x1, y1;
 						tank->GetPosition(x1, y1);
-						rocket->SetPosition(x1 + TANK_NORMAL_WIDTH + 7, y1 - 7);
-						//bullet->SetStartPositon(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+						rocket->SetPosition(x1 + TANK_NORMAL_WIDTH +5 , (y1 - ROCKET_BBOX_HEIGHT) - 10  );
 						LPANIMATION_SET ani_set = animation_sets->Get(8);
 						rocket->SetAnimationSet(ani_set);
 						objects->push_back(rocket);

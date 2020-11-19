@@ -83,8 +83,8 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny,rtx,rty);
 
 		// block 
-		x += min_tx * dx + nx * 5.0f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 5.0f;
+		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.4f;
 
 
 		if (nx != 0) vx = 0;
@@ -96,7 +96,10 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
 			if (e->obj->IsEnemy()) {
-				e->obj->visible = false;				//Destroy every enemy
+				e->obj->TakeDamage(this->damage);				//Destroy every enemy
+				this->visible = false;
+			}
+			else if (dynamic_cast<CBrick*>(e->obj)) {
 				this->visible = false;
 			}
 		}
@@ -133,7 +136,6 @@ void CBullet::Render()
 
 CBullet::CBullet(int level , int state) : CGameObject()
 {
-
 	this->level = level;
 	damage = level;
 	this->state = state;
