@@ -14,7 +14,32 @@ CScene::CScene(int id, LPCWSTR filePath)
 		scene_width = 513;
 		scene_height = 1277;
 		break;
+	case 3:
+		scene_width = 513;
+		scene_height = 270;
+		break;
+	case 4:
+		scene_width = 512;
+		scene_height = 1008;
+		break;
+	case 5:
+		scene_width = 513;
+		scene_height = 1759;
+		break;
+	case 6:
+		scene_width = 505;
+		scene_height = 217;
+		break;
+	case 7:
+		scene_width = 513;
+		scene_height = 525;
+		break;
+	case 8:
+		scene_width = 496;
+		scene_height = 159;
+		break;
 	default:
+		
 		break;
 	}
 

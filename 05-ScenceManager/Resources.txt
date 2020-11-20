@@ -12,8 +12,12 @@
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
 2	textures\Area22.png	5	5	5
-4	textures\tilesheet.png	5	5	5
-
+3	textures\Area23.png	5	5	5
+4	textures\Area24.png	5	5	5
+5	textures\Area25.png	5	5	5
+6	textures\Area26.png	5	5	5
+7	textures\Area27.png	5	5	5
+8	textures\Area28.png	5	5	5
 [SPRITES]
 
 #TANK
