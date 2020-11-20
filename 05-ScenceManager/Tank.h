@@ -81,7 +81,7 @@ class CTank : public CGameObject
 	float start_y;
 	int tank_width;
 	int tank_height;
-
+	bool isJumping;
 	
 public:
 	CTank(float x = 0.0f, float y = 0.0f);
@@ -91,7 +91,7 @@ public:
 	virtual void Render();
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-
+	bool IsJumping() { return isJumping; };
 	void SetDimension(int width, int height);
 	void GetDimension(int &width, int &height);
 	void Reset();

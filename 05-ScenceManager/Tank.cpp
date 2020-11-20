@@ -8,6 +8,7 @@
 #include "Golem.h"
 CTank:: CTank(float x, float y)  : CGameObject()
 {
+	isJumping = false;
 	health = 8;
 	damage = 3;
 	untouchable = 0;
@@ -61,8 +62,8 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// block 
-		x += min_tx * dx + nx * 0.2f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.2f;
+		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0.00f;
@@ -182,26 +183,32 @@ void CTank::SetState(int state)
 	switch (state)
 	{
 	case TANK_STATE_WALKING_RIGHT:
+		isJumping = false;
 		vx = TANK_WALKING_SPEED;
 		nx = 1;
 		break;
 	case TANK_STATE_WALKING_LEFT:
+		isJumping = false;
 		vx = -TANK_WALKING_SPEED;
 		nx = -1;
 		break;
 	case TANK_STATE_JUMP_IDLE_LEFT:
+		isJumping = false;
 		nx = -1;
 		vy = -TANK_JUMP_SPEED_Y;
 		break;
 	case TANK_STATE_JUMP_IDLE_RIGHT:
+		isJumping = true;
 		nx = 1;
 		vy = -TANK_JUMP_SPEED_Y;
 		break;
 	case TANK_STATE_IDLE_RIGHT:
+		isJumping = false;
 		vx = 0;
 		nx = 1;
 		break;
 	case TANK_STATE_IDLE_LEFT:
+		isJumping = false;
 		vx = 0;
 		nx = -1;
 		break;
@@ -210,26 +217,32 @@ void CTank::SetState(int state)
 		y -= 23;
 		break;
 	case TANK_STATE_JUMP_LEFT:
+		isJumping = true;
 		vx = -TANK_WALKING_SPEED;
 		nx = -1;
 		break;
 	case TANK_STATE_JUMP_RIGHT:
+		isJumping = true;
 		vx = TANK_WALKING_SPEED;
 		nx = 1;
 		break;
 	case TANK_STATE_UP_GUN_WALKING_LEFT:
+		isJumping = false;
 		vx = -TANK_WALKING_SPEED;
 		nx = -1;
 		break;
 	case TANK_STATE_UP_GUN_WALKING_RIGHT:
+		isJumping = false;
 		vx = TANK_WALKING_SPEED;
 		nx = 1;
 		break;
 	case TANK_STATE_UP_GUN_LEFT:
+		isJumping = false;
 		vx = 0;
 		nx = -1;
 		break;
 	case TANK_STATE_UP_GUN_RIGHT:
+		isJumping = false;
 		vx = 0;
 		nx = 1;
 		break;

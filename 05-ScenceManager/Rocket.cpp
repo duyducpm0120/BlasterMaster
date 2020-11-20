@@ -6,7 +6,7 @@
 #include "Destroyed.h"
 CRocket::CRocket()
 {
-	damage = 9999;
+	damage =9999;
 	nx = 1;
 	SetState(ROCKET_STATE_WALKING_LEFT);
 }
@@ -78,10 +78,10 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 	// block 
-	x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-	y += min_ty * dy + ny * 0.4f;
-	//x += dx;
-	//y += dy;
+	//x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+	//y += min_ty * dy + ny * 0.4f;
+	x+= dx;
+	y += dy;
 
 	if (nx != 0) vx = 0;
 	if (ny != 0) vy = 0.00f;
@@ -90,7 +90,7 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];
 		if (e->obj->IsEnemy()) {
-			e->obj->visible = false;				//Destroy every enemy
+			e->obj->TakeDamage(this->damage);			//Destroy every enemy
 			this->visible = false;
 		}
 

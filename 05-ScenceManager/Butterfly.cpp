@@ -19,7 +19,8 @@ void CButterfly::GetBoundingBox(float& left, float& top, float& right, float& bo
 void CButterfly::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
-
+	if (health <= 0)
+		this->visible = false;
 	//
 	// TO-DO: make sure Golem can interact with the world and to each of them too!
 	// 
