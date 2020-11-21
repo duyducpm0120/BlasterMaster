@@ -99,8 +99,9 @@ public:
 	~CGame();
 
 	//New Stuff
-public: int GetSceneId() { return current_scene; }
-
+public:
+int GetSceneId() { return current_scene; }
+void GetCameraBoundingBox(float& left, float& top, float& right, float& bottom);
 	
 	
 };

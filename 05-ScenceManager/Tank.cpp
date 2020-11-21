@@ -167,11 +167,7 @@ void CTank::Render()
 	else
 		animations[ani]->Render(x, y, -1, alpha);*/
 	animation_set->at(ani)->Render(x, y, alpha);
-	DebugOut(L"State: %d \n", state);
-	DebugOut(L"Ani: %d \n", ani);
-	DebugOut(L"vy: %f \n ", vy) ;
-	DebugOut(L"dt: %d \n", dt);
-	DebugOut(L"nx: %d \n", nx);
+	
 	//RenderBoundingBox();
 
 }

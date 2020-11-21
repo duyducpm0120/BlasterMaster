@@ -199,7 +199,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
 	grid->Add(obj);
-	DebugOut(L"COunt\n");
+	
 	
 }
 
@@ -382,6 +382,11 @@ void CPlayScene::Update(DWORD dt)
 
 	game->SetCamPos(cx, cy);
 
+
+	float left, top, right, bottom;
+	game->GetCameraBoundingBox(left, top, right, bottom);
+	grid->GetUpdateObjects(updateObject, left, top, right, bottom);
+	updateObject.clear();
 	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }
