@@ -11,6 +11,7 @@
 #include "Tank.h"
 #include "Golem.h"
 #include "HealthBar.h"
+#include "Grid.h"
 #include "HUD.h"
 
 
@@ -47,6 +48,7 @@ protected:
 	vector<LPTILE> tiledMap;
 	int offset_y = 0; //To render the tiles rows
 	int testx = 0;
+	CGrid* grid = CGrid::GetInstance();
 
 
 

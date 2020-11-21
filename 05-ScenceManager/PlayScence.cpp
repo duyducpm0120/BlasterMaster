@@ -198,6 +198,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
+	grid->Add(obj);
+	DebugOut(L"COunt\n");
+	
 }
 
 void CPlayScene::_ParseSection_TILE_MAP(string line)
