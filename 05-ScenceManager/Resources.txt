@@ -1,8 +1,6 @@
 [TEXTURES]
 # id	file_path	transparent_color_r	g	b
-0	textures\mario.png	255	255	255
 -100	textures\bbox.png	5	5	5
-20	textures\misc.png	176	224	248
 30	textures\tank.png	243	243	244
 40	textures\Enemies_BlasterMaster.png	243	243	244
 50	textures\bullet.png	199	200	50
