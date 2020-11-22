@@ -95,9 +95,17 @@
 4	100.0	0	4
 
 
+<<<<<<< Updated upstream
 #BULLET
 6	250	135	6
 
+=======
+#<<<<<<< Updated upstream
+#>>>>>>> Stashed changes
+
+#GOLEM
+5	300	134	5	
+>>>>>>> Stashed changes
 
 
 

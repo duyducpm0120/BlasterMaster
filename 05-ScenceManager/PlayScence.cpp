@@ -311,8 +311,8 @@ void CPlayScene::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
-		coObjects.push_back(objects[i]);
-		grid->Add(objects[i]); //Rebuilding the grid on update
+		coObjects.push_back(objects.at(i));
+		grid->Add(objects.at(i)); //Rebuilding the grid on update
 	}
 	CGame* game = CGame::GetInstance();
 	updateObjects.clear();
@@ -321,43 +321,88 @@ void CPlayScene::Update(DWORD dt)
 	grid->GetUpdateObjects(updateObjects, left, top, right, bottom);
 	DebugOut(L"Size of update array %d\n", updateObjects.size());
 	
+	//for (size_t i = 0; i < objects.size(); i++)
+	//{
+	//	if (objects.at(i)->visible == true)
+	//		objects.at(i)->Update(dt, &coObjects);
+	//	else {
+	//		if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
+
+	//			if (dynamic_cast<CBullet*>(objects.at(i))) {
+	//				CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_BULLET);
+	//				destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+	//				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	//				LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
+	//				destroyed->SetAnimationSet(ani_set);
+	//				objects.push_back(destroyed);
+	//			}
+	//			else if (dynamic_cast<CTank*>(objects.at(i))) {
+	//				CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_TANK);
+	//				destroyed->SetPosition(objects.at(i)->x - 19, objects.at(i)->y - 30);
+	//				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	//				LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
+	//				destroyed->SetAnimationSet(ani_set);
+	//				objects.push_back(destroyed);
+	//			}
+	//			else {
+	//				CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_OBJECT);
+	//				destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+	//				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	//				LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
+	//				destroyed->SetAnimationSet(ani_set);
+	//				objects.push_back(destroyed);
+	//			}
+
+	//		}
+	//		objects.erase(objects.begin() + i);   //erase obj at (i)
+	//		//return;
+	//	}
+	//}
+
+
 	for (size_t i = 0; i < updateObjects.size(); i++)
 	{
-		if (updateObjects[i]->visible == true)
-			updateObjects[i]->Update(dt, &coObjects);
-		else {
-			if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
+		if (updateObjects.at(i)->visible == true)
+			updateObjects.at(i)->Update(dt, &coObjects);
+		else
+		{
+			if (!dynamic_cast<CDestroyed*>(updateObjects.at(i))) {
 
-				if (dynamic_cast<CBullet*>(objects.at(i))) {
-					CDestroyed* destroyed = new CDestroyed(1);
-					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+				if (dynamic_cast<CBullet*>(updateObjects.at(i))) {
+					CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_BULLET);
+					destroyed->SetPosition(updateObjects.at(i)->x, updateObjects.at(i)->y);
 					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
 					destroyed->SetAnimationSet(ani_set);
-					objects.push_back(destroyed);
+					updateObjects.push_back(destroyed);
 				}
-				else if (dynamic_cast<CTank*>(objects.at(i))) {
-					CDestroyed* destroyed = new CDestroyed(3);
-					destroyed->SetPosition(objects.at(i)->x - 19, objects.at(i)->y - 30);
+				else if (dynamic_cast<CTank*>(updateObjects.at(i))) {
+					CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_TANK);
+					destroyed->SetPosition(updateObjects.at(i)->x - 19, updateObjects.at(i)->y - 30);
 					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
 					destroyed->SetAnimationSet(ani_set);
-					objects.push_back(destroyed);
+					updateObjects.push_back(destroyed);
 				}
 				else {
-					CDestroyed* destroyed = new CDestroyed(2);
-					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+					CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_OBJECT);
+					destroyed->SetPosition(updateObjects.at(i)->x, updateObjects.at(i)->y);
 					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
 					destroyed->SetAnimationSet(ani_set);
-					objects.push_back(destroyed);
+					updateObjects.push_back(destroyed);
 				}
 
 			}
-			updateObjects.erase(updateObjects.begin() + i);//erase obj at (i)
-			return;
+
+			updateObjects.erase(updateObjects.begin() + i);
 		}
 	}
+
+
+	
+
+
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
@@ -381,7 +426,7 @@ void CPlayScene::Update(DWORD dt)
 			cx -= game->GetScreenWidth() / 2;
 	}
 
-	if (scene_height <= 270) {
+	if (scene_height <= 250) {
 	
 		cy = 0;
 	}
@@ -400,11 +445,11 @@ void CPlayScene::Update(DWORD dt)
 	}
 
 	game->SetCamPos(cx, cy);
-
-
-
 	
 	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
+
+	DebugOut(L"objects size: %d", objects.size());
+	DebugOut(L"coObjects size: %d", coObjects.size());
 
 }
 
@@ -416,15 +461,17 @@ void CPlayScene::Render()
 	for (int i = 0; i < tiledMap.size(); i++)
 		tiledMap[i]->Render();
 	//Object Rendering
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; i < updateObjects.size(); i++)
 
 	{
-		if (objects[i]->visible == true)
+		if (updateObjects.at(i)->visible == true)
 		{
-			objects[i]->Render();
-			objects[i]->RenderBoundingBox();
+			updateObjects.at(i)->Render();
+			updateObjects.at(i)->RenderBoundingBox();
 		}
 	}
+
+	
 	hud->Render(player);
 }
 

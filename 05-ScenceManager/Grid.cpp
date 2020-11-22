@@ -76,8 +76,7 @@ void CGrid::GetUpdateObjects(vector<LPGAMEOBJECT>& updateobjects, float left, fl
 				//if ((find(updateobjects.begin(), updateobjects.end(), cells[row][column].at(k)) != updateobjects.end()== false))
 				//{
 				
-								
-					updateobjects.push_back(cells[row][column].at(k));
+				if (cells[row][column].at(k)->visible==true) updateobjects.push_back(cells[row][column].at(k));
 				//	debugout(l"row index: %d, col index: %d\n", row, column);
 				
 

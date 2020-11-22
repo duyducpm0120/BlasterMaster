@@ -41,7 +41,7 @@ public:
 	CTank * GetPlayer() { return player; } 
 	vector<LPGAMEOBJECT>* GetObjects(){ return &objects; }
 	//friend class CPlayScenceKeyHandler;
-
+	vector<LPGAMEOBJECT>* GetupdateObjects() { return &updateObjects; }
 	//New stuff:
 protected:
 	vector<LPTILE> tiledMap;

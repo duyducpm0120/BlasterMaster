@@ -93,7 +93,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 
 	//CMario mario = ((CPlayScene)scence)->GetPlayer();
 	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
-	vector<LPGAMEOBJECT> *objects = ((CPlayScene*)scence)->GetObjects();
+	vector<LPGAMEOBJECT> *objects = ((CPlayScene*)scence)->GetupdateObjects();
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	CGameObject* obj = objects->at(0);
 	switch (KeyCode)
