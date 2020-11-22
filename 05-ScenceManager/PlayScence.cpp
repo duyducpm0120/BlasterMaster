@@ -250,7 +250,7 @@ void CPlayScene::Load()
 	f.open(sceneFilePath);
 
 	// current resource section flag
-	int section = SCENE_SECTION_UNKNOWN;					
+	int section = SCENE_SECTION_UNKNOWN;
 
 	char str[MAX_SCENE_LINE];
 	while (f.getline(str, MAX_SCENE_LINE))
@@ -260,17 +260,22 @@ void CPlayScene::Load()
 		if (line[0] == '#') continue;	// skip comment lines	
 
 		if (line == "[TEXTURES]") { section = SCENE_SECTION_TEXTURES; continue; }
-		if (line == "[SPRITES]") { 
-			section = SCENE_SECTION_SPRITES; continue; }
-		if (line == "[ANIMATIONS]") { 
-			section = SCENE_SECTION_ANIMATIONS; continue; }
-		if (line == "[ANIMATION_SETS]") { 
-			section = SCENE_SECTION_ANIMATION_SETS; continue; }
-		if (line == "[OBJECTS]") { 
-			section = SCENE_SECTION_OBJECTS; continue; }
+		if (line == "[SPRITES]") {
+			section = SCENE_SECTION_SPRITES; continue;
+		}
+		if (line == "[ANIMATIONS]") {
+			section = SCENE_SECTION_ANIMATIONS; continue;
+		}
+		if (line == "[ANIMATION_SETS]") {
+			section = SCENE_SECTION_ANIMATION_SETS; continue;
+		}
+		if (line == "[OBJECTS]") {
+			section = SCENE_SECTION_OBJECTS; continue;
+		}
 		if (line == "[TILE_MAP]") {
-			section = SCENE_SECTION_TILE_MAP; continue;}
-		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }	
+			section = SCENE_SECTION_TILE_MAP; continue;
+		}
+		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		{
 
@@ -293,7 +298,7 @@ void CPlayScene::Load()
 
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
-
+	DebugOut(L"[INFO] Done adding objects to grid %d\n", grid->count);
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -383,10 +388,12 @@ void CPlayScene::Update(DWORD dt)
 	game->SetCamPos(cx, cy);
 
 
+
+	updateObject.clear();
 	float left, top, right, bottom;
 	game->GetCameraBoundingBox(left, top, right, bottom);
 	grid->GetUpdateObjects(updateObject, left, top, right, bottom);
-	updateObject.clear();
+	DebugOut(L"Size of update array %d\n", updateObject.size());
 	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }

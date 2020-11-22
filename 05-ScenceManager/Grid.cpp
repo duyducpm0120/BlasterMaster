@@ -21,16 +21,20 @@ void CGrid::Add(LPGAMEOBJECT Obj)
 	float l, t, r, b;
 	Obj->GetBoundingBox(l, t, r, b);
 
-	int CellX = (int)(l / CELL_WIDTH);
-	int CellY = (int)(t / CELL_HEIGHT);
+	beginCellColumn = (int)(l / CELL_WIDTH);
+	beginCellRow = (int)(t / CELL_HEIGHT);
 
-	
+	endCellColumn = (int)(r / CELL_WIDTH);
+	endCellRow = (int)(b / CELL_HEIGHT);
 
-	//endCellColumn = (int)(r / CELL_WIDTH);
-	//endCellRow = (int)(b / CELL_HEIGHT);
-
-	cells[CellX][CellY].push_back(Obj);
-	DebugOut(L"[INFO] %d\n", CellY);
+	for (int i = beginCellRow; i <= endCellRow; i++)
+	{
+		for (int j = beginCellColumn; j <= endCellColumn; j++)
+		{
+			cells[i][j].push_back(Obj);
+			count++;
+		}
+	}
 
 	
 }
@@ -54,25 +58,33 @@ void CGrid::GetUpdateObjects(vector<LPGAMEOBJECT>& updateobjects, float left, fl
 
 	lastCellColumn = (int)(right) / CELL_WIDTH;
 	lastCellRow = (int)(bottom) / CELL_HEIGHT;
+	DebugOut(L"First Col index: %d, Last Col Index: %d\n", firstCellColumn, lastCellColumn);
 
+	DebugOut(L"First Row index: %d, Last Row Index: %d\n", firstCellRow, lastCellRow);
+	
 	for (int row = firstCellRow; row <= lastCellRow; row++)
 	{
 		for (int column = firstCellColumn; column <= lastCellColumn; column++)
 		{
+			//DebugOut(L"Row index: %d, Col Index: %d\n", row, column);
+
+			//DebugOut(L"Objects in grid cell counts: %d\n", cells[row][column].size());
 			for (UINT k = 0; k < cells[row][column].size(); k++)
 			{
+				
 				// Check the object if is in the vector or not ! Ref: https://en.cppreference.com/w/cpp/algorithm/find
 				//if ((find(updateobjects.begin(), updateobjects.end(), cells[row][column].at(k)) != updateobjects.end()== false))
 				//{
 				
-				if (true)
-				{
+								
 					updateobjects.push_back(cells[row][column].at(k));
-					DebugOut(L"Row index: %d, Col index: %d\n", row, column);
-				}
+				//	debugout(l"row index: %d, col index: %d\n", row, column);
+				
 
 				//}
 			}
 		}
 	}
 }
+
+
