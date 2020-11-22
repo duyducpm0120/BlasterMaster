@@ -14,15 +14,20 @@
 #define GOLEM_ANI_WALKING_LEFT 0
 #define GOLEM_ANI_WALKING_RIGHT 1
 #define GOLEM_ANI_DIE	2
+#define GOLEM_GRAVITY	0.01f
+
+#define GOLEM_MOVE_SPACE	290
 
 class CGolem : public CGameObject
 {
 	int nx;
+	float startX, startY;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
 public:
-	CGolem();
+	CGolem(int x,int y);
 	virtual void SetState(int state);
+	void SetStartPosition( int x, int y);
 };

@@ -1,6 +1,7 @@
 #include "Golem.h"
-CGolem::CGolem()
+CGolem::CGolem(int x, int y)
 {
+	SetStartPosition(x, y);
 	damage = 1;
 	health = 2;
 	nx = -1;
@@ -33,13 +34,12 @@ void CGolem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	x += dx;
 	y += dy;
 
-	if (vx < 0 && x < 50) {
-		x = 50; vx = -vx;
+	if (vx < 0 && (x < startX - GOLEM_MOVE_SPACE || x <= 40)) {
+		vx = -vx;
 		SetState(GOLEM_STATE_WALKING_RIGHT);
 	}
-
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
+	if (vx > 0 && x > startX) {
+		vx = -vx;
 		SetState(GOLEM_STATE_WALKING_LEFT);
 	}
 }
@@ -53,13 +53,8 @@ void CGolem::Render()
 		ani = GOLEM_ANI_WALKING_RIGHT;
 
 
-	/*if (state == GOLEM_STATE_DIE) {
-		return;
-	}*/
-
 	animation_set->at(ani)->Render(x, y);
 
-	//RenderBoundingBox();
 }
 
 void CGolem::SetState(int state)
@@ -81,3 +76,10 @@ void CGolem::SetState(int state)
 		vx = GOLEM_WALKING_SPEED;
 	}
 }
+
+void CGolem::SetStartPosition(int x, int y)
+{
+	startX = x;
+	startY = y;
+}
+

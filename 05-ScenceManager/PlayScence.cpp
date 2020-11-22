@@ -169,7 +169,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object created!\n");
 		hud = new HUD(player->GetHealth(), player->GetDamage());
 		break;
-	case OBJECT_TYPE_GOLEM: obj = new CGolem(); break;
+	case OBJECT_TYPE_GOLEM: obj = new CGolem(x,y); break; 
 	case OBJECT_TYPE_BUTTERFLY: {
 		obj = new CButterfly(); 
 		dynamic_cast<CButterfly*>(obj)->SetPlayer(this->GetPlayer());
@@ -191,8 +191,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 
 	// General object setup
-	obj->SetPosition(x, y);
 
+	obj->SetPosition(x, y);
+	
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 	obj->SetAnimationSet(ani_set);

@@ -95,12 +95,17 @@
 4	100.0	0	4
 
 
+<<<<<<< Updated upstream
 
 
 #GOLEM
 5	300	150	5
 
+=======
+>>>>>>> Stashed changes
 
+#GOLEM
+5	300	134	5	
 
 
 
