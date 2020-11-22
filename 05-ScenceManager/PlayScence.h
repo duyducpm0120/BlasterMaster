@@ -48,7 +48,7 @@ protected:
 	int offset_y = 0; //To render the tiles rows
 	int testx = 0;
 	CGrid* grid = CGrid::GetInstance();
-	vector<LPGAMEOBJECT> updateObject;
+	vector<LPGAMEOBJECT> updateObjects;
 
 
 

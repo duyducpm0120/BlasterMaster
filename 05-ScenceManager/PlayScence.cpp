@@ -304,6 +304,8 @@ void CPlayScene::Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
+
+	//Newstuff
 	grid->Clear();
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
@@ -311,11 +313,17 @@ void CPlayScene::Update(DWORD dt)
 		coObjects.push_back(objects[i]);
 		grid->Add(objects[i]); //Rebuilding the grid on update
 	}
-
-	for (size_t i = 0; i < objects.size(); i++)
+	CGame* game = CGame::GetInstance();
+	updateObjects.clear();
+	float left, top, right, bottom;
+	game->GetCameraBoundingBox(left, top, right, bottom);
+	grid->GetUpdateObjects(updateObjects, left, top, right, bottom);
+	DebugOut(L"Size of update array %d\n", updateObjects.size());
+	
+	for (size_t i = 0; i < updateObjects.size(); i++)
 	{
-		if (objects[i]->visible == true)
-			objects[i]->Update(dt, &coObjects);
+		if (updateObjects[i]->visible == true)
+			updateObjects[i]->Update(dt, &coObjects);
 		else {
 			if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
 
@@ -345,7 +353,7 @@ void CPlayScene::Update(DWORD dt)
 				}
 
 			}
-			objects.erase(objects.begin() + i);//erase obj at (i)
+			updateObjects.erase(updateObjects.begin() + i);//erase obj at (i)
 			return;
 		}
 	}
@@ -357,7 +365,7 @@ void CPlayScene::Update(DWORD dt)
 	float cx, cy;
 	player->GetPosition(cx, cy);
 
-	CGame* game = CGame::GetInstance();
+	
 	//cx -= game->GetScreenWidth() / 2;
 	//cy -= game->GetScreenHeight() / 2;
 	if (cx + game->GetScreenWidth() / 2 >= scene_width - 1)
@@ -394,11 +402,7 @@ void CPlayScene::Update(DWORD dt)
 
 
 
-	updateObject.clear();
-	float left, top, right, bottom;
-	game->GetCameraBoundingBox(left, top, right, bottom);
-	grid->GetUpdateObjects(updateObject, left, top, right, bottom);
-	DebugOut(L"Size of update array %d\n", updateObject.size());
+	
 	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }
