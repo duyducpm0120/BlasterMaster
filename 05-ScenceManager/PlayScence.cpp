@@ -314,7 +314,7 @@ void CPlayScene::Update(DWORD dt)
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		if(objects[i]->visible==true)
+		if (objects[i]->visible == true)
 			objects[i]->Update(dt, &coObjects);
 		else {
 			if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
@@ -329,7 +329,7 @@ void CPlayScene::Update(DWORD dt)
 				}
 				else if (dynamic_cast<CTank*>(objects.at(i))) {
 					CDestroyed* destroyed = new CDestroyed(3);
-					destroyed->SetPosition(objects.at(i)->x-19, objects.at(i)->y-30);
+					destroyed->SetPosition(objects.at(i)->x - 19, objects.at(i)->y - 30);
 					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
 					destroyed->SetAnimationSet(ani_set);
@@ -344,9 +344,9 @@ void CPlayScene::Update(DWORD dt)
 					objects.push_back(destroyed);
 				}
 
-			}		
+			}
 			objects.erase(objects.begin() + i);//erase obj at (i)
-			return;			
+			return;
 		}
 	}
 
@@ -372,17 +372,22 @@ void CPlayScene::Update(DWORD dt)
 			cx -= game->GetScreenWidth() / 2;
 	}
 
-
-	if (cy + game->GetScreenHeight() / 2 >= (scene_height -1))
-		cy = (scene_height -1) - game->GetScreenHeight();
-	else
-	{
-		if (cy < game->GetScreenHeight() / 2)
-		{
-			cy = 0;
-		}
+	if (scene_height <= 270) {
+	
+		cy = 0;
+	}
+	else {
+		if (cy + game->GetScreenHeight() / 2 >= (scene_height - 1))
+			cy = (scene_height - 1) - game->GetScreenHeight();
 		else
-			cy -= game->GetScreenHeight() / 2;
+		{
+			if (cy < game->GetScreenHeight() / 2)
+			{
+				cy = 0;
+			}
+			else
+				cy -= game->GetScreenHeight() / 2;
+		}
 	}
 
 	game->SetCamPos(cx, cy);
