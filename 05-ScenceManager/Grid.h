@@ -2,8 +2,8 @@
 #include "GameObject.h"
 
 
-#define COLUMN_MAX	25
-#define ROW_MAX		25
+#define COLUMN_MAX	35
+#define ROW_MAX		35
 class CGrid
 {
 	friend class GameObject;

@@ -12,6 +12,7 @@
 #include "Butterfly.h"
 #include "PlayScenceKeyHandler.h"
 #include "Destroyed.h"
+#include "Item.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -335,7 +336,23 @@ void CPlayScene::Update(DWORD dt)
 					destroyed->SetAnimationSet(ani_set);
 					objects.push_back(destroyed);
 				}
-				else {
+				else if(!dynamic_cast<CItem*>(objects.at(i))) {
+					if (objects[i]->IsEnemy() == true)
+					{
+						srand(time(NULL));
+						int n = rand() % 2 ;					
+						if (n == 1)
+						{
+							int type = rand() % 3 ;
+							CItem* item = new CItem(type);
+							item->SetPosition(objects[i]->x, objects[i]->y);
+							CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+							LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
+							item->SetAnimationSet(ani_set);
+							objects.push_back(item);
+						}
+
+					}
 					CDestroyed* destroyed = new CDestroyed(2);
 					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
 					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
@@ -420,6 +437,7 @@ void CPlayScene::Render()
 			objects[i]->RenderBoundingBox();
 		}
 	}
+	//hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
 	hud->Render(player);
 }
 

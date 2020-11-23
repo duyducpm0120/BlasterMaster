@@ -20,6 +20,7 @@ void CBullet::GetBoundingBox(float& left, float& top, float& right, float& botto
 
 void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	damage = level *2;
 	CGameObject::Update(dt);
 	if (state == BULLET_STATE_FLYING_LEFT) {
 		SetSpeed(-BULLET_SPEED, 0.0f);

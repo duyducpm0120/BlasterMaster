@@ -8,7 +8,7 @@
 50	textures\bullet.png	199	200	50
 60	textures\Destroyed.png	0	57	115
 70	textures\healthBar.png	255	255	255
-
+80	textures\item.png	181	165	213
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
 2	textures\Area22.png	5	5	5
@@ -150,6 +150,15 @@
 110003	86	36	105	123	70
 110004	111	37	126	43	70
 
+
+#ITEM
+#health
+120001	87	240	103	256	80
+#power
+120002	45	240	61	256	80
+#enable rocket
+120003	24	240	40	256	80
+
 [ANIMATIONS]
 # ==== BRICK =========
 601	20001	100
@@ -252,6 +261,13 @@
 #Player add
 1404	110004	100
 
+#-------------Item----------
+#Health
+1501	120001	100
+#power
+1502	120002	100
+#enable rocket
+1503	120003	100
 
 [ANIMATION_SETS]
 # MARIO
@@ -278,3 +294,6 @@
 9	1301	1302	1303
 #HEALTHBAR
 10	1401	1402	1403	1404
+#Item
+11	1501	1502	1503
+
