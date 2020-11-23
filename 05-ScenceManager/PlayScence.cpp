@@ -322,15 +322,87 @@ void CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
+	CGame* game = CGame::GetInstance();
 
+	grid->Clear();
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
-		coObjects.push_back(objects[i]);
-	}
+		//coObjects.push_back(objects[i]);
+		if (objects.at(i)->visible == false)
+		{
+			if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
 
+				if (dynamic_cast<CBullet*>(objects.at(i))) {
+					CDestroyed* destroyed = new CDestroyed(1);
+					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
+					destroyed->SetAnimationSet(ani_set);
+					objects.push_back(destroyed);
+				}
+				else if (dynamic_cast<CTank*>(objects.at(i))) {
+					CDestroyed* destroyed = new CDestroyed(3);
+					destroyed->SetPosition(objects.at(i)->x - 19, objects.at(i)->y - 30);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
+					destroyed->SetAnimationSet(ani_set);
+					objects.push_back(destroyed);
+				}
+				else if (!dynamic_cast<CItem*>(objects.at(i))) {
+					if (objects[i]->IsEnemy() == true)
+					{
+						srand(time(NULL));
+						int n = rand() % 2;
+						if (n == 1)
+						{
+							int type = rand() % 3;
+							CItem* item = new CItem(type);
+							item->SetPosition(objects[i]->x, objects[i]->y);
+							CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+							LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
+							item->SetAnimationSet(ani_set);
+							objects.push_back(item);
+						}
+
+					}
+					CDestroyed* destroyed = new CDestroyed(2);
+					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
+					destroyed->SetAnimationSet(ani_set);
+					objects.push_back(destroyed);
+				}
+
+			}
+			objects.erase(objects.begin() + i);
+		}
+
+	}
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		//coObjects.push_back(objects[i]);
+		grid->Add(objects[i]);
+
+	}
+	updateObject.clear();
+	float left, top, right, bottom;
+	game->GetCameraBoundingBox(left, top, right, bottom);
+	grid->GetUpdateObjects(updateObject, left, top, right, bottom);
+	DebugOut(L"Size of update array %d\n", updateObject.size());
+	DebugOut(L"Size of object array %d\n", objects.size());
+
+
+
+	for (size_t i = 1; i < updateObject.size(); i++)
+	{
+		if (player == NULL) return;
+		if (objects[i]->visible == true)
+			updateObject[i]->Update(dt, &updateObject);
+
+
+	}
+	/*
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->visible == true)
@@ -358,12 +430,12 @@ void CPlayScene::Update(DWORD dt)
 					if (objects[i]->IsEnemy() == true)
 					{
 						srand(time(NULL));
-						int n = rand() % 2 ;					
+						int n = rand() % 2 ;
 						if (n == 1)
 						{
 							int type = rand() % 3 ;
 							CItem* item = new CItem(type);
-							item->SetPosition(objects[i]->x, objects[i]->y - 10);
+							item->SetPosition(objects[i]->x, objects[i]->y);
 							CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 							LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
 							item->SetAnimationSet(ani_set);
@@ -384,7 +456,7 @@ void CPlayScene::Update(DWORD dt)
 			return;
 		}
 	}
-
+	*/
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
@@ -392,7 +464,6 @@ void CPlayScene::Update(DWORD dt)
 	float cx, cy;
 	player->GetPosition(cx, cy);
 
-	CGame* game = CGame::GetInstance();
 	//cx -= game->GetScreenWidth() / 2;
 	//cy -= game->GetScreenHeight() / 2;
 	if (cx + game->GetScreenWidth() / 2 >= scene_width - 1)
@@ -408,7 +479,7 @@ void CPlayScene::Update(DWORD dt)
 	}
 
 	if (scene_height <= 270) {
-	
+
 		cy = 0;
 	}
 	else {
@@ -429,11 +500,7 @@ void CPlayScene::Update(DWORD dt)
 
 
 
-	//updateObject.clear();
-	//float left, top, right, bottom;
-	//game->GetCameraBoundingBox(left, top, right, bottom);
-	//grid->GetUpdateObjects(updateObject, left, top, right, bottom);
-	DebugOut(L"Size of object array %d\n", objects.size());
+
 	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }
