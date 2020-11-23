@@ -5,12 +5,16 @@
 #include "Portal.h"
 #include "Goomba.h"
 #include "Utils.h"
-
+#include "Golem.h"
 CTank:: CTank(float x, float y)  : CGameObject()
 {
+	isJumping = false;
+	health = 8;
+	damage = 3;
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
-
+	tank_width = TANK_NORMAL_WIDTH;
+	tank_height = TANK_NORMAL_HEIGHT;
 	start_x = x;
 	start_y = y;
 	this->x = x;
@@ -19,6 +23,8 @@ CTank:: CTank(float x, float y)  : CGameObject()
 
 void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (state == TANK_STATE_DIE)
+		return;
 	
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
@@ -28,19 +34,17 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-
 	coEvents.clear();
-
 	// turn off collision when die 
 	if (state != TANK_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > TANK_UNTOUCHABLE_TIME)
+	/*if (GetTickCount() - untouchable_start > TANK_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
-	}
+	}*/
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -62,7 +66,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		if (ny != 0) vy = 0.00f;
 
 
 		/*if (vy == 0)
@@ -79,38 +83,19 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
-			{
-				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-
-				// jump on top >> kill Goomba and deflect a bit 
-				if (e->ny < 0)
-				{
-					if (goomba->GetState() != GOOMBA_STATE_DIE)
-					{
-						goomba->SetState(GOOMBA_STATE_DIE);
-						vy = -TANK_JUMP_DEFLECT_SPEED;
-					}
-				}
-				else if (e->nx != 0)
-				{
-					if (untouchable == 0)
-					{
-						if (goomba->GetState() != GOOMBA_STATE_DIE)
-						{
-
-							SetState(TANK_STATE_DIE);
-						}
-					}
-				}
-				
+			if (e->obj->IsEnemy()) {		
+				health -= e->obj->GetDamage();
+				vx -= 0.3f;
+				//vy -= 0.3f;
+				if (health <= 0)
+					visible = false;
 			}
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
 				CGame::GetInstance()->SwitchScene(p->GetSceneId());
 			}
-	
+			
 			
 		}
 	}
@@ -118,40 +103,18 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	DebugOut(L"\n \n  vy: %d \t \n", state);
+	//DebugOut(L"\n \n  state: %d \t \n", state);
 }
 
 void CTank::Render()
 {
+	
 	int ani;
-
-	/*if (state == TANK_STATE_DIE)
-		ani = TANK_ANI_IDLE_LEFT;
-	else if (state == TANK_STATE_JUMP_LEFT) {
-		ani = TANK_ANI_JUMP_LEFT;
-	}
-	else if (state == TANK_STATE_JUMP_RIGHT)
-		ani = TANK_ANI_JUMP_RIGHT;
-	else if(state == TANK_STATE_WALKING_LEFT)
-	{		
-		ani = TANK_ANI_WALKING_LEFT;
-	}
-	else if (state == TANK_STATE_WALKING_RIGHT)
-	{
-		ani = TANK_ANI_WALKING_RIGHT;
-	}
-	else if (state == TANK_STATE_IDLE_RIGHT)
-	{
-		ani = TANK_ANI_IDLE_RIGHT;
-	}
-	else if(state == TANK_STATE_IDLE_LEFT)
-	{
-		ani = TANK_ANI_IDLE_LEFT;
-	}
-	else {}*/
-
 	switch (state)
 	{
+	/*case TANK_STATE_DIE:
+		ani = TANK_ANI_DIE;
+		break;*/
 	case TANK_STATE_WALKING_RIGHT:
 		ani = TANK_ANI_WALKING_RIGHT;
 		break;
@@ -170,14 +133,29 @@ void CTank::Render()
 	case TANK_STATE_IDLE_LEFT:
 		ani = TANK_ANI_IDLE_LEFT;
 		break;
-	case TANK_STATE_DIE:
-		ani = TANK_ANI_IDLE_LEFT;
-		break;
 	case TANK_STATE_JUMP_LEFT:
 		ani = TANK_ANI_JUMP_LEFT;
 		break;
 	case TANK_STATE_JUMP_RIGHT:
 		ani = TANK_ANI_JUMP_RIGHT;
+		break;
+	case TANK_STATE_UPING_GUN_LEFT:
+		ani = TANK_ANI_UPING_GUN_LEFT;
+		break;
+	case TANK_STATE_UPING_GUN_RIGHT:
+		ani = TANK_ANI_UPING_GUN_RIGHT;
+		break;
+	case TANK_STATE_UP_GUN_LEFT:
+		ani = TANK_ANI_UP_GUN_LEFT;
+		break;
+	case TANK_STATE_UP_GUN_RIGHT:
+		ani = TANK_ANI_UP_GUN_RIGHT;
+		break;
+	case TANK_STATE_UP_GUN_WALKING_LEFT:
+		ani = TANK_ANI_UP_GUN_WALKING_LEFT;
+		break;
+	case TANK_STATE_UP_GUN_WALKING_RIGHT:
+		ani = TANK_ANI_UP_GUN_WALKING_RIGHT;
 		break;
 	}
 
@@ -189,6 +167,7 @@ void CTank::Render()
 	else
 		animations[ani]->Render(x, y, -1, alpha);*/
 	animation_set->at(ani)->Render(x, y, alpha);
+	
 	//RenderBoundingBox();
 
 }
@@ -200,38 +179,67 @@ void CTank::SetState(int state)
 	switch (state)
 	{
 	case TANK_STATE_WALKING_RIGHT:
+		isJumping = false;
 		vx = TANK_WALKING_SPEED;
 		nx = 1;
 		break;
 	case TANK_STATE_WALKING_LEFT:
+		isJumping = false;
 		vx = -TANK_WALKING_SPEED;
 		nx = -1;
 		break;
 	case TANK_STATE_JUMP_IDLE_LEFT:
+		isJumping = false;
 		nx = -1;
 		vy = -TANK_JUMP_SPEED_Y;
 		break;
 	case TANK_STATE_JUMP_IDLE_RIGHT:
+		isJumping = true;
 		nx = 1;
 		vy = -TANK_JUMP_SPEED_Y;
 		break;
 	case TANK_STATE_IDLE_RIGHT:
+		isJumping = false;
 		vx = 0;
 		nx = 1;
 		break;
 	case TANK_STATE_IDLE_LEFT:
+		isJumping = false;
 		vx = 0;
 		nx = -1;
 		break;
 	case TANK_STATE_DIE:
-		vy = -TANK_DIE_DEFLECT_SPEED;
+		//vy = -TANK_DIE_DEFLECT_SPEED;
+		y -= 23;
 		break;
 	case TANK_STATE_JUMP_LEFT:
+		isJumping = true;
 		vx = -TANK_WALKING_SPEED;
 		nx = -1;
 		break;
 	case TANK_STATE_JUMP_RIGHT:
+		isJumping = true;
 		vx = TANK_WALKING_SPEED;
+		nx = 1;
+		break;
+	case TANK_STATE_UP_GUN_WALKING_LEFT:
+		isJumping = false;
+		vx = -TANK_WALKING_SPEED;
+		nx = -1;
+		break;
+	case TANK_STATE_UP_GUN_WALKING_RIGHT:
+		isJumping = false;
+		vx = TANK_WALKING_SPEED;
+		nx = 1;
+		break;
+	case TANK_STATE_UP_GUN_LEFT:
+		isJumping = false;
+		vx = 0;
+		nx = -1;
+		break;
+	case TANK_STATE_UP_GUN_RIGHT:
+		isJumping = false;
+		vx = 0;
 		nx = 1;
 		break;
 	}
@@ -242,8 +250,18 @@ void CTank::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
 	top = y;
-	right = x + TANK_BBOX_WIDTH;
-	bottom = y + TANK_BBOX_HEIGHT;
+	right = x + tank_width;
+	bottom = y + tank_height;
+}
+void CTank::SetDimension(int width, int height)
+{
+	this->tank_width = width;
+	this->tank_height = height;
+}
+void CTank::GetDimension(int& width, int& height)
+{
+	width = this->tank_width;
+	height = this->tank_height;
 }
 void CTank::Reset()
 {

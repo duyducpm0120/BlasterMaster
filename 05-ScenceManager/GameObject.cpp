@@ -10,6 +10,7 @@
 
 CGameObject::CGameObject()
 {
+	visible = true;
 	x = y = 0;
 	vx = vy = 0;
 	nx = 1;	
@@ -30,7 +31,6 @@ LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	float sl, st, sr, sb;		// static object bbox
 	float ml, mt, mr, mb;		// moving object bbox
 	float t, nx, ny;
-
 	coO->GetBoundingBox(sl, st, sr, sb);
 
 	// deal with moving object: m speed = original m speed - collide object speed
@@ -114,6 +114,11 @@ void CGameObject::FilterCollision(
 }
 
 
+float CGameObject::GetDistance(CGameObject* obj)
+{
+	return sqrt(pow((this->x - obj->x), 2) + pow((this->y - obj->y), 2));
+}
+
 void CGameObject::RenderBoundingBox()
 {
 	D3DXVECTOR3 p(x, y, 0);
@@ -129,7 +134,7 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
+	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom,100);
 }
 
 

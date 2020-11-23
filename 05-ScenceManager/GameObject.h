@@ -58,15 +58,25 @@ public:
 
 	int state;
 
+	bool visible;
+	
+	bool isEnemy;
+	int health;
+	int damage;
+
 	DWORD dt; 
 
 	LPANIMATION_SET animation_set;
 
 public: 
+	void TakeDamage(int damage) { this->health -= damage; };
+	int GetDamage() { return this->damage; };
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
+	float GetDistance(CGameObject* obj);
+	bool IsEnemy() { return isEnemy; };
 
 	int GetState() { return this->state; }
 

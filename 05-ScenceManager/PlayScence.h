@@ -10,6 +10,9 @@
 #include "Tile.h"
 #include "Tank.h"
 #include "Golem.h"
+#include "HealthBar.h"
+#include "Grid.h"
+#include "HUD.h"
 
 
 class CPlayScene: public CScene
@@ -18,6 +21,7 @@ protected:
 	CTank *player;					// A play scene has to have player, right? 
 
 	vector<LPGAMEOBJECT> objects;
+	HUD* hud;
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
@@ -36,7 +40,7 @@ public:
 	virtual void Unload();
 
 	CTank * GetPlayer() { return player; } 
-
+	vector<LPGAMEOBJECT>* GetObjects(){ return &objects; }
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:
@@ -44,17 +48,12 @@ protected:
 	vector<LPTILE> tiledMap;
 	int offset_y = 0; //To render the tiles rows
 	int testx = 0;
+	CGrid* grid = CGrid::GetInstance();
+	vector<LPGAMEOBJECT> updateObject;
 
 
 
 };
 
-class CPlayScenceKeyHandler : public CScenceKeyHandler
-{
-public: 
-	virtual void KeyState(BYTE *states);
-	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode) {};
-	CPlayScenceKeyHandler(CScene *s) :CScenceKeyHandler(s) {};
-};
+
 

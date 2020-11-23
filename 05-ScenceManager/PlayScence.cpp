@@ -8,7 +8,10 @@
 #include "Portal.h"
 #include "Tile.h"
 #include "Tank.h"
-
+#include "Bullet.h"
+#include "Butterfly.h"
+#include "PlayScenceKeyHandler.h"
+#include "Destroyed.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -37,6 +40,9 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_KOOPAS	3
 #define	OBJECT_TYPE_TANK	4
 #define	OBJECT_TYPE_GOLEM	5
+#define OBJECT_TYPE_BULLET	6
+#define OBJECT_TYPE_BUTTERFLY	7
+
 #define OBJECT_TYPE_PORTAL	50
 
 #define MAX_SCENE_LINE 1024
@@ -151,19 +157,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	switch (object_type)
 	{
-		//case OBJECT_TYPE_MARIO:
-		//	//if (player!=NULL) 
-		//	//{
-		//	//	DebugOut(L"[ERROR] MARIO object was created before!\n");
-		//	//	return;
-		//	//}
-		//	////obj = new CMario(x,y); 
-		//	///*player = (CMario*)obj;  */
-
-		//	//DebugOut(L"[INFO] Player object created!\n");
-		//	//break;
-		//	break;
-
 	case OBJECT_TYPE_TANK:
 		if (player != NULL)
 		{
@@ -174,8 +167,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		player = (CTank*)obj;
 
 		DebugOut(L"[INFO] Player object created!\n");
+		hud = new HUD(player->GetHealth(), player->GetDamage());
 		break;
 	case OBJECT_TYPE_GOLEM: obj = new CGolem(); break;
+	case OBJECT_TYPE_BUTTERFLY: {
+		obj = new CButterfly(); 
+		dynamic_cast<CButterfly*>(obj)->SetPlayer(this->GetPlayer());
+		break; 
+	}
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
@@ -199,6 +198,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
+	grid->Add(obj);
+	
+	
 }
 
 void CPlayScene::_ParseSection_TILE_MAP(string line)
@@ -248,7 +250,7 @@ void CPlayScene::Load()
 	f.open(sceneFilePath);
 
 	// current resource section flag
-	int section = SCENE_SECTION_UNKNOWN;					
+	int section = SCENE_SECTION_UNKNOWN;
 
 	char str[MAX_SCENE_LINE];
 	while (f.getline(str, MAX_SCENE_LINE))
@@ -258,17 +260,22 @@ void CPlayScene::Load()
 		if (line[0] == '#') continue;	// skip comment lines	
 
 		if (line == "[TEXTURES]") { section = SCENE_SECTION_TEXTURES; continue; }
-		if (line == "[SPRITES]") { 
-			section = SCENE_SECTION_SPRITES; continue; }
-		if (line == "[ANIMATIONS]") { 
-			section = SCENE_SECTION_ANIMATIONS; continue; }
-		if (line == "[ANIMATION_SETS]") { 
-			section = SCENE_SECTION_ANIMATION_SETS; continue; }
-		if (line == "[OBJECTS]") { 
-			section = SCENE_SECTION_OBJECTS; continue; }
+		if (line == "[SPRITES]") {
+			section = SCENE_SECTION_SPRITES; continue;
+		}
+		if (line == "[ANIMATIONS]") {
+			section = SCENE_SECTION_ANIMATIONS; continue;
+		}
+		if (line == "[ANIMATION_SETS]") {
+			section = SCENE_SECTION_ANIMATION_SETS; continue;
+		}
+		if (line == "[OBJECTS]") {
+			section = SCENE_SECTION_OBJECTS; continue;
+		}
 		if (line == "[TILE_MAP]") {
-			section = SCENE_SECTION_TILE_MAP; continue;}
-		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }	
+			section = SCENE_SECTION_TILE_MAP; continue;
+		}
+		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		{
 
@@ -291,7 +298,7 @@ void CPlayScene::Load()
 
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
-
+	DebugOut(L"[INFO] Done adding objects to grid %d\n", grid->count);
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -307,24 +314,93 @@ void CPlayScene::Update(DWORD dt)
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt, &coObjects);
+		if (objects[i]->visible == true)
+			objects[i]->Update(dt, &coObjects);
+		else {
+			if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
+
+				if (dynamic_cast<CBullet*>(objects.at(i))) {
+					CDestroyed* destroyed = new CDestroyed(1);
+					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
+					destroyed->SetAnimationSet(ani_set);
+					objects.push_back(destroyed);
+				}
+				else if (dynamic_cast<CTank*>(objects.at(i))) {
+					CDestroyed* destroyed = new CDestroyed(3);
+					destroyed->SetPosition(objects.at(i)->x - 19, objects.at(i)->y - 30);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
+					destroyed->SetAnimationSet(ani_set);
+					objects.push_back(destroyed);
+				}
+				else {
+					CDestroyed* destroyed = new CDestroyed(2);
+					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
+					destroyed->SetAnimationSet(ani_set);
+					objects.push_back(destroyed);
+				}
+
+			}
+			objects.erase(objects.begin() + i);//erase obj at (i)
+			return;
+		}
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
-	if (player == NULL) return; 
+	if (player == NULL) return;
 
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
 
-	CGame *game = CGame::GetInstance();
-	cx -= game->GetScreenWidth() / 2;
-	cy -= game->GetScreenHeight() / 2;
+	CGame* game = CGame::GetInstance();
+	//cx -= game->GetScreenWidth() / 2;
+	//cy -= game->GetScreenHeight() / 2;
+	if (cx + game->GetScreenWidth() / 2 >= scene_width - 1)
+		cx = (scene_width - 1) - game->GetScreenWidth();
+	else
+	{
+		if (cx < game->GetScreenWidth() / 2)
+		{
+			cx = 0;
+		}
+		else
+			cx -= game->GetScreenWidth() / 2;
+	}
 
+	if (scene_height <= 270) {
 	
+		cy = 0;
+	}
+	else {
+		if (cy + game->GetScreenHeight() / 2 >= (scene_height - 1))
+			cy = (scene_height - 1) - game->GetScreenHeight();
+		else
+		{
+			if (cy < game->GetScreenHeight() / 2)
+			{
+				cy = 0;
+			}
+			else
+				cy -= game->GetScreenHeight() / 2;
+		}
+	}
+
 	game->SetCamPos(cx, cy);
 
-	
+
+
+	updateObject.clear();
+	float left, top, right, bottom;
+	game->GetCameraBoundingBox(left, top, right, bottom);
+	grid->GetUpdateObjects(updateObject, left, top, right, bottom);
+	DebugOut(L"Size of update array %d\n", updateObject.size());
+	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
+
 }
 
 void CPlayScene::Render()
@@ -338,10 +414,13 @@ void CPlayScene::Render()
 	for (int i = 0; i < objects.size(); i++)
 
 	{
-		objects[i]->Render();
-		
+		if (objects[i]->visible == true)
+		{
+			objects[i]->Render();
+			objects[i]->RenderBoundingBox();
+		}
 	}
-	
+	hud->Render(player);
 }
 
 /*
@@ -358,61 +437,4 @@ void CPlayScene::Unload()
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
-void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
-{
-	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
-	//CMario mario = ((CPlayScene)scence)->GetPlayer();
-	CTank	*tank = ((CPlayScene*)scence)->GetPlayer();
-	switch (KeyCode)
-	{
-	case DIK_SPACE:
-		if (tank->GetState() != TANK_STATE_DIE && tank->GetState() != TANK_STATE_JUMP_IDLE_LEFT && tank->GetState() != TANK_STATE_JUMP_IDLE_RIGHT && tank->GetState() != TANK_STATE_JUMP_LEFT && tank->GetState() != TANK_STATE_JUMP_RIGHT)
-			if (tank->nx == -1)
-				tank->SetState(TANK_STATE_JUMP_IDLE_LEFT);
-			else
-				tank->SetState(TANK_STATE_JUMP_IDLE_RIGHT);
-		break;
-	case DIK_A:
-		tank->SetState(TANK_STATE_IDLE_RIGHT);
-		tank->SetPosition(100.0f, 0.0f);
-		tank->SetSpeed(0, 0);
-		break;
-	}
-}
-
-void CPlayScenceKeyHandler::KeyState(BYTE* states)
-{
-	CGame* game = CGame::GetInstance();
-	/*CMario mario = ((CPlayScene)scence)->GetPlayer();*/
-	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
-
-	// disable control key when Mario die 
-	if (tank->GetState() == TANK_STATE_DIE) return;
-
-	if (game->IsKeyDown(DIK_RIGHT)) {
-		/*jason->nx = 1;*/
-		tank->nx = 1;
-
-		if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
-			tank->SetState(TANK_STATE_JUMP_RIGHT);
-		else
-			tank->SetState(TANK_STATE_WALKING_RIGHT);
-	}
-	else if (game->IsKeyDown(DIK_LEFT)) {
-		tank->nx = -1;
-
-		if (tank->GetState() == TANK_STATE_JUMP_IDLE_LEFT || tank->GetState() == TANK_STATE_JUMP_IDLE_RIGHT || tank->GetState() == TANK_STATE_JUMP_LEFT || tank->GetState() == TANK_STATE_JUMP_RIGHT)
-			tank->SetState(TANK_STATE_JUMP_LEFT);
-		else
-			tank->SetState(TANK_STATE_WALKING_LEFT);
-	}
-	else
-	{
-		if (tank->vy == 0)
-			if (tank->nx == -1)
-				tank->SetState(TANK_STATE_IDLE_LEFT);
-			else
-				tank->SetState(TANK_STATE_IDLE_RIGHT);
-	}
-}

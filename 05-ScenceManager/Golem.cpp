@@ -1,12 +1,15 @@
 #include "Golem.h"
 CGolem::CGolem()
 {
+	damage = 1;
+	health = 2;
 	nx = -1;
 	SetState(GOLEM_STATE_WALKING_LEFT);
 }
 
 void CGolem::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	isEnemy = true;
 	left = x;
 	top = y;
 	right = x + GOLEM_BBOX_WIDTH;
@@ -21,15 +24,17 @@ void CGolem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 
+	if (health <= 0)
+		this->visible = false;
 	//
-	// TO-DO: make sure Goomba can interact with the world and to each of them too!
+	// TO-DO: make sure Golem can interact with the world and to each of them too!
 	// 
 
 	x += dx;
 	y += dy;
 
-	if (vx < 0 && x < 0) {
-		x = 0; vx = -vx;
+	if (vx < 0 && x < 50) {
+		x = 50; vx = -vx;
 		SetState(GOLEM_STATE_WALKING_RIGHT);
 	}
 

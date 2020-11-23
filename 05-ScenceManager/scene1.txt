@@ -23,6 +23,9 @@
 0	96	120	1
 # BRICK 
 # --- fist broken bridge section
+1	64	160	2
+1	48	160	2
+1	32	160	2
 1	80	160	2
 1	96	160	2
 1	112	160	2
@@ -38,7 +41,15 @@
 1	272	160	2
 1	288	160	2
 1	304	160	2
-
+#left wall
+1	14	160	2
+1	14	142	2
+1	14	126	2
+1	14	110	2
+1	14	94	2
+1	14	78	2
+1	14	62	2
+1	14	46	2
 # --- second broken bridge section
 1	378	160	2
 1	384	160	2
@@ -83,10 +94,18 @@
 #TANK
 4	100.0	0	4
 
+
+<<<<<<< Updated upstream
+#BULLET
+6	250	135	6
+
+=======
+#<<<<<<< Updated upstream
+#>>>>>>> Stashed changes
+
 #GOLEM
-5	250	135	5
-
-
+5	300	134	5	
+>>>>>>> Stashed changes
 
 
 

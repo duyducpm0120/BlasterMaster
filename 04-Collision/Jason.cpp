@@ -138,6 +138,7 @@ void CJason::Render()
 		animations[ani]->Render(x, y, 1, alpha);
 	else
 		animations[ani]->Render(x, y, -1, alpha);
+	DebugOut(L"[INFO] vy: %f\n", vy);
 }
 
 void CJason::SetState(int state)

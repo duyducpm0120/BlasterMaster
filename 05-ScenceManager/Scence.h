@@ -9,6 +9,8 @@ protected:
 	CKeyEventHandler * key_handler;
 	int id;
 	LPCWSTR sceneFilePath;
+	int scene_width;
+	int scene_height;
 
 public: 
 	CScene(int id, LPCWSTR filePath);
@@ -18,6 +20,9 @@ public:
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0; 
+	void GetSceneWidth(int &w);
+	void GetSceneHeight(int& h);
+
 };
 typedef CScene * LPSCENE;
 
@@ -32,4 +37,5 @@ public:
 	virtual void OnKeyDown(int KeyCode) = 0;
 	virtual void OnKeyUp(int KeyCode) = 0;
 	CScenceKeyHandler(CScene *s) :CKeyEventHandler() { scence = s; }
+	
 };

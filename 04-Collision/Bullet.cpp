@@ -5,8 +5,8 @@ void CBullet::GetBoundingBox(float& left, float& top, float& right, float& botto
 {
 	left = x;
 	top = y;
-	right = x + BULLET_BBOX_WIDTH;	
-	bottom = y + BULLET_BBOX_HEIGHT;
+	right = x + BULLET_HORIZONTAL_BBOX_WIDTH;	
+	bottom = y + BULLET_HORIZONTAL_BBOX_HEIGHT;
 }
 
 void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -94,12 +94,16 @@ void CBullet::Render()
 {
 	int ani;
 	if (nx == -1) {
-		ani = BULLET_ANI_FLYING;
+		ani = BULLET_ANI_FLYING_LV1;
 		animations[ani]->Render(x, y, -1);
 	}
 	else
 		animations[0]->Render(x, y, 1);
 
+}
+
+CBullet::CBullet(int direct, int level)
+{
 }
 
 void CBullet::SetState(int state)
