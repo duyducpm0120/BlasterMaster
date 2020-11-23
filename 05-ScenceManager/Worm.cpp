@@ -2,7 +2,7 @@
 CWorm::CWorm()
 {
 	damage = 1;
-	health = 10000;
+	health = 2;
 	nx = -1;
 	SetState(WORM_STATE_WALKING_LEFT);
 }

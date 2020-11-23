@@ -24,7 +24,8 @@ void CButterfly::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//
 	// TO-DO: make sure Golem can interact with the world and to each of them too!
 	// 
-	CatchPlayer();
+	if(GetDistance(tank)<300)
+		CatchPlayer();
 	if (GetDistance(tank) == 0) {
 		this->visible = false;
 		return;

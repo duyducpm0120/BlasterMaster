@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Tank.h"
 
-#define BUTTERFLY_WALKING_SPEED 0.05f;
+#define BUTTERFLY_WALKING_SPEED 0.1f;
 
 #define BUTTERFLY_BBOX_WIDTH 18
 #define BUTTERFLY_BBOX_HEIGHT 18

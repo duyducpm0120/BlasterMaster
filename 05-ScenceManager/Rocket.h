@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Tank.h"
 
-#define ROCKET_WALKING_SPEED 0.1f;
+#define ROCKET_WALKING_SPEED 0.2f;
 
 #define ROCKET_BBOX_WIDTH 15
 #define ROCKET_BBOX_HEIGHT 6

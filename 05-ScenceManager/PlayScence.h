@@ -23,6 +23,8 @@ protected:
 	vector<LPGAMEOBJECT> objects;
 	HUD* hud;
 
+	int *playerHealth;
+	int *playerPower;
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);

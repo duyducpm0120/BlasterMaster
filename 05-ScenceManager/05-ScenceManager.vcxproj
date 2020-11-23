@@ -140,6 +140,7 @@
     <ClCompile Include="PlayScenceKeyHandler.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Rocket.cpp" />
+    <ClCompile Include="StupidHead.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="PlayScenceKeyHandler.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="Rocket.h" />
+    <ClInclude Include="StupidHead.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Utils.h" />

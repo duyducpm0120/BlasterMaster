@@ -103,8 +103,13 @@
     <ClCompile Include="Worm.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Flame.cpp" />
     <ClCompile Include="Bee.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Flame.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="StupidHead.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
   </ItemGroup>
@@ -190,7 +195,14 @@
     <ClInclude Include="Worm.h">
       <Filter>Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Bee.h" />
-    <ClInclude Include="Flame.h" />
+    <ClInclude Include="Bee.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Flame.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="StupidHead.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
