@@ -213,7 +213,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
-	grid->Add(obj);
 	
 	
 }
@@ -359,7 +358,7 @@ void CPlayScene::Update(DWORD dt)
 						{
 							int type = rand() % 3 ;
 							CItem* item = new CItem(type);
-							item->SetPosition(objects[i]->x, objects[i]->y);
+							item->SetPosition(objects[i]->x, objects[i]->y - 10);
 							CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 							LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
 							item->SetAnimationSet(ani_set);
