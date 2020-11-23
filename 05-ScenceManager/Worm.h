@@ -18,6 +18,8 @@
 class CWorm : public CGameObject
 {
 	int nx;
+	float startX;
+	float startY;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
@@ -25,4 +27,5 @@ class CWorm : public CGameObject
 public:
 	CWorm();
 	virtual void SetState(int state);
+	void SetStartPosition(float x,float y);
 };

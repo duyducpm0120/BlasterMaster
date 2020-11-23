@@ -14,6 +14,8 @@
 #include "Destroyed.h"
 #include "Item.h"
 #include "Worm.h"
+#include "Bee.h"
+#include "Flame.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -45,7 +47,8 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_BULLET	6
 #define OBJECT_TYPE_BUTTERFLY	7
 #define OBJECT_TYPE_WORM	12
-
+#define OBJECT_TYPE_BEE	13
+#define OBJECT_TYPE_FLAME	14
 #define OBJECT_TYPE_PORTAL	50
 
 #define MAX_SCENE_LINE 1024
@@ -172,7 +175,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object created!\n");
 		hud = new HUD(player->GetHealth(), player->GetDamage());
 		break;
-	case OBJECT_TYPE_GOLEM: obj = new CGolem(); break;
+	case OBJECT_TYPE_GOLEM: obj = new CGolem();
+		dynamic_cast<CGolem*>(obj)->SetStartPosition(x, y);
+		break;
 	case OBJECT_TYPE_BUTTERFLY: {
 		obj = new CButterfly(); 
 		dynamic_cast<CButterfly*>(obj)->SetPlayer(this->GetPlayer());
@@ -180,6 +185,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
+	case OBJECT_TYPE_FLAME: obj = new CFlame(); break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
 	case OBJECT_TYPE_PORTAL:
 	{
@@ -189,7 +195,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
 	break;
-	case OBJECT_TYPE_WORM: obj = new CWorm(); break;
+	case OBJECT_TYPE_WORM: obj = new CWorm();
+		dynamic_cast<CWorm*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_BEE: obj = new CBee();
+		dynamic_cast<CBee*>(obj)->SetStartPosition(x, y);
+		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;

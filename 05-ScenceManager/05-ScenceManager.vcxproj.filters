@@ -103,6 +103,10 @@
     <ClCompile Include="Worm.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Flame.cpp" />
+    <ClCompile Include="Bee.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mario.h">
@@ -186,5 +190,7 @@
     <ClInclude Include="Worm.h">
       <Filter>Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Bee.h" />
+    <ClInclude Include="Flame.h" />
   </ItemGroup>
 </Project>

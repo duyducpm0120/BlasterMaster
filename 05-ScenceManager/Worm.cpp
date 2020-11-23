@@ -33,13 +33,13 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	x += dx;
 	y += dy;
 
-	if (vx < 0 && x < 50) {
-		x = 50; vx = -vx;
+	if (vx < 0 && x < (startX-100) ){
+		x = startX - 100; vx = -vx;
 		SetState(WORM_STATE_WALKING_RIGHT);
 	}
 
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
+	if (vx > 0 && x > startX ){
+		x = startX; vx = -vx;
 		SetState(WORM_STATE_WALKING_LEFT);
 	}
 }
@@ -80,4 +80,11 @@ void CWorm::SetState(int state)
 		nx = 1;
 		vx = WORM_WALKING_SPEED;
 	}
+	
+}
+
+void CWorm::SetStartPosition(float x, float y)
+{
+	startX = x;
+	startY = y;
 }

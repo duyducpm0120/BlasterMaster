@@ -33,13 +33,13 @@ void CGolem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	x += dx;
 	y += dy;
 
-	if (vx < 0 && x < 50) {
-		x = 50; vx = -vx;
+	if (vx < 0 && x <(startX - 80) ){
+		x = startX - 80; vx = -vx;
 		SetState(GOLEM_STATE_WALKING_RIGHT);
 	}
 
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
+	if (vx > 0 && x > startX) {
+		x = startX; vx = -vx;
 		SetState(GOLEM_STATE_WALKING_LEFT);
 	}
 }
@@ -80,4 +80,10 @@ void CGolem::SetState(int state)
 		nx = 1;
 		vx = GOLEM_WALKING_SPEED;
 	}
+}
+
+void CGolem::SetStartPosition(float x, float y)
+{
+	startX = x;
+	startY = y;
 }

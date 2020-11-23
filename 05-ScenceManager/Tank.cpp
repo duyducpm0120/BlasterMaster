@@ -7,6 +7,7 @@
 #include "Utils.h"
 #include "Golem.h"
 #include "Item.h"
+#include "Flame.h"
 CTank:: CTank(float x, float y)  : CGameObject()
 {
 	bulletLevel = 1;
@@ -120,6 +121,13 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						break;
 					}
 				}
+			}
+			else if (dynamic_cast<CFlame*>(e->obj)) {
+				health--;
+				//vx -= (vx + 0.3f);
+				vy -= 0.4f;
+				if (health <= 0)
+					visible = false;
 			}
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{
