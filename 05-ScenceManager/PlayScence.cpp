@@ -21,6 +21,9 @@ using namespace std;
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
+	CGame *game = CGame::GetInstance();
+	this->playerHealth = game->GetHealth();
+	this->playerPower = game->GetPower();
 	key_handler = new CPlayScenceKeyHandler(this);
 }
 
@@ -171,6 +174,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		obj = new CTank(x, y);
 		player = (CTank*)obj;
+		player->health = *this->playerHealth;
+		player->damage = *this->playerPower;
 
 		DebugOut(L"[INFO] Player object created!\n");
 		hud = new HUD(player->GetHealth(), player->GetDamage());
