@@ -94,6 +94,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	//CMario mario = ((CPlayScene)scence)->GetPlayer();
 	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
 	vector<LPGAMEOBJECT> *objects = ((CPlayScene*)scence)->GetObjects();
+	vector<LPGAMEOBJECT>* updateObjects = ((CPlayScene*)scence)->GetUpdateObjects();
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	CGameObject* obj = objects->at(0);
 	switch (KeyCode)
@@ -265,27 +266,35 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			tank->SetState(TANK_STATE_UPING_GUN_RIGHT);
 		break;
 	case DIK_1:
-		CGame::GetInstance()->SwitchScene(1);
+		objects->clear();
+		CGame::GetInstance()->SwitchScene(1);		
 		break;
 	case DIK_2:
+		objects->clear();
 		CGame::GetInstance()->SwitchScene(2);
 		break;
 	case DIK_3:
+		objects->clear();
 		CGame::GetInstance()->SwitchScene(3);
 		break;
 	case DIK_4:
+		objects->clear();
 		CGame::GetInstance()->SwitchScene(4);
 		break;
 	case DIK_5:
+		objects->clear();
 		CGame::GetInstance()->SwitchScene(5);
 		break;
 	case DIK_6:
+		objects->clear();
 		CGame::GetInstance()->SwitchScene(6);
 		break;
 	case DIK_7:
+		objects->clear();
 		CGame::GetInstance()->SwitchScene(7);
 		break;
 	case DIK_8:
+		objects->clear();
 		CGame::GetInstance()->SwitchScene(8);
 		break;
 	}

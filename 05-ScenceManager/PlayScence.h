@@ -41,6 +41,7 @@ public:
 
 	CTank * GetPlayer() { return player; } 
 	vector<LPGAMEOBJECT>* GetObjects(){ return &objects; }
+	vector<LPGAMEOBJECT>* GetUpdateObjects() { return &updateObject; }
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:

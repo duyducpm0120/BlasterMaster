@@ -21,7 +21,6 @@ public:
 	void Clear();
 	void Add(LPGAMEOBJECT Obj);
 	static CGrid* GetInstance();
-	int count = 0;
 	void GetUpdateObjects(vector<LPGAMEOBJECT>& updateobjects, float left, float top, float right, float bottom); // This gives the objects that needs to be updated
 	void Render();
 };

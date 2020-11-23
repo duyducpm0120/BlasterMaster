@@ -13,6 +13,7 @@
 #include "PlayScenceKeyHandler.h"
 #include "Destroyed.h"
 #include "Item.h"
+#include "Worm.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -43,6 +44,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define	OBJECT_TYPE_GOLEM	5
 #define OBJECT_TYPE_BULLET	6
 #define OBJECT_TYPE_BUTTERFLY	7
+#define OBJECT_TYPE_WORM	12
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -187,6 +189,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
 	break;
+	case OBJECT_TYPE_WORM: obj = new CWorm(); break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -299,7 +302,7 @@ void CPlayScene::Load()
 
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
-	DebugOut(L"[INFO] Done adding objects to grid %d\n", grid->count);
+	
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -411,11 +414,11 @@ void CPlayScene::Update(DWORD dt)
 
 
 
-	updateObject.clear();
-	float left, top, right, bottom;
-	game->GetCameraBoundingBox(left, top, right, bottom);
-	grid->GetUpdateObjects(updateObject, left, top, right, bottom);
-	DebugOut(L"Size of update array %d\n", updateObject.size());
+	//updateObject.clear();
+	//float left, top, right, bottom;
+	//game->GetCameraBoundingBox(left, top, right, bottom);
+	//grid->GetUpdateObjects(updateObject, left, top, right, bottom);
+	DebugOut(L"Size of object array %d\n", objects.size());
 	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }
@@ -434,7 +437,7 @@ void CPlayScene::Render()
 		if (objects[i]->visible == true)
 		{
 			objects[i]->Render();
-			objects[i]->RenderBoundingBox();
+			//objects[i]->RenderBoundingBox();
 		}
 	}
 	//hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
