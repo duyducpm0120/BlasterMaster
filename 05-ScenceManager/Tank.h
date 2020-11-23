@@ -59,17 +59,12 @@
 #define	TANK_ANI_UP_GUN_RIGHT	16
 
 
-
-
-
 #define TANK_NORMAL_WIDTH	26
-#define	TANK_NORMAL_HEIGHT	18	
+#define	TANK_NORMAL_HEIGHT	18
 #define TANK_UP_GUN_WIDHT	26
 #define TANK_UP_GUN_HEIGHT	34
 
 #define TANK_UNTOUCHABLE_TIME 3000
-
-
 
 #pragma endregion
 

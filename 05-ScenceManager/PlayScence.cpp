@@ -448,7 +448,7 @@ void CPlayScene::Render()
 		if (objects[i]->visible == true)
 		{
 			objects[i]->Render();
-			//objects[i]->RenderBoundingBox();
+			objects[i]->RenderBoundingBox();
 		}
 	}
 	//hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
