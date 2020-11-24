@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "HealthBar.h"
 #include "Tank.h"
-
+#include "Player.h"
 using namespace std;
 
 //#define MAX_TEXTLENGHT_SCORE					6
@@ -28,5 +28,5 @@ public:
 	~HUD();
 
 	void Update(float x, float y, int currentPlayerHealth, int currentGunHealth);
-	void Render(CTank* playerInfo);
+	void Render(CPlayer* playerInfo);
 };

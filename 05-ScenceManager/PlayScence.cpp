@@ -16,6 +16,7 @@
 #include "Worm.h"
 #include "Bee.h"
 #include "Flame.h"
+#include "Sophia.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -178,14 +179,18 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		player->damage = *this->playerPower;
 
 		DebugOut(L"[INFO] Player object created!\n");
-		hud = new HUD(player->GetHealth(), player->GetDamage());
+		hud = new HUD(dynamic_cast<CTank*> (player)->GetHealth(), player->GetDamage());
+		break;
+	case 15:
+		obj = new CSophia(x, y);
+		player = (CSophia*)obj;
 		break;
 	case OBJECT_TYPE_GOLEM: obj = new CGolem();
 		dynamic_cast<CGolem*>(obj)->SetStartPosition(x, y);
 		break;
 	case OBJECT_TYPE_BUTTERFLY: {
 		obj = new CButterfly(); 
-		dynamic_cast<CButterfly*>(obj)->SetPlayer(this->GetPlayer());
+		dynamic_cast<CButterfly*>(obj)->SetPlayer(dynamic_cast<CTank*> (this->GetPlayer()));
 		break; 
 	}
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
@@ -471,6 +476,11 @@ void CPlayScene::Unload()
 	player = NULL;
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
+}
+
+void CPlayScene::SetPlayer(CPlayer* player)
+{
+	this->player = player;
 }
 
 

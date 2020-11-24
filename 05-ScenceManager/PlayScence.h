@@ -13,12 +13,12 @@
 #include "HealthBar.h"
 #include "Grid.h"
 #include "HUD.h"
-
+#include "Player.h"
 
 class CPlayScene: public CScene
 {
 protected: 
-	CTank *player;					// A play scene has to have player, right? 
+	CPlayer *player;					// A play scene has to have player, right? 
 
 	vector<LPGAMEOBJECT> objects;
 	HUD* hud;
@@ -41,7 +41,12 @@ public:
 	virtual void Render();
 	virtual void Unload();
 
-	CTank * GetPlayer() { return player; } 
+	CGameObject * GetPlayer() { return player; } 
+	int GetPlayerHealth() { return *playerHealth; };
+	int GetPlayerPower() { return *playerPower; };
+	void SetPlayer(CPlayer* player);
+	HUD* GetHUD() { return hud; };
+	void SetHUD(HUD* hud) { this->hud = hud; };
 	vector<LPGAMEOBJECT>* GetObjects(){ return &objects; }
 	vector<LPGAMEOBJECT>* GetUpdateObjects() { return &updateObject; }
 	//friend class CPlayScenceKeyHandler;

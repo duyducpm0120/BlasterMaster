@@ -8,7 +8,7 @@
 #include "Golem.h"
 #include "Item.h"
 #include "Flame.h"
-CTank:: CTank(float x, float y)  : CGameObject()
+CTank:: CTank(float x, float y) 
 {
 	bulletLevel = 1;
 	enableRocket = true;

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include	"Player.h"
 
 #pragma region define
 
@@ -76,7 +77,7 @@
 
 
 
-class CTank : public CGameObject
+class CTank : public CPlayer
 {
 	int untouchable;
 	DWORD untouchable_start;

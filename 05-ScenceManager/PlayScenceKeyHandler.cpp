@@ -12,10 +12,11 @@
 #include "Butterfly.h"
 #include "PlayScenceKeyHandler.h"
 #include "Rocket.h"
+#include "Sophia.h"
 using namespace std;
 
 void CPlayScenceKeyHandler::OnKeyUp(int KeyCode) {
-	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
+	CTank* tank = dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer());
 	switch (KeyCode)
 	{
 	case DIK_UP:
@@ -36,7 +37,7 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode) {
 void CPlayScenceKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
-	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
+	CTank* tank = dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer());
 
 	// disable control key when Mario die 
 	if (tank->GetState() == TANK_STATE_DIE) return;
@@ -92,54 +93,34 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
 	//CMario mario = ((CPlayScene)scence)->GetPlayer();
-	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
+	CTank* tank = new CTank();
+	CSophia* sophia = new CSophia();
+	if(dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer()))
+		tank = dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer());
 	vector<LPGAMEOBJECT> *objects = ((CPlayScene*)scence)->GetObjects();
 	vector<LPGAMEOBJECT>* updateObjects = ((CPlayScene*)scence)->GetUpdateObjects();
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	CGameObject* obj = objects->at(0);
 	switch (KeyCode)
 	{
-	/*case DIK_X: 		
-		int width1, height1;
-		tank->GetDimension(width1, height1);
-		if (height1 == TANK_NORMAL_HEIGHT)
-		{
-			if (tank->nx == -1)
-			{
+	
 
-				CBullet* bullet = new CBullet(2, BULLET_STATE_FLYING_LEFT);
-				float x1, y1;
-				tank->GetPosition(x1, y1);
-				bullet->SetPosition(x1 - BULLET_HORIZONTAL_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
-				bullet->SetStartPositon(x1 - BULLET_HORIZONTAL_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
-				LPANIMATION_SET ani_set = animation_sets->Get(6);
-				bullet->SetAnimationSet(ani_set);
-				objects->push_back(bullet);
-			}
-			else
-			{
-				CBullet* bullet = new CBullet(2, BULLET_STATE_FLYING_RIGHT);
-				float x1, y1;
-				tank->GetPosition(x1, y1);
-				bullet->SetPosition(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
-				bullet->SetStartPositon(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
-				LPANIMATION_SET ani_set = animation_sets->Get(6);
-				bullet->SetAnimationSet(ani_set);
-				objects->push_back(bullet);
-			}
-		}
-		else {
-			CBullet* bullet = new CBullet(2, BULLET_STATE_FLYING_UP);
-			float x1, y1;
-			tank->GetPosition(x1, y1);
-			bullet->SetPosition(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
-			bullet->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
-			LPANIMATION_SET ani_set = animation_sets->Get(6);
-			bullet->SetAnimationSet(ani_set);
-			objects->push_back(bullet);
-		}
+	case DIK_W:
+		if (dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer()))
+		{			
+			sophia->health = ((CPlayScene*)scence)->GetPlayerHealth();
+			sophia->damage = ((CPlayScene*)scence)->GetPlayerPower();
+			sophia->SetPosition(dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer())->x, dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer())->y);
+			LPANIMATION_SET ani_set = animation_sets->Get(15);
 
-		break;*/
+			sophia->SetAnimationSet(ani_set);
+			dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer())->visible = false;
+			((CPlayScene*)scence)->SetPlayer(sophia);
+			((CPlayScene*)scence)->SetHUD(new HUD(sophia->GetHealth(), sophia->GetDamage()));
+			objects->push_back(sophia);
+		}
+		break;
+
 	case DIK_Z:
 		int width3, height3;
 		tank->GetDimension(width3, height3);

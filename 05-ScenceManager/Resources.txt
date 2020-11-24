@@ -9,6 +9,7 @@
 60	textures\Destroyed.png	0	57	115
 70	textures\healthBar.png	255	255	255
 80	textures\item.png	181	165	213
+90	textures\sophia.png	54	94	143
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
 2	textures\Area22.png	5	5	5
@@ -176,6 +177,22 @@
 140003	132	530	150	548	40
 140004	152	530	170	548	40
 
+#SOPHIA
+#Idle left
+150001	87	40	95	56	90
+#idle right
+150002	153	40	161	56	90
+#walking left
+150003	114	40	122	56	90
+150004	105	40	113	56	90
+150005	96	40	104	56	90
+#walking right
+150006	126	40	134	56	90
+150007	135	40	143	56	90
+150008	144	40	152	56	90
+#climbing
+150009	165	40	181	56	90
+150010	182	40	198	56	90
 
 [ANIMATIONS]
 # ==== BRICK =========
@@ -299,6 +316,18 @@
 #walking right
 1702	140003	40	140004	40
 
+#----SOPHIA-------
+#idle left
+1801	150001	100
+#idle right
+1802	150002	100
+#walking left
+1803	150003	40	150004	40	150005	40
+#walking right
+1804	150006	40	150007	40	150008	40
+#climbing
+1805	150009	40	180010	40
+
 [ANIMATION_SETS]
 # MARIO
 1	400	401	402	403	500	501	502	503	599
@@ -332,4 +361,7 @@
 
 #Bee
 13	1701	1702
+
+#SOPHIA
+15	1801	1802	1803	1804	1805
 

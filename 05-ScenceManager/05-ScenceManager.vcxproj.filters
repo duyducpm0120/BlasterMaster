@@ -108,6 +108,8 @@
       <Filter>Enemies</Filter>
     </ClCompile>
     <ClCompile Include="StupidHead.cpp" />
+    <ClCompile Include="Sophia.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mario.h">
@@ -196,5 +198,7 @@
     <ClInclude Include="Bee.h">
       <Filter>Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Sophia.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
 </Project>
