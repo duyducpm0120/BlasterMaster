@@ -123,11 +123,20 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 			else if (dynamic_cast<CFlame*>(e->obj)) {
-				health--;
-				//vx -= (vx + 0.3f);
-				vy -= 0.4f;
-				if (health <= 0)
-					visible = false;
+				if (e->ny < 0) {
+					health--;
+					//vx -= (vx + 0.3f);
+					vy -= 0.4f;
+					if (health <= 0)
+						visible = false;
+				}
+				else if (e->ny > 0) {
+					health--;
+					//vx -= (vx + 0.3f);
+					vy += 0.4f;
+					if (health <= 0)
+						visible = false;
+				}
 			}
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{

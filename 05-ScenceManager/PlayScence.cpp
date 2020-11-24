@@ -326,7 +326,7 @@ void CPlayScene::Update(DWORD dt)
 
 	grid->Clear();
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 0; i < objects.size(); i++)
+	/*for (size_t i = 0; i < objects.size(); i++)
 	{
 		//coObjects.push_back(objects[i]);
 		if (objects.at(i)->visible == false)
@@ -377,11 +377,11 @@ void CPlayScene::Update(DWORD dt)
 			}
 			objects.erase(objects.begin() + i);
 		}
-
-	}
+		
+	}*/
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		//coObjects.push_back(objects[i]);
+		coObjects.push_back(objects[i]);
 		grid->Add(objects[i]);
 
 	}
@@ -394,15 +394,15 @@ void CPlayScene::Update(DWORD dt)
 
 
 
-	for (size_t i = 1; i < updateObject.size(); i++)
-	{
-		if (player == NULL) return;
-		if (objects[i]->visible == true)
-			updateObject[i]->Update(dt, &updateObject);
+	//for (size_t i = 1; i < updateObject.size(); i++)
+	//{
+		//if (player == NULL) return;
+		//if (objects[i]->visible == true)
+			//updateObject[i]->Update(dt, &updateObject);
 
 
-	}
-	/*
+	//}
+	
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->visible == true)
@@ -435,7 +435,7 @@ void CPlayScene::Update(DWORD dt)
 						{
 							int type = rand() % 3 ;
 							CItem* item = new CItem(type);
-							item->SetPosition(objects[i]->x, objects[i]->y);
+							item->SetPosition(objects[i]->x, objects[i]->y -10);
 							CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 							LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
 							item->SetAnimationSet(ani_set);
@@ -456,7 +456,7 @@ void CPlayScene::Update(DWORD dt)
 			return;
 		}
 	}
-	*/
+	
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
@@ -519,7 +519,7 @@ void CPlayScene::Render()
 		if (objects[i]->visible == true)
 		{
 			objects[i]->Render();
-			objects[i]->RenderBoundingBox();
+			//objects[i]->RenderBoundingBox();
 		}
 	}
 	//hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
