@@ -24,14 +24,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Mario.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
     <ClCompile Include="Tank.cpp">
       <Filter>Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Golem.cpp">
       <Filter>Enemies</Filter>
@@ -114,14 +108,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mario.h">
-      <Filter>Player</Filter>
-    </ClInclude>
     <ClInclude Include="Tank.h">
       <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Golem.h">
       <Filter>Enemies</Filter>

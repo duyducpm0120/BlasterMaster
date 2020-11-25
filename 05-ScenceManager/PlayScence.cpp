@@ -188,7 +188,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		dynamic_cast<CButterfly*>(obj)->SetPlayer(this->GetPlayer());
 		break; 
 	}
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
 	case OBJECT_TYPE_FLAME: obj = new CFlame(); break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;

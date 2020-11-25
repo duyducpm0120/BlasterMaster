@@ -1,5 +1,4 @@
 #include "Bullet.h"
-#include "Goomba.h"
 #include "Destroyed.h"
 #include "PlayScence.h"
 
