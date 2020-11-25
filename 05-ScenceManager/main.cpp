@@ -22,6 +22,8 @@
 
 #include "Mario.h"
 #include "Brick.h"
+#include "Goomba.h"
+
 #include "PlayScence.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
