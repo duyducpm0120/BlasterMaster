@@ -37,7 +37,7 @@ void HealthBar::Render()
 			}
 			else
 			{
-				health.at(i)->at(HEALTH_TYPE_PLAYER_UNIT)->Render( x-2, y + 56 - i * HEALTH_SPACE_UNIT,255);
+				health.at(i)->at(HEALTH_TYPE_PLAYER_UNIT)->Render( x-1, y + 56 - i * HEALTH_SPACE_UNIT,255);
 			}
 		}
 	}
