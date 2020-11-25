@@ -192,8 +192,9 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 
 					CRocket* rocket = new CRocket();
 					for (int i = 0; i < objects->size(); i++) {
-						if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 200) {
+						if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 500) {
 							rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
+							rocket->SetTargetObject(objects->at(i));
 							float x1, y1;
 							tank->GetPosition(x1, y1);
 							rocket->SetPosition(x1 - 15, (y1 - ROCKET_BBOX_HEIGHT) - 15);
@@ -208,8 +209,9 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				{
 					CRocket* rocket = new CRocket();
 					for (int i = 0; i < objects->size(); i++) {
-						if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 200) {
+						if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 500) {
 							rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
+							rocket->SetTargetObject(objects->at(i));
 							float x1, y1;
 							tank->GetPosition(x1, y1);
 							rocket->SetPosition(x1 + TANK_NORMAL_WIDTH + 5, (y1 - ROCKET_BBOX_HEIGHT) - 10);
@@ -225,8 +227,9 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			else {
 				CRocket* rocket = new CRocket();
 				for (int i = 0; i < objects->size(); i++) {
-					if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 200) {
+					if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 500) {
 						rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
+						rocket->SetTargetObject(objects->at(i));
 						float x1, y1;
 						tank->GetPosition(x1, y1);
 						rocket->SetPosition(x1 + (TANK_UP_GUN_WIDHT - ROCKET_BBOX_WIDTH) / 2, y1 - ROCKET_BBOX_HEIGHT + 8);

@@ -2,7 +2,7 @@
 CBee::CBee()
 {
 	damage = 1;
-	health = 10000;
+	health = 3;
 	nx = -1;
 	SetState(BEE_STATE_WALKING_LEFT);
 	vx = -BEE_WALKING_SPEED;

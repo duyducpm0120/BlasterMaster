@@ -13,16 +13,20 @@ CRocket::CRocket()
 
 void CRocket::findTarget()
 {
-	float minDistance = 1000.0f;
-	CGameObject* target = objects->at(0);
-	int i = 0, check =0;
+	float minDistance = GetDistance(this->targetObject);
+	CGameObject* target = this->targetObject;
+	int i = 0, check = 0;
 	for (; i < objects->size(); i++) {
-		if (objects->at(i)->IsEnemy()) {
+		if (objects->at(i)->IsEnemy() == true && objects->at(i)->visible == true) {
 			if (GetDistance(objects->at(i)) < minDistance)
+			{
 				target = objects->at(i);
+				break;
+			}
 			check++;
+			}
 		}
-	}
+	
 	//if (check != 0)
 		SetTargetObject(target);
 	//else
@@ -45,7 +49,7 @@ void CRocket::GetBoundingBox(float& left, float& top, float& right, float& botto
 void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
-
+	
 	//
 	// TO-DO: make sure Golem can interact with the world and to each of them too!
 	// 
@@ -59,6 +63,10 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->visible = false;
 		return;
 	}
+
+	if (this->targetObject->visible == false)
+		this->visible = false;
+	
 	findTarget();
 	CatchTargetObject();
 	
