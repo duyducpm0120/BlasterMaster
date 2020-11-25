@@ -24,7 +24,8 @@ void CButterfly::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//
 	// TO-DO: make sure Golem can interact with the world and to each of them too!
 	// 
-	CatchPlayer();
+	if(GetDistance(tank)<300)
+		CatchPlayer();
 	if (GetDistance(tank) == 0) {
 		this->visible = false;
 		return;
@@ -90,37 +91,41 @@ void CButterfly::SetState(int state)
 
 void CButterfly::CatchPlayer()
 {
-	tank->GetPosition(this->target_x, this->target_y);
-	if(target_x > x) {
-		if (target_y > y) {
-			vx = BUTTERFLY_WALKING_SPEED;
-			vy = BUTTERFLY_WALKING_SPEED;
-			nx = 1;
-			SetState(BUTTERFLY_STATE_WALKING_RIGHT);
+	if (GetDistance(tank) <= 500)
+	{
+		tank->GetPosition(this->target_x, this->target_y);
+
+		if (target_x > x) {
+			if (target_y > y) {
+				vx = BUTTERFLY_WALKING_SPEED;
+				vy = BUTTERFLY_WALKING_SPEED;
+				nx = 1;
+				SetState(BUTTERFLY_STATE_WALKING_RIGHT);
+			}
+			else
+			{
+				vx = BUTTERFLY_WALKING_SPEED;
+				vy = -BUTTERFLY_WALKING_SPEED;
+				nx = 1;
+				SetState(BUTTERFLY_STATE_WALKING_RIGHT);
+			}
 		}
 		else
 		{
-			vx = BUTTERFLY_WALKING_SPEED;
-			vy = -BUTTERFLY_WALKING_SPEED;
-			nx = 1;
-			SetState(BUTTERFLY_STATE_WALKING_RIGHT);
+			if (target_y > y) {
+				vx = -BUTTERFLY_WALKING_SPEED;
+				vy = BUTTERFLY_WALKING_SPEED;
+				nx = -1;
+				SetState(BUTTERFLY_STATE_WALKING_LEFT);
+			}
+			else
+			{
+				vx = -BUTTERFLY_WALKING_SPEED;
+				vy = -BUTTERFLY_WALKING_SPEED;
+				nx = -1;
+				SetState(BUTTERFLY_STATE_WALKING_LEFT);
+			}
 		}
-	}
-	else
-	{
-	if (target_y > y) {
-		vx = -BUTTERFLY_WALKING_SPEED;
-		vy = BUTTERFLY_WALKING_SPEED;
-		nx = -1;
-		SetState(BUTTERFLY_STATE_WALKING_LEFT);
-	}
-	else
-	{
-		vx = -BUTTERFLY_WALKING_SPEED;
-		vy = -BUTTERFLY_WALKING_SPEED;
-		nx = -1;
-		SetState(BUTTERFLY_STATE_WALKING_LEFT);
-	}
 	}
 }
 

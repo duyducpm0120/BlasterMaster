@@ -1,12 +1,14 @@
 [TEXTURES]
 # id	file_path	transparent_color_r	g	b
+0	textures\mario.png	255	255	255
 -100	textures\bbox.png	5	5	5
+20	textures\misc.png	176	224	248
 30	textures\tank.png	243	243	244
 40	textures\Enemies_BlasterMaster.png	243	243	244
 50	textures\bullet.png	199	200	50
 60	textures\Destroyed.png	0	57	115
 70	textures\healthBar.png	255	255	255
-
+80	textures\item.png	181	165	213
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
 2	textures\Area22.png	5	5	5
@@ -145,8 +147,35 @@
 #HEALTHBAR
 110001	30	35	49	126	70
 110002	56	37	71	44	70
-110003	86	36	105	123	70
+110003	85	36	105	123	70
 110004	111	37	126	43	70
+
+
+#ITEM
+#health
+120001	87	240	103	256	80
+#power
+120002	45	240	61	256	80
+#enable rocket
+120003	24	240	40	256	80
+
+#WORM
+#walking left
+130001	64	412	82	422	40
+130002	46	412	63	422	40
+#walking right
+130003	172	412	190	422	40
+130004	191	412	208	422	40
+
+
+#BEE
+#walking left
+140001	104	530	122	548	40
+140002	84	530	102	548	40
+#walking right
+140003	132	530	150	548	40
+140004	152	530	170	548	40
+
 
 [ANIMATIONS]
 # ==== BRICK =========
@@ -250,6 +279,25 @@
 #Player add
 1404	110004	100
 
+#-------------Item----------
+#Health
+1501	120001	100
+#power
+1502	120002	100
+#enable rocket
+1503	120003	100
+
+#-----------------WORM-------
+#walking left
+1601	130001	100	130002	100
+#walking right
+1602	130003	100	130004	100
+
+#---BEE---
+#walking left
+1701	140001	40	140002	40
+#walking right
+1702	140003	40	140004	40
 
 [ANIMATION_SETS]
 # MARIO
@@ -276,3 +324,12 @@
 9	1301	1302	1303
 #HEALTHBAR
 10	1401	1402	1403	1404
+#Item
+11	1501	1502	1503
+
+#Worm
+12	1601	1602
+
+#Bee
+13	1701	1702
+

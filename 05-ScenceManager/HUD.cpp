@@ -15,6 +15,8 @@ void HUD::Update(float x, float y, int currentPlayerHealth, int currentGunHealth
 {
 	this->x = x;
 	this->y = y;
+	gunHB = new HealthBar(currentGunHealth, true);
+	playerHB = new HealthBar(currentPlayerHealth, false);
 
 	gunHB->Update(currentGunHealth, x + 4, y + 7.8); // Hard code -> Dieu chinh khoang cach cac unit mau cua Gun #LKP
 	playerHB->Update(currentPlayerHealth, x + 3, y + 112.5); // Hard code -> Dieu chinh khoang cach cac unit mau cua Player #LKP

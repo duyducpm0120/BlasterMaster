@@ -2,8 +2,8 @@
 #include "GameObject.h"
 
 
-#define COLUMN_MAX	25
-#define ROW_MAX		25
+#define COLUMN_MAX	35
+#define ROW_MAX		35
 class CGrid
 {
 	friend class GameObject;
@@ -21,7 +21,6 @@ public:
 	void Clear();
 	void Add(LPGAMEOBJECT Obj);
 	static CGrid* GetInstance();
-	int count = 0;
 	void GetUpdateObjects(vector<LPGAMEOBJECT>& updateobjects, float left, float top, float right, float bottom); // This gives the objects that needs to be updated
 	void Render();
 };

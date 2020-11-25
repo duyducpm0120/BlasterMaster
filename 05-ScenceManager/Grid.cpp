@@ -32,7 +32,6 @@ void CGrid::Add(LPGAMEOBJECT Obj)
 		for (int j = beginCellColumn; j <= endCellColumn; j++)
 		{
 			cells[i][j].push_back(Obj);
-			count++;
 		}
 	}
 
@@ -76,7 +75,8 @@ void CGrid::GetUpdateObjects(vector<LPGAMEOBJECT>& updateobjects, float left, fl
 				//if ((find(updateobjects.begin(), updateobjects.end(), cells[row][column].at(k)) != updateobjects.end()== false))
 				//{
 				
-				if (cells[row][column].at(k)->visible==true) updateobjects.push_back(cells[row][column].at(k));
+								
+					updateobjects.push_back(cells[row][column].at(k));
 				//	debugout(l"row index: %d, col index: %d\n", row, column);
 				
 

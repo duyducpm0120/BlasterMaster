@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Brick.h"
 #include "Mario.h"
+#include "Goomba.h"
 #include "Koopas.h"
 #include "Tile.h"
 #include "Tank.h"
@@ -22,12 +23,16 @@ protected:
 	vector<LPGAMEOBJECT> objects;
 	HUD* hud;
 
+	int *playerHealth;
+	int *playerPower;
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
 	void _ParseSection_ANIMATION_SETS(string line);
 	void _ParseSection_OBJECTS(string line);
 	void _ParseSection_TILE_MAP(string line);
+
+	void CallDestroyed(CGameObject* object);
 	
 	
 public: 
@@ -40,15 +45,16 @@ public:
 
 	CTank * GetPlayer() { return player; } 
 	vector<LPGAMEOBJECT>* GetObjects(){ return &objects; }
+	vector<LPGAMEOBJECT>* GetUpdateObjects() { return &updateObject; }
 	//friend class CPlayScenceKeyHandler;
-	vector<LPGAMEOBJECT>* GetupdateObjects() { return &updateObjects; }
+
 	//New stuff:
 protected:
 	vector<LPTILE> tiledMap;
 	int offset_y = 0; //To render the tiles rows
 	int testx = 0;
 	CGrid* grid = CGrid::GetInstance();
-	vector<LPGAMEOBJECT> updateObjects;
+	vector<LPGAMEOBJECT> updateObject;
 
 
 

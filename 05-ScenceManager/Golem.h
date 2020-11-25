@@ -14,9 +14,6 @@
 #define GOLEM_ANI_WALKING_LEFT 0
 #define GOLEM_ANI_WALKING_RIGHT 1
 #define GOLEM_ANI_DIE	2
-#define GOLEM_GRAVITY	0.01f
-
-#define GOLEM_MOVE_SPACE	290
 
 class CGolem : public CGameObject
 {
@@ -27,7 +24,7 @@ class CGolem : public CGameObject
 	virtual void Render();
 
 public:
-	CGolem(int x,int y);
+	CGolem();
 	virtual void SetState(int state);
-	void SetStartPosition( int x, int y);
+	void SetStartPosition(float x, float y);
 };

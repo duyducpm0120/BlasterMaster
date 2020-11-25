@@ -93,12 +93,13 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 
 	//CMario mario = ((CPlayScene)scence)->GetPlayer();
 	CTank* tank = ((CPlayScene*)scence)->GetPlayer();
-	vector<LPGAMEOBJECT> *objects = ((CPlayScene*)scence)->GetupdateObjects();
+	vector<LPGAMEOBJECT> *objects = ((CPlayScene*)scence)->GetObjects();
+	vector<LPGAMEOBJECT>* updateObjects = ((CPlayScene*)scence)->GetUpdateObjects();
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	CGameObject* obj = objects->at(0);
 	switch (KeyCode)
 	{
-	case DIK_X: 		
+	/*case DIK_X: 		
 		int width1, height1;
 		tank->GetDimension(width1, height1);
 		if (height1 == TANK_NORMAL_HEIGHT)
@@ -138,8 +139,8 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			objects->push_back(bullet);
 		}
 
-		break;
-	case DIK_C:
+		break;*/
+	case DIK_Z:
 		int width3, height3;
 		tank->GetDimension(width3, height3);
 		if (height3 == TANK_NORMAL_HEIGHT)
@@ -147,7 +148,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			if (tank->nx == -1)
 			{
 
-				CBullet* bullet = new CBullet(1, BULLET_STATE_FLYING_LEFT);
+				CBullet* bullet = new CBullet(tank->GetBulletLevel(), BULLET_STATE_FLYING_LEFT);
 				float x1, y1;
 				tank->GetPosition(x1, y1);
 				bullet->SetPosition(x1 - BULLET_HORIZONTAL_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
@@ -158,7 +159,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			}
 			else
 			{
-				CBullet* bullet = new CBullet(1, BULLET_STATE_FLYING_RIGHT);
+				CBullet* bullet = new CBullet(tank->GetBulletLevel(), BULLET_STATE_FLYING_RIGHT);
 				float x1, y1;
 				tank->GetPosition(x1, y1);
 				bullet->SetPosition(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
@@ -169,7 +170,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			}
 		}
 		else {
-			CBullet* bullet = new CBullet(1, BULLET_STATE_FLYING_UP);
+			CBullet* bullet = new CBullet(tank->GetBulletLevel(), BULLET_STATE_FLYING_UP);
 			float x1, y1;
 			tank->GetPosition(x1, y1);
 			bullet->SetPosition(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
@@ -183,56 +184,61 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_V:
 		int width4, height4;
 		tank->GetDimension(width4, height4);
-		if (height4 == TANK_NORMAL_HEIGHT)
-		{
-			if (tank->nx == -1)
+		if (tank->GetEnableRocket()) {
+			if (height4 == TANK_NORMAL_HEIGHT)
 			{
+				if (tank->nx == -1)
+				{
 
+					CRocket* rocket = new CRocket();
+					for (int i = 0; i < objects->size(); i++) {
+						if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 500) {
+							rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
+							rocket->SetTargetObject(objects->at(i));
+							float x1, y1;
+							tank->GetPosition(x1, y1);
+							rocket->SetPosition(x1 - 15, (y1 - ROCKET_BBOX_HEIGHT) - 15);
+							LPANIMATION_SET ani_set = animation_sets->Get(8);
+							rocket->SetAnimationSet(ani_set);
+							objects->push_back(rocket);
+							break;
+						}
+					}
+				}
+				else
+				{
+					CRocket* rocket = new CRocket();
+					for (int i = 0; i < objects->size(); i++) {
+						if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 500) {
+							rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
+							rocket->SetTargetObject(objects->at(i));
+							float x1, y1;
+							tank->GetPosition(x1, y1);
+							rocket->SetPosition(x1 + TANK_NORMAL_WIDTH + 5, (y1 - ROCKET_BBOX_HEIGHT) - 10);
+							LPANIMATION_SET ani_set = animation_sets->Get(8);
+							rocket->SetAnimationSet(ani_set);
+							objects->push_back(rocket);
+							break;
+						}
+					}
+
+				}
+			}
+			else {
 				CRocket* rocket = new CRocket();
 				for (int i = 0; i < objects->size(); i++) {
-					if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 200) {
+					if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 500) {
 						rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
+						rocket->SetTargetObject(objects->at(i));
 						float x1, y1;
 						tank->GetPosition(x1, y1);
-						rocket->SetPosition(x1 - 15 , (y1 - ROCKET_BBOX_HEIGHT)- 15 );
+						rocket->SetPosition(x1 + (TANK_UP_GUN_WIDHT - ROCKET_BBOX_WIDTH) / 2, y1 - ROCKET_BBOX_HEIGHT + 8);
+						//rocket->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
 						LPANIMATION_SET ani_set = animation_sets->Get(8);
 						rocket->SetAnimationSet(ani_set);
 						objects->push_back(rocket);
 						break;
 					}
-				}
-			}
-			else
-			{
-				CRocket* rocket = new CRocket();
-				for (int i = 0; i < objects->size(); i++) {
-					if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i))<200) {
-						rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
-						float x1, y1;
-						tank->GetPosition(x1, y1);
-						rocket->SetPosition(x1 + TANK_NORMAL_WIDTH +5 , (y1 - ROCKET_BBOX_HEIGHT) - 10  );
-						LPANIMATION_SET ani_set = animation_sets->Get(8);
-						rocket->SetAnimationSet(ani_set);
-						objects->push_back(rocket);
-						break;
-					}
-				}
-				
-			}
-		}
-		else {
-			CRocket* rocket = new CRocket();
-			for (int i = 0; i < objects->size(); i++) {
-				if (objects->at(i)->IsEnemy() && tank->GetDistance(objects->at(i)) < 200) {
-					rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
-					float x1, y1;
-					tank->GetPosition(x1, y1);
-					rocket->SetPosition(x1 + (TANK_UP_GUN_WIDHT - ROCKET_BBOX_WIDTH) / 2, y1 - ROCKET_BBOX_HEIGHT + 8);
-					//rocket->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
-					LPANIMATION_SET ani_set = animation_sets->Get(8);
-					rocket->SetAnimationSet(ani_set);
-					objects->push_back(rocket);
-					break;
 				}
 			}
 		}
@@ -261,6 +267,38 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			tank->SetState(TANK_STATE_UPING_GUN_LEFT);
 		else
 			tank->SetState(TANK_STATE_UPING_GUN_RIGHT);
+		break;
+	case DIK_1:
+		objects->clear();
+		CGame::GetInstance()->SwitchScene(1);		
+		break;
+	case DIK_2:
+		objects->clear();
+		CGame::GetInstance()->SwitchScene(2);
+		break;
+	case DIK_3:
+		objects->clear();
+		CGame::GetInstance()->SwitchScene(3);
+		break;
+	case DIK_4:
+		objects->clear();
+		CGame::GetInstance()->SwitchScene(4);
+		break;
+	case DIK_5:
+		objects->clear();
+		CGame::GetInstance()->SwitchScene(5);
+		break;
+	case DIK_6:
+		objects->clear();
+		CGame::GetInstance()->SwitchScene(6);
+		break;
+	case DIK_7:
+		objects->clear();
+		CGame::GetInstance()->SwitchScene(7);
+		break;
+	case DIK_8:
+		objects->clear();
+		CGame::GetInstance()->SwitchScene(8);
 		break;
 	}
 }

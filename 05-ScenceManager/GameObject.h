@@ -55,7 +55,9 @@ public:
 	float vy;
 
 	int nx;	 
+	//New Stuff
 
+	bool isToUpdate;
 	int state;
 
 	bool visible;
@@ -78,6 +80,7 @@ public:
 	float GetDistance(CGameObject* obj);
 	bool IsEnemy() { return isEnemy; };
 
+	void setToUpdate(bool update) { this->isToUpdate = update; }
 	int GetState() { return this->state; }
 
 	void RenderBoundingBox();
@@ -106,7 +109,7 @@ public:
 
 	
 
-
+	
 	~CGameObject();
 };
 

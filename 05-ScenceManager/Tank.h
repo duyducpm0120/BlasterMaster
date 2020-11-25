@@ -3,6 +3,9 @@
 
 #pragma region define
 
+#define	TANK_START_HEALTH	7
+#define TANK_START_DAMAGE	1
+
 #define TANK_WALKING_SPEED		0.1f 
 //0.1f
 #define TANK_JUMP_SPEED_Y		0.35f
@@ -56,17 +59,12 @@
 #define	TANK_ANI_UP_GUN_RIGHT	16
 
 
-
-
-
 #define TANK_NORMAL_WIDTH	26
-#define	TANK_NORMAL_HEIGHT	18	
+#define	TANK_NORMAL_HEIGHT	18
 #define TANK_UP_GUN_WIDHT	26
 #define TANK_UP_GUN_HEIGHT	34
 
 #define TANK_UNTOUCHABLE_TIME 3000
-
-
 
 #pragma endregion
 
@@ -82,11 +80,14 @@ class CTank : public CGameObject
 	int tank_width;
 	int tank_height;
 	bool isJumping;
-	
+	bool enableRocket;
+	int bulletLevel;
 public:
+	bool GetEnableRocket() { return  enableRocket; };
 	CTank(float x = 0.0f, float y = 0.0f);
 	int GetHealth() { return this->health; }
 	int GetDamage() { return this->damage; }
+	int GetBulletLevel() { return bulletLevel; };
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();
 	void SetState(int state);
@@ -95,6 +96,7 @@ public:
 	void SetDimension(int width, int height);
 	void GetDimension(int &width, int &height);
 	void Reset();
+
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

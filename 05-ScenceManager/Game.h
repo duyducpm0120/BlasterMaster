@@ -48,6 +48,9 @@ class CGame
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
 
+	int playerHealth = 7;
+	int playerPower =1;
+
 
 	//New Stuff
 public:
@@ -55,6 +58,11 @@ public:
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
 	void _ParseSection_ANIMATION_SETS(string line);
+	int* GetHealth() { return &playerHealth; };
+	int* GetPower() { return &playerPower; };
+
+	void SetPlayerHealth(int health) { playerHealth = health; };
+	void SetPlayerPower(int power) { playerPower = power; };
 	void LoadResources();
 
 public:

@@ -12,11 +12,18 @@
 #include "Butterfly.h"
 #include "PlayScenceKeyHandler.h"
 #include "Destroyed.h"
+#include "Item.h"
+#include "Worm.h"
+#include "Bee.h"
+#include "Flame.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
+	CGame *game = CGame::GetInstance();
+	this->playerHealth = game->GetHealth();
+	this->playerPower = game->GetPower();
 	key_handler = new CPlayScenceKeyHandler(this);
 }
 
@@ -42,7 +49,9 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define	OBJECT_TYPE_GOLEM	5
 #define OBJECT_TYPE_BULLET	6
 #define OBJECT_TYPE_BUTTERFLY	7
-
+#define OBJECT_TYPE_WORM	12
+#define OBJECT_TYPE_BEE	13
+#define OBJECT_TYPE_FLAME	14
 #define OBJECT_TYPE_PORTAL	50
 
 #define MAX_SCENE_LINE 1024
@@ -165,17 +174,23 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		obj = new CTank(x, y);
 		player = (CTank*)obj;
+		player->health = *this->playerHealth;
+		player->damage = *this->playerPower;
 
 		DebugOut(L"[INFO] Player object created!\n");
 		hud = new HUD(player->GetHealth(), player->GetDamage());
 		break;
-	case OBJECT_TYPE_GOLEM: obj = new CGolem(x,y); break; 
+	case OBJECT_TYPE_GOLEM: obj = new CGolem();
+		dynamic_cast<CGolem*>(obj)->SetStartPosition(x, y);
+		break;
 	case OBJECT_TYPE_BUTTERFLY: {
 		obj = new CButterfly(); 
 		dynamic_cast<CButterfly*>(obj)->SetPlayer(this->GetPlayer());
 		break; 
 	}
+	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
+	case OBJECT_TYPE_FLAME: obj = new CFlame(); break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
 	case OBJECT_TYPE_PORTAL:
 	{
@@ -185,20 +200,24 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
 	break;
+	case OBJECT_TYPE_WORM: obj = new CWorm();
+		dynamic_cast<CWorm*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_BEE: obj = new CBee();
+		dynamic_cast<CBee*>(obj)->SetStartPosition(x, y);
+		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
 	}
 
 	// General object setup
-
 	obj->SetPosition(x, y);
-	
+
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
-	
 	
 	
 }
@@ -239,6 +258,54 @@ void CPlayScene::_ParseSection_TILE_MAP(string line)
 	
 
 	
+}
+
+void CPlayScene::CallDestroyed(CGameObject* object)
+{
+	if (!dynamic_cast<CDestroyed*>(object) ){
+
+		if (dynamic_cast<CBullet*>(object)) {
+			CDestroyed* destroyed = new CDestroyed(1);
+			destroyed->SetPosition(object->x, object->y);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+		}
+		else if (dynamic_cast<CTank*>(object)) {
+			CDestroyed* destroyed = new CDestroyed(3);
+			destroyed->SetPosition(object->x - 19, object->y - 30);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+		}
+		else if (!dynamic_cast<CItem*>(object)) {
+			if (object->IsEnemy() == true)
+			{
+				srand(time(NULL));
+				int n = rand() % 2;
+				if (n == 1)
+				{
+					int type = rand() % 3;
+					CItem* item = new CItem(type);
+					item->SetPosition(object->x, object->y - 10);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
+					item->SetAnimationSet(ani_set);
+					objects.push_back(item);
+				}
+
+			}
+			CDestroyed* destroyed = new CDestroyed(2);
+			destroyed->SetPosition(object->x, object->y);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+		}
+
+	}
 }
 
 
@@ -298,120 +365,59 @@ void CPlayScene::Load()
 
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
-	DebugOut(L"[INFO] Done adding objects to grid %d\n", grid->count);
+	
 }
 
 void CPlayScene::Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
+	CGame* game = CGame::GetInstance();
 
-	//Newstuff
 	grid->Clear();
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
-		coObjects.push_back(objects.at(i));
-		grid->Add(objects.at(i)); //Rebuilding the grid on update
+		//coObjects.push_back(objects[i]);
+		if (objects.at(i)->visible == false)
+		{
+			CallDestroyed(objects.at(i));
+			objects.erase(objects.begin() + i);
+		}
+
 	}
-	CGame* game = CGame::GetInstance();
-	updateObjects.clear();
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		//coObjects.push_back(objects[i]);
+		grid->Add(objects[i]);
+		objects[i]->setToUpdate(true);
+
+	}
+	updateObject.clear();
 	float left, top, right, bottom;
 	game->GetCameraBoundingBox(left, top, right, bottom);
-	grid->GetUpdateObjects(updateObjects, left, top, right, bottom);
-	DebugOut(L"Size of update array %d\n", updateObjects.size());
-	
-	//for (size_t i = 0; i < objects.size(); i++)
-	//{
-	//	if (objects.at(i)->visible == true)
-	//		objects.at(i)->Update(dt, &coObjects);
-	//	else {
-	//		if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
-
-	//			if (dynamic_cast<CBullet*>(objects.at(i))) {
-	//				CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_BULLET);
-	//				destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
-	//				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	//				LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
-	//				destroyed->SetAnimationSet(ani_set);
-	//				objects.push_back(destroyed);
-	//			}
-	//			else if (dynamic_cast<CTank*>(objects.at(i))) {
-	//				CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_TANK);
-	//				destroyed->SetPosition(objects.at(i)->x - 19, objects.at(i)->y - 30);
-	//				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	//				LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
-	//				destroyed->SetAnimationSet(ani_set);
-	//				objects.push_back(destroyed);
-	//			}
-	//			else {
-	//				CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_OBJECT);
-	//				destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
-	//				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	//				LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
-	//				destroyed->SetAnimationSet(ani_set);
-	//				objects.push_back(destroyed);
-	//			}
-
-	//		}
-	//		objects.erase(objects.begin() + i);   //erase obj at (i)
-	//		//return;
-	//	}
-	//}
+	grid->GetUpdateObjects(updateObject, left, top, right, bottom);
+	DebugOut(L"Size of update array %d\n", updateObject.size());
+	DebugOut(L"Size of object array %d\n", objects.size());
 
 
-	for (size_t i = 0; i < updateObjects.size(); i++)
+
+	for (size_t i = 1; i < updateObject.size(); i++)
 	{
-		if (updateObjects.at(i)->visible == true)
-			updateObjects.at(i)->Update(dt, &coObjects);
-		else
-		{
-			if (!dynamic_cast<CDestroyed*>(updateObjects.at(i))) {
+		if (player == NULL) return;
+		if (updateObject[i]->visible == true &&updateObject[i]->isToUpdate) 
+			updateObject[i]->Update(dt, &updateObject);
 
-				if (dynamic_cast<CBullet*>(updateObjects.at(i))) {
-					CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_BULLET);
-					destroyed->SetPosition(updateObjects.at(i)->x, updateObjects.at(i)->y);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
-					destroyed->SetAnimationSet(ani_set);
-					updateObjects.push_back(destroyed);
-				}
-				else if (dynamic_cast<CTank*>(updateObjects.at(i))) {
-					CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_TANK);
-					destroyed->SetPosition(updateObjects.at(i)->x - 19, updateObjects.at(i)->y - 30);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
-					destroyed->SetAnimationSet(ani_set);
-					updateObjects.push_back(destroyed);
-				}
-				else {
-					CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_OBJECT);
-					destroyed->SetPosition(updateObjects.at(i)->x, updateObjects.at(i)->y);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
-					destroyed->SetAnimationSet(ani_set);
-					updateObjects.push_back(destroyed);
-				}
-
-			}
-
-			updateObjects.erase(updateObjects.begin() + i);
-		}
 	}
-
-
-	
-
-
-
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
+	int w, h;
+	player->GetDimension(w, h);
+	if (h == TANK_UP_GUN_HEIGHT)
+		cy += 16;
 
-	
 	//cx -= game->GetScreenWidth() / 2;
 	//cy -= game->GetScreenHeight() / 2;
 	if (cx + game->GetScreenWidth() / 2 >= scene_width - 1)
@@ -426,8 +432,8 @@ void CPlayScene::Update(DWORD dt)
 			cx -= game->GetScreenWidth() / 2;
 	}
 
-	if (scene_height <= 250) {
-	
+	if (scene_height <= 270) {
+
 		cy = 0;
 	}
 	else {
@@ -443,13 +449,14 @@ void CPlayScene::Update(DWORD dt)
 				cy -= game->GetScreenHeight() / 2;
 		}
 	}
+	
 
 	game->SetCamPos(cx, cy);
-	
-	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
-	DebugOut(L"objects size: %d", objects.size());
-	DebugOut(L"coObjects size: %d", coObjects.size());
+
+
+
+	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }
 
@@ -461,17 +468,16 @@ void CPlayScene::Render()
 	for (int i = 0; i < tiledMap.size(); i++)
 		tiledMap[i]->Render();
 	//Object Rendering
-	for (int i = 0; i < updateObjects.size(); i++)
+	for (int i = 0; i < objects.size(); i++)
 
 	{
-		if (updateObjects.at(i)->visible == true)
+		if (objects[i]->visible == true)
 		{
-			updateObjects.at(i)->Render();
-			updateObjects.at(i)->RenderBoundingBox();
+			objects[i]->Render();
+			//objects[i]->RenderBoundingBox();
 		}
 	}
-
-	
+	//hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
 	hud->Render(player);
 }
 

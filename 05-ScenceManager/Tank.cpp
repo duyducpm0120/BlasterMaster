@@ -3,13 +3,18 @@
 
 #include "Game.h"
 #include "Portal.h"
+#include "Goomba.h"
 #include "Utils.h"
 #include "Golem.h"
+#include "Item.h"
+#include "Flame.h"
 CTank:: CTank(float x, float y)  : CGameObject()
 {
+	bulletLevel = 1;
+	enableRocket = true;
 	isJumping = false;
-	health = 8;
-	damage = 3;
+	health = TANK_START_HEALTH;
+	damage = TANK_START_DAMAGE;
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
 	tank_width = TANK_NORMAL_WIDTH;
@@ -24,7 +29,10 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (state == TANK_STATE_DIE)
 		return;
-	
+	if (damage > 4)
+		bulletLevel = 2;
+	else
+		bulletLevel = 1;
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 
@@ -64,8 +72,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		y += min_ty * dy + ny * 0.4f;
 
-
-
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0.00f;
 
@@ -91,10 +97,54 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (health <= 0)
 					visible = false;
 			}
+			else if (dynamic_cast<CItem*>(e->obj)) {
+				switch (dynamic_cast<CItem*>(e->obj)->GetType())
+				{
+					case ITEM_TYPE_HEALTH:
+					{
+						if (health < 8 && health >0)
+							health ++;
+						(e->obj)->visible = false;
+						break;
+					}
+					case ITEM_TYPE_POWER:
+					{
+						if(damage < 8 && damage >0)
+							damage++;
+						(e->obj)->visible = false;
+						break;
+					}
+					case ITEM_TYPE_ENABLE_ROCKET:
+					{
+						enableRocket = true;
+						dynamic_cast<CItem*>(e->obj)->visible = false;
+						break;
+					}
+				}
+			}
+			else if (dynamic_cast<CFlame*>(e->obj)) {
+				if (e->ny < 0) {
+					health--;
+					//vx -= (vx + 0.3f);
+					vy -= 0.4f;
+					if (health <= 0)
+						visible = false;
+				}
+				else if (e->ny > 0) {
+					health--;
+					//vx -= (vx + 0.3f);
+					vy += 0.4f;
+					if (health <= 0)
+						visible = false;
+				}
+			}
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
-				CGame::GetInstance()->SwitchScene(p->GetSceneId());
+				CGame* game = CGame::GetInstance();				
+				game->SetPlayerHealth(this->health);
+				game->SetPlayerPower(this->damage);
+				game->SwitchScene(p->GetSceneId());
 			}
 			
 			
