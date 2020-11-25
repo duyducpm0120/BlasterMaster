@@ -383,6 +383,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		//coObjects.push_back(objects[i]);
 		grid->Add(objects[i]);
+		objects[i]->setToUpdate(true);
 
 	}
 	updateObject.clear();
@@ -397,7 +398,7 @@ void CPlayScene::Update(DWORD dt)
 	for (size_t i = 1; i < updateObject.size(); i++)
 	{
 		if (player == NULL) return;
-		if (objects[i]->visible == true)
+		if (updateObject[i]->visible == true &&updateObject[i]->isToUpdate) 
 			updateObject[i]->Update(dt, &updateObject);
 
 
