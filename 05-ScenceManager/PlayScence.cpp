@@ -260,6 +260,54 @@ void CPlayScene::_ParseSection_TILE_MAP(string line)
 	
 }
 
+void CPlayScene::CallDestroyed(CGameObject* object)
+{
+	if (!dynamic_cast<CDestroyed*>(object) ){
+
+		if (dynamic_cast<CBullet*>(object)) {
+			CDestroyed* destroyed = new CDestroyed(1);
+			destroyed->SetPosition(object->x, object->y);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+		}
+		else if (dynamic_cast<CTank*>(object)) {
+			CDestroyed* destroyed = new CDestroyed(3);
+			destroyed->SetPosition(object->x - 19, object->y - 30);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+		}
+		else if (!dynamic_cast<CItem*>(object)) {
+			if (object->IsEnemy() == true)
+			{
+				srand(time(NULL));
+				int n = rand() % 2;
+				if (n == 1)
+				{
+					int type = rand() % 3;
+					CItem* item = new CItem(type);
+					item->SetPosition(object->x, object->y - 10);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
+					item->SetAnimationSet(ani_set);
+					objects.push_back(item);
+				}
+
+			}
+			CDestroyed* destroyed = new CDestroyed(2);
+			destroyed->SetPosition(object->x, object->y);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+		}
+
+	}
+}
+
 
 void CPlayScene::Load()
 {
@@ -331,50 +379,7 @@ void CPlayScene::Update(DWORD dt)
 		//coObjects.push_back(objects[i]);
 		if (objects.at(i)->visible == false)
 		{
-			if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
-
-				if (dynamic_cast<CBullet*>(objects.at(i))) {
-					CDestroyed* destroyed = new CDestroyed(1);
-					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
-					destroyed->SetAnimationSet(ani_set);
-					objects.push_back(destroyed);
-				}
-				else if (dynamic_cast<CTank*>(objects.at(i))) {
-					CDestroyed* destroyed = new CDestroyed(3);
-					destroyed->SetPosition(objects.at(i)->x - 19, objects.at(i)->y - 30);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
-					destroyed->SetAnimationSet(ani_set);
-					objects.push_back(destroyed);
-				}
-				else if (!dynamic_cast<CItem*>(objects.at(i))) {
-					if (objects[i]->IsEnemy() == true)
-					{
-						srand(time(NULL));
-						int n = rand() % 2;
-						if (n == 1)
-						{
-							int type = rand() % 3;
-							CItem* item = new CItem(type);
-							item->SetPosition(objects[i]->x, objects[i]->y);
-							CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-							LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
-							item->SetAnimationSet(ani_set);
-							objects.push_back(item);
-						}
-
-					}
-					CDestroyed* destroyed = new CDestroyed(2);
-					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
-					destroyed->SetAnimationSet(ani_set);
-					objects.push_back(destroyed);
-				}
-
-			}
+			CallDestroyed(objects.at(i));
 			objects.erase(objects.begin() + i);
 		}
 
@@ -400,7 +405,6 @@ void CPlayScene::Update(DWORD dt)
 		if (player == NULL) return;
 		if (updateObject[i]->visible == true &&updateObject[i]->isToUpdate) 
 			updateObject[i]->Update(dt, &updateObject);
-
 
 	}
 	/*
@@ -464,6 +468,10 @@ void CPlayScene::Update(DWORD dt)
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
+	int w, h;
+	player->GetDimension(w, h);
+	if (h == TANK_UP_GUN_HEIGHT)
+		cy += 16;
 
 	//cx -= game->GetScreenWidth() / 2;
 	//cy -= game->GetScreenHeight() / 2;
@@ -496,6 +504,7 @@ void CPlayScene::Update(DWORD dt)
 				cy -= game->GetScreenHeight() / 2;
 		}
 	}
+	
 
 	game->SetCamPos(cx, cy);
 

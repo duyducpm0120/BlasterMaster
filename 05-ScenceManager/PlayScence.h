@@ -31,6 +31,8 @@ protected:
 	void _ParseSection_ANIMATION_SETS(string line);
 	void _ParseSection_OBJECTS(string line);
 	void _ParseSection_TILE_MAP(string line);
+
+	void CallDestroyed(CGameObject* object);
 	
 	
 public: 
