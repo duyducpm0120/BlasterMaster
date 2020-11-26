@@ -175,6 +175,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		obj = new CTank(x, y);
 		player = (CTank*)obj;
+		tank = dynamic_cast<CTank*> (obj);
 		player->health = *this->playerHealth;
 		player->damage = *this->playerPower;
 

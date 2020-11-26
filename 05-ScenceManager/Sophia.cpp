@@ -7,12 +7,13 @@
 #include "Golem.h"
 #include "Item.h"
 #include "Flame.h"
+#include "Tank.h"
 CSophia::CSophia(float x, float y)
 {
 	nx = -1;
 	bulletLevel = 1;
-	health = 8;
-	damage = 1;
+	//health = 8;
+	//damage = 1;
 	isJumping = false;
 	health = SOPHIA_START_HEALTH;
 	damage = SOPHIA_START_DAMAGE;
@@ -25,6 +26,7 @@ CSophia::CSophia(float x, float y)
 	start_y = y;
 	this->x = x;
 	this->y = y;
+	untouchableTime = 0;
 }
 
 void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -43,6 +45,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// Simple fall down
 	vy += SOPHIA_GRAVITY * dt;
+	isTouchTank = false;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -80,24 +83,19 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0.00f;
 
-
-		/*if (vy == 0)
-			if (nx == -1)
-				SetState( SOPHIA_STATE_IDLE_LEFT);
-			else
-				SetState( SOPHIA_STATE_IDLE_RIGHT);*/
-				/*if(vy>0)
-					DebugOut(L"vy: %f \t",vy);*/
-
-
-					// Collision logic with Goombas
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-
+			if (dynamic_cast<CTank*>(e->obj)) {
+				isTouchTank = true;
+			}
 			if (e->obj->IsEnemy()) {
-				health -= e->obj->GetDamage();
-				vx -= 0.3f;
+				if (untouchableTime == 0) {
+					health -= e->obj->GetDamage();
+					vx -= 0.3f;
+					untouchableTime = 1;
+				}
+
 				//vy -= 0.3f;
 				if (health <= 0)
 					visible = false;
@@ -127,9 +125,10 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 			else if (dynamic_cast<CFlame*>(e->obj)) {
-				health--;
-				//vx -= (vx + 0.3f);
-				vy -= 0.4f;
+				if (untouchableTime == 0) {
+					health-=2;
+					untouchableTime = 1;
+				}
 				if (health <= 0)
 					visible = false;
 			}
@@ -140,6 +139,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
 	DebugOut(L"\n \n  vy: %f \t \n", vy);
+	HandleUntouchableTime();
 }
 
 void CSophia::Render()
@@ -164,23 +164,21 @@ void CSophia::Render()
 		ani = SOPHIA_ANI_IDLE_LEFT;
 		break;
 	case SOPHIA_STATE_JUMP:
-		if (nx = -1)
-			ani = SOPHIA_ANI_IDLE_LEFT;
-		else
+		if (nx == 1)
 			ani = SOPHIA_ANI_IDLE_RIGHT;
+		else if(nx == -1)
+			ani = SOPHIA_ANI_IDLE_LEFT;
 		break;
 	}
 
 
 	int alpha = 255;
-	if (untouchable) alpha = 128;
-	/*if ((ani == SOPHIA_ANI_WALKING_RIGHT || ani == SOPHIA_ANI_IDLE_RIGHT || state == SOPHIA_STATE_JUMP || state == SOPHIA_STATE_DIE) && nx == 1)
-		animations[ani]->Render(x, y, 1, alpha);
+	//if (untouchable) alpha = 128;
+	if (untouchableTime % 10 < 5)
+		animation_set->at(ani)->Render(x, y, 255);
 	else
-		animations[ani]->Render(x, y, -1, alpha);*/
-	animation_set->at(ani)->Render(x, y, alpha);
+		animation_set->at(ani)->Render(x, y, 50);
 
-	//RenderBoundingBox();
 
 }
 
@@ -243,4 +241,14 @@ void CSophia::Reset()
 	SetState(SOPHIA_STATE_IDLE_RIGHT);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
+}
+
+void CSophia::HandleUntouchableTime()
+{
+
+	if (untouchableTime == 0)
+		return;
+	untouchableTime += 1;
+	if (untouchableTime == SOPHIA_UNTOUCHABLE_TIME)
+		untouchableTime = 0;
 }

@@ -109,6 +109,12 @@
     <ClCompile Include="Boss.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sophia.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tank.h">
@@ -197,6 +203,12 @@
     </ClInclude>
     <ClInclude Include="Boss.h">
       <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sophia.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -99,7 +99,7 @@ public:
 	void SetDimension(int width, int height);
 	void GetDimension(int &width, int &height);
 	void Reset();
-	void StartUntouchableTime();
+	void HandleUntouchableTime();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

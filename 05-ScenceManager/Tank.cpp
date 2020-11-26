@@ -144,10 +144,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					health--;
 					untouchableTime = 1;
 				}
-				
-
-				//vx -= (vx + 0.3f);
-				//vy -= 0.4f;
 				if (health <= 0)
 					visible = false;
 			}
@@ -167,7 +163,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];	
 	DebugOut(L"\n \n  Result size: %d \t \n", coEventsResult.size());
-	StartUntouchableTime();
+	HandleUntouchableTime();
 
 }
 
@@ -338,7 +334,7 @@ void CTank::Reset()
 	SetSpeed(0, 0);
 }
 
-void CTank::StartUntouchableTime()
+void CTank::HandleUntouchableTime()
 {
 	if (untouchableTime == 0)
 		return;

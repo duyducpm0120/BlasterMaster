@@ -46,7 +46,7 @@
 #define	SOPHIA_BBOX_HEIGHT	16
 
 
-#define SOPHIA_UNTOUCHABLE_TIME 3000
+#define SOPHIA_UNTOUCHABLE_TIME 200
 
 
 
@@ -65,6 +65,8 @@ class CSophia : public CPlayer
 	int sophia_height;
 	int bulletLevel;
 	bool isJumping;
+	int untouchableTime;
+	bool isTouchTank;
 public:
 	CSophia(float x = 0.0f, float y = 0.0f);
 	int GetHealth() { return this->health; }
@@ -74,10 +76,11 @@ public:
 	virtual void Render();
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-
+	bool IsTouchTank() { return isTouchTank; };
 	void SetDimension(int width, int height);
 	void GetDimension(int& width, int& height);
 	void Reset();
+	void HandleUntouchableTime();
 
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

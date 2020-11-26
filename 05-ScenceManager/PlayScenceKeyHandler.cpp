@@ -172,17 +172,17 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		switch (KeyCode)
 		{
 		case DIK_W:
-			if (dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer()))
+			if (dynamic_cast<CTank*> (player))
 			{
-				sophia->health = ((CPlayScene*)scence)->GetPlayerHealth();
-				sophia->damage = ((CPlayScene*)scence)->GetPlayerPower();
+				sophia->health =player->GetHealth();
+				sophia->damage =player->GetDamage();
 				sophia->SetPosition(dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer())->x, dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer())->y);
 				LPANIMATION_SET ani_set = animation_sets->Get(15);
 
 				sophia->SetAnimationSet(ani_set);
 				//dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer())->visible = false;
-				((CPlayScene*)scence)->SetPlayer(sophia);
-				((CPlayScene*)scence)->SetHUD(new HUD(sophia->GetHealth(), sophia->GetDamage()));
+				((CPlayScene*)scence)->SetPlayer(&*sophia);
+				((CPlayScene*)scence)->SetHUD(new HUD(player->GetHealth(), player->GetDamage()));
 				objects->push_back(sophia);
 			}
 			break;
@@ -325,7 +325,20 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			if(player->vy >= 0.0f && player->vy <= 0.35f)
 				player->SetState(SOPHIA_STATE_JUMP);
 			break;
-
+		case DIK_W:
+			if (dynamic_cast<CSophia*> (player)->IsTouchTank())
+			{
+				tank = ((CPlayScene*)scence)->GetTank();
+				tank->health = player->GetHealth();
+				tank->damage = player->GetDamage();
+				//dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer())->visible = false;
+				((CPlayScene*)scence)->SetPlayer(&(*tank));
+				
+				((CPlayScene*)scence)->SetHUD(new HUD(player->GetHealth(), player->GetDamage()));
+	
+				
+			}
+			break;
 		}
 
 	} 

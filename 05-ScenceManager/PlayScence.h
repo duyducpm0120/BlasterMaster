@@ -12,11 +12,15 @@
 #include "Grid.h"
 #include "HUD.h"
 #include "Player.h"
+#include "Sophia.h"
 
 class CPlayScene: public CScene
 {
 protected: 
-	CPlayer *player;					// A play scene has to have player, right? 
+	CPlayer *player;			// A play scene has to have player, right? 
+
+	CTank* tank;
+	CSophia* sophia;
 
 	vector<LPGAMEOBJECT> objects;
 	HUD* hud;
@@ -35,7 +39,7 @@ protected:
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
-
+	CTank* GetTank() { return tank; };
 	virtual void Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();
