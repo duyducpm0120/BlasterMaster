@@ -27,6 +27,7 @@ CTank:: CTank(float x, float y)
 	start_y = y;
 	this->x = x;
 	this->y = y;
+	illTime = 0;
 }
 
 void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -75,7 +76,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			if (dynamic_cast<CSophia*> (coEventsResult[i]->obj) || dynamic_cast<CRocket*> (coEventsResult[i]->obj) || dynamic_cast<CBullet*> (coEventsResult[i]->obj) || dynamic_cast<CItem*> (coEventsResult[i]->obj))
 			{
-				//x += dx;
+				//x += dx * 0.5;
 				//y += dy;
 			}
 			else {
@@ -158,6 +159,10 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];	
 	DebugOut(L"\n \n  Result size: %d \t \n", coEventsResult.size());
+	illTime += 1;
+	if (illTime == TANK_UNTOUCHABLE_TIME)
+		illTime = 0;
+
 }
 
 void CTank::Render()
@@ -220,7 +225,11 @@ void CTank::Render()
 		animations[ani]->Render(x, y, 1, alpha);
 	else
 		animations[ani]->Render(x, y, -1, alpha);*/
-	animation_set->at(ani)->Render(x, y, alpha);
+	if(illTime%10 < 5)
+		animation_set->at(ani)->Render(x, y, alpha);
+	else
+		animation_set->at(ani)->Render(x, y, 50);
+
 	
 	//RenderBoundingBox();
 

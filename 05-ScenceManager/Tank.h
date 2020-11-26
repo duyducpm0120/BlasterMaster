@@ -68,7 +68,8 @@
 #define TANK_UP_GUN_WIDHT	26
 #define TANK_UP_GUN_HEIGHT	34
 
-#define TANK_UNTOUCHABLE_TIME 3000
+#define TANK_UNTOUCHABLE_TIME 15000
+
 
 
 
@@ -88,6 +89,7 @@ class CTank : public CPlayer
 	bool isJumping;
 	bool enableRocket;
 	int bulletLevel;
+	int illTime;
 public:
 	bool GetEnableRocket() { return  enableRocket; };
 	CTank(float x = 0.0f, float y = 0.0f);

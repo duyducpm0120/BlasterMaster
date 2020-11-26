@@ -232,30 +232,29 @@ void CGame::SweptAABB(
 
 	if (sl <= mr && sr >= ml && st <= mb && sb >= mt) {
 		if (st >= mt && sl >= ml) {
-			t = 0.0f; 
+			t = 0;
 			nx = 1.0f;
 			ny = 1.0f;
 			return;
 		}
-		else if (st <= mt && sl < ml) {
-			t = 0.0f;
+		else if (st <= mt && sl <= ml) {
+			t = 0;
 			nx = -1.0f;
 			ny = -1.0f;
 			return;
 		}
 		else if (st <= mt && sl >= ml) {
-			t = 0.0f;
+			t = 0;
 			nx = 1.0f;
 			ny = -1.0f;
 			return;
 		}
 		else {
-			t = 0.0f;
+			t = 0;
 			nx = -1.0f;
 			ny = 1.0f;
 			return;
 		}
-
 	}
 	else {
 
