@@ -27,7 +27,7 @@ CTank:: CTank(float x, float y)
 	start_y = y;
 	this->x = x;
 	this->y = y;
-	illTime = 0;
+	untouchableTime = 0;
 }
 
 void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -104,9 +104,13 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (e->obj->IsEnemy()) {		
-				health -= e->obj->GetDamage();
-				vx -= 0.3f;
+			if (e->obj->IsEnemy()) {	
+				if (untouchableTime == 0) {
+					health -= e->obj->GetDamage();
+					vx -= 0.3f;
+					untouchableTime = 1;
+				}
+				
 				//vy -= 0.3f;
 				if (health <= 0)
 					visible = false;
@@ -137,9 +141,14 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 			else if (dynamic_cast<CFlame*>(e->obj)) {
-				health--;
+				if (untouchableTime == 0) {
+					health--;
+					untouchableTime = 1;
+				}
+				
+
 				//vx -= (vx + 0.3f);
-				vy -= 0.4f;
+				//vy -= 0.4f;
 				if (health <= 0)
 					visible = false;
 			}
@@ -159,9 +168,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];	
 	DebugOut(L"\n \n  Result size: %d \t \n", coEventsResult.size());
-	illTime += 1;
-	if (illTime == TANK_UNTOUCHABLE_TIME)
-		illTime = 0;
+	StartUntouchableTime();
 
 }
 
@@ -219,13 +226,12 @@ void CTank::Render()
 	}
 
 
-	int alpha = 255;
-	if (untouchable) alpha = 128;
+	int alpha = 255;	
 	/*if ((ani == TANK_ANI_WALKING_RIGHT || ani == TANK_ANI_IDLE_RIGHT || state == TANK_STATE_JUMP || state == TANK_STATE_DIE) && nx == 1)
 		animations[ani]->Render(x, y, 1, alpha);
 	else
 		animations[ani]->Render(x, y, -1, alpha);*/
-	if(illTime%10 < 5)
+	if(untouchableTime % 10 < 5)
 		animation_set->at(ani)->Render(x, y, alpha);
 	else
 		animation_set->at(ani)->Render(x, y, 50);
@@ -331,4 +337,13 @@ void CTank::Reset()
 	SetState(TANK_STATE_IDLE_RIGHT);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
+}
+
+void CTank::StartUntouchableTime()
+{
+	if (untouchableTime == 0)
+		return;
+	untouchableTime += 1;
+	if (untouchableTime == TANK_UNTOUCHABLE_TIME)
+		untouchableTime = 0;
 }
