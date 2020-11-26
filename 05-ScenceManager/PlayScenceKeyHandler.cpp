@@ -241,6 +241,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 						for (int i = 0; i < objects->size(); i++) {
 							if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 200) {
 								rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
+								rocket->SetTargetObject(objects->at(i));
 								float x1, y1;
 								player->GetPosition(x1, y1);
 								rocket->SetPosition(x1 - 15, (y1 - ROCKET_BBOX_HEIGHT) - 15);
@@ -257,6 +258,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 						for (int i = 0; i < objects->size(); i++) {
 							if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 200) {
 								rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
+								rocket->SetTargetObject(objects->at(i));
 								float x1, y1;
 								player->GetPosition(x1, y1);
 								rocket->SetPosition(x1 + TANK_NORMAL_WIDTH + 5, (y1 - ROCKET_BBOX_HEIGHT) - 10);
@@ -274,6 +276,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 					for (int i = 0; i < objects->size(); i++) {
 						if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 200) {
 							rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
+							rocket->SetTargetObject(objects->at(i));
 							float x1, y1;
 							player->GetPosition(x1, y1);
 							rocket->SetPosition(x1 + (TANK_UP_GUN_WIDHT - ROCKET_BBOX_WIDTH) / 2, y1 - ROCKET_BBOX_HEIGHT + 8);

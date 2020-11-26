@@ -3,7 +3,6 @@
 
 #include "Game.h"
 #include "Portal.h"
-#include "Goomba.h"
 #include "Utils.h"
 #include "Golem.h"
 #include "Item.h"
