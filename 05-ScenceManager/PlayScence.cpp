@@ -184,6 +184,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case 15:
 		obj = new CSophia(x, y);
 		player = (CSophia*)obj;
+		player->health = *this->playerHealth;
+		player->damage = *this->playerPower;
+		hud = new HUD(player->GetHealth(), player->GetDamage());
 		break;
 	case OBJECT_TYPE_GOLEM: obj = new CGolem();
 		dynamic_cast<CGolem*>(obj)->SetStartPosition(x, y);
@@ -457,7 +460,7 @@ void CPlayScene::Render()
 		if (objects[i]->visible == true)
 		{
 			objects[i]->Render();
-			//objects[i]->RenderBoundingBox();
+			objects[i]->RenderBoundingBox();
 		}
 	}
 	//hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());

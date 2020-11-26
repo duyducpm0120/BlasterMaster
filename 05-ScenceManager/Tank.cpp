@@ -8,6 +8,10 @@
 #include "Golem.h"
 #include "Item.h"
 #include "Flame.h"
+#include "Rocket.h"
+#include "Brick.h"
+#include "Bullet.h"
+#include "Sophia.h"
 CTank:: CTank(float x, float y) 
 {
 	bulletLevel = 1;
@@ -67,10 +71,20 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float rdy = 0;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			if (dynamic_cast<CSophia*> (coEventsResult[i]->obj) || dynamic_cast<CRocket*> (coEventsResult[i]->obj) || dynamic_cast<CBullet*> (coEventsResult[i]->obj) || dynamic_cast<CItem*> (coEventsResult[i]->obj))
+			{
+				//x += dx;
+				//y += dy;
+			}
+			else {
+				x += min_tx * dx + nx * 0.4f;
+				y += min_ty * dy + ( ny < 0 ? ny : 0) * 0.4f;
+			}
+		}
 		// block 
-		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.4f;
+		
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0.00f;
@@ -85,7 +99,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			DebugOut(L"vy: %f \t",vy);*/
 
 
-		// Collision logic with Goombas
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -143,9 +156,8 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-
-	//DebugOut(L"\n \n  state: %d \t \n", state);
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];	
+	DebugOut(L"\n \n  Result size: %d \t \n", coEventsResult.size());
 }
 
 void CTank::Render()

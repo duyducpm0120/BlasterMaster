@@ -95,11 +95,11 @@ public:
 	int GetBulletLevel() { return bulletLevel; };
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();
-	void SetState(int state);
+	virtual void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	bool IsJumping() { return isJumping; };
-	void SetDimension(int width, int height);
-	void GetDimension(int& width, int& height);
+	virtual void SetDimension(int width, int height);
+	virtual void GetDimension(int& width, int& height);
 	void Reset();
 
 

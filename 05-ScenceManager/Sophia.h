@@ -9,7 +9,7 @@
 
 #define SOPHIA_WALKING_SPEED		0.1f 
 //0.1f
-#define SOPHIA_JUMP_SPEED_Y		0.35f
+#define SOPHIA_JUMP_SPEED_Y		0.30f
 #define SOPHIA_JUMP_DEFLECT_SPEED 0.35f
 #define SOPHIA_GRAVITY			0.001f
 #define SOPHIA_DIE_DEFLECT_SPEED	 0.35f
@@ -19,6 +19,7 @@
 #define SOPHIA_STATE_WALKING_LEFT		200
 #define SOPHIA_STATE_WALKING_RIGHT	300
 #define	SOPHIA_STATE_CLIMBING_LADDER	400
+#define SOPHIA_STATE_JUMP	500
 
 #define SOPHIA_STATE_DIE				800
 
@@ -60,8 +61,8 @@ class CSophia : public CPlayer
 	DWORD untouchable_start;
 	float start_x;			// initial position of SOPHIA at scene
 	float start_y;
-	int SOPHIA_width;
-	int SOPHIA_height;
+	int sophia_width;
+	int sophia_height;
 	int bulletLevel;
 	bool isJumping;
 public:

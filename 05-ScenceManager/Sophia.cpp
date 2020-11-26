@@ -12,13 +12,16 @@ CSophia::CSophia(float x, float y)
 {
 	nx = -1;
 	bulletLevel = 1;
+	health = 8;
+	damage = 1;
 	isJumping = false;
 	health = SOPHIA_START_HEALTH;
 	damage = SOPHIA_START_DAMAGE;
 	untouchable = 0;
+	state = SOPHIA_STATE_IDLE_LEFT;
 	SetState(SOPHIA_STATE_IDLE_LEFT);
-	SOPHIA_width = SOPHIA_BBOX_WIDTH;
-	SOPHIA_height = SOPHIA_BBOX_HEIGHT;
+	sophia_width = SOPHIA_BBOX_WIDTH;
+	sophia_height = SOPHIA_BBOX_HEIGHT;
 	start_x = x;
 	start_y = y;
 	this->x = x;
@@ -35,6 +38,9 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		bulletLevel = 1;
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
+
+	if (vy >= 0.0f && vy <= 0.35f)
+		isJumping = false;
 
 	// Simple fall down
 	vy += SOPHIA_GRAVITY * dt;
@@ -128,15 +134,13 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (health <= 0)
 					visible = false;
 			}
-
-
 		}
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	//DebugOut(L"\n \n  state: %d \t \n", state);
+	DebugOut(L"\n \n  vy: %f \t \n", vy);
 }
 
 void CSophia::Render()
@@ -159,6 +163,12 @@ void CSophia::Render()
 		break;
 	case SOPHIA_STATE_IDLE_LEFT:
 		ani = SOPHIA_ANI_IDLE_LEFT;
+		break;
+	case SOPHIA_STATE_JUMP:
+		if (nx = -1)
+			ani = SOPHIA_ANI_IDLE_LEFT;
+		else
+			ani = SOPHIA_ANI_IDLE_RIGHT;
 		break;
 	}
 
@@ -203,7 +213,10 @@ void CSophia::SetState(int state)
 		break;
 	case SOPHIA_STATE_DIE:
 		//vy = -SOPHIA_DIE_DEFLECT_SPEED;
-		y -= 23;
+		//y -= 23;
+		break;
+	case SOPHIA_STATE_JUMP:
+		vy -= SOPHIA_JUMP_SPEED_Y;
 		break;
 	}
 
@@ -213,18 +226,18 @@ void CSophia::GetBoundingBox(float& left, float& top, float& right, float& botto
 {
 	left = x;
 	top = y;
-	right = x + SOPHIA_width;
-	bottom = y + SOPHIA_height;
+	right = x + sophia_width;
+	bottom = y + sophia_height;
 }
 void CSophia::SetDimension(int width, int height)
 {
-	this->SOPHIA_width = width;
-	this->SOPHIA_height = height;
+	this->sophia_width = width;
+	this->sophia_height = height;
 }
 void CSophia::GetDimension(int& width, int& height)
 {
-	width = this->SOPHIA_width;
-	height = this->SOPHIA_height;
+	width = this->sophia_width;
+	height = this->sophia_height;
 }
 void CSophia::Reset()
 {

@@ -41,7 +41,7 @@ public:
 	virtual void Render();
 	virtual void Unload();
 
-	CGameObject * GetPlayer() { return player; } 
+	CPlayer * GetPlayer() { return player; } 
 	int GetPlayerHealth() { return *playerHealth; };
 	int GetPlayerPower() { return *playerPower; };
 	void SetPlayer(CPlayer* player);
