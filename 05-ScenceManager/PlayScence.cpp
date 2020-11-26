@@ -16,6 +16,7 @@
 #include "Worm.h"
 #include "Bee.h"
 #include "Flame.h"
+#include "Boss.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -52,6 +53,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_WORM	12
 #define OBJECT_TYPE_BEE	13
 #define OBJECT_TYPE_FLAME	14
+#define OBJECT_TYPE_BOSS	16
 #define OBJECT_TYPE_PORTAL	50
 
 #define MAX_SCENE_LINE 1024
@@ -190,7 +192,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
 	case OBJECT_TYPE_FLAME: obj = new CFlame(); break;
-	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
+	case OBJECT_TYPE_BOSS: obj = new CBoss(); break;
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = atof(tokens[4].c_str());
