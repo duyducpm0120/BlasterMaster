@@ -3,11 +3,16 @@
 
 #include "Game.h"
 #include "Portal.h"
+#include "Goomba.h"
 #include "Utils.h"
 #include "Golem.h"
 #include "Item.h"
 #include "Flame.h"
-CTank:: CTank(float x, float y)  : CGameObject()
+#include "Rocket.h"
+#include "Brick.h"
+#include "Bullet.h"
+#include "Sophia.h"
+CTank:: CTank(float x, float y) 
 {
 	bulletLevel = 1;
 	enableRocket = true;
@@ -22,6 +27,7 @@ CTank:: CTank(float x, float y)  : CGameObject()
 	start_y = y;
 	this->x = x;
 	this->y = y;
+	untouchableTime = 0;
 }
 
 void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -66,10 +72,20 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float rdy = 0;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			if (dynamic_cast<CSophia*> (coEventsResult[i]->obj) || dynamic_cast<CRocket*> (coEventsResult[i]->obj) || dynamic_cast<CBullet*> (coEventsResult[i]->obj) || dynamic_cast<CItem*> (coEventsResult[i]->obj))
+			{
+				//x += dx * 0.5;
+				//y += dy;
+			}
+			else {
+				x += min_tx * dx + nx * 0.4f;
+				y += min_ty * dy + ( ny < 0 ? ny : 0) * 0.4f;
+			}
+		}
 		// block 
-		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.4f;
+		
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0.00f;
@@ -84,14 +100,17 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			DebugOut(L"vy: %f \t",vy);*/
 
 
-		// Collision logic with Goombas
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (e->obj->IsEnemy()) {		
-				health -= e->obj->GetDamage();
-				vx -= 0.3f;
+			if (e->obj->IsEnemy()) {	
+				if (untouchableTime == 0) {
+					health -= e->obj->GetDamage();
+					vx -= 0.3f;
+					untouchableTime = 1;
+				}
+				
 				//vy -= 0.3f;
 				if (health <= 0)
 					visible = false;
@@ -122,20 +141,16 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 			else if (dynamic_cast<CFlame*>(e->obj)) {
-				if (e->ny < 0) {
+				if (untouchableTime == 0) {
 					health--;
-					//vx -= (vx + 0.3f);
-					vy -= 0.4f;
-					if (health <= 0)
-						visible = false;
+					untouchableTime = 1;
 				}
-				else if (e->ny > 0) {
-					health--;
-					//vx -= (vx + 0.3f);
-					vy += 0.4f;
-					if (health <= 0)
-						visible = false;
-				}
+				
+
+				//vx -= (vx + 0.3f);
+				//vy -= 0.4f;
+				if (health <= 0)
+					visible = false;
 			}
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{
@@ -151,9 +166,10 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];	
+	DebugOut(L"\n \n  Result size: %d \t \n", coEventsResult.size());
+	StartUntouchableTime();
 
-	//DebugOut(L"\n \n  state: %d \t \n", state);
 }
 
 void CTank::Render()
@@ -210,13 +226,16 @@ void CTank::Render()
 	}
 
 
-	int alpha = 255;
-	if (untouchable) alpha = 128;
+	int alpha = 255;	
 	/*if ((ani == TANK_ANI_WALKING_RIGHT || ani == TANK_ANI_IDLE_RIGHT || state == TANK_STATE_JUMP || state == TANK_STATE_DIE) && nx == 1)
 		animations[ani]->Render(x, y, 1, alpha);
 	else
 		animations[ani]->Render(x, y, -1, alpha);*/
-	animation_set->at(ani)->Render(x, y, alpha);
+	if(untouchableTime % 10 < 5)
+		animation_set->at(ani)->Render(x, y, alpha);
+	else
+		animation_set->at(ani)->Render(x, y, 50);
+
 	
 	//RenderBoundingBox();
 
@@ -318,4 +337,13 @@ void CTank::Reset()
 	SetState(TANK_STATE_IDLE_RIGHT);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
+}
+
+void CTank::StartUntouchableTime()
+{
+	if (untouchableTime == 0)
+		return;
+	untouchableTime += 1;
+	if (untouchableTime == TANK_UNTOUCHABLE_TIME)
+		untouchableTime = 0;
 }

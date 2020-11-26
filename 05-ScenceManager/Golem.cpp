@@ -4,6 +4,7 @@ CGolem::CGolem()
 	damage = 1;
 	health = 2;
 	nx = -1;
+	vy = 0;
 	SetState(GOLEM_STATE_WALKING_LEFT);
 }
 

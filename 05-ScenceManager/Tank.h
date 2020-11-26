@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include	"Player.h"
 
 #pragma region define
 
@@ -64,14 +65,15 @@
 #define TANK_UP_GUN_WIDHT	26
 #define TANK_UP_GUN_HEIGHT	34
 
-#define TANK_UNTOUCHABLE_TIME 3000
+#define TANK_UNTOUCHABLE_TIME 200
+
 
 #pragma endregion
 
 
 
 
-class CTank : public CGameObject
+class CTank : public CPlayer
 {
 	int untouchable;
 	DWORD untouchable_start;
@@ -82,6 +84,7 @@ class CTank : public CGameObject
 	bool isJumping;
 	bool enableRocket;
 	int bulletLevel;
+	int untouchableTime;
 public:
 	bool GetEnableRocket() { return  enableRocket; };
 	CTank(float x = 0.0f, float y = 0.0f);
@@ -96,7 +99,7 @@ public:
 	void SetDimension(int width, int height);
 	void GetDimension(int &width, int &height);
 	void Reset();
-
+	void StartUntouchableTime();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

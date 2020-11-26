@@ -20,7 +20,9 @@
 #include "GameObject.h"
 #include "Textures.h"
 
+#include "Mario.h"
 #include "Brick.h"
+#include "Goomba.h"
 
 #include "PlayScence.h"
 
@@ -31,7 +33,7 @@
 #define SCREEN_WIDTH 350
 #define SCREEN_HEIGHT 275
 
-#define MAX_FRAME_RATE 1000
+#define MAX_FRAME_RATE 240
 
 CGame *game;
 
@@ -177,7 +179,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game->Init(hWnd);
 	game->InitKeyboard();
 	game->LoadResources();
-	game->Load(L"Setting.txt");
+	game->Load(L"mario-sample.txt");
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

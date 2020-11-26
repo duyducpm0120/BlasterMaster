@@ -22,7 +22,7 @@ void HUD::Update(float x, float y, int currentPlayerHealth, int currentGunHealth
 	playerHB->Update(currentPlayerHealth, x + 3, y + 112.5); // Hard code -> Dieu chinh khoang cach cac unit mau cua Player #LKP
 }
 
-void HUD::Render(CTank* playerInfo)
+void HUD::Render(CPlayer* playerInfo)
 {
 	UIanimationSet->at(HEALTH_TYPE_GUN_NULL)->Render(x, y + ARTICULAR_GUNPOWER_HEALTHBAR_Y,255);
 	UIanimationSet->at(HEALTH_TYPE_PLAYER_NULL)->Render(x, y + ARTICULAR_PLAYER_HEALTHBAR_Y,255);
