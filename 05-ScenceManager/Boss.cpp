@@ -1,7 +1,10 @@
 #include "Boss.h"
 
-CBoss::CBoss()
+CBoss::CBoss() :
+	BigClawLeft(18),
+	BigClawRight(18)
 {
+	
 	damage = 1;
 	health = 3;
 	nx = -1;
@@ -57,16 +60,19 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y = startY;
 		vy = -Boss_WALKING_SPEED;
 	}
+	this->BigClawLeft.x = this->x-60;
+	this->BigClawLeft.y = this->y;
+	this->BigClawRight.x = this->x + 60;
+	this->BigClawRight.y = this->y;
 }
 
 
 void CBoss::Render()
 {
 	int ani;
-	if (state == Boss_STATE_WALKING_LEFT)
+	
 		ani = Boss_ANI_WALKING_LEFT;
-	else
-		ani = Boss_ANI_WALKING_RIGHT;
+
 
 
 	/*if (state == Boss_STATE_DIE) {
@@ -76,6 +82,8 @@ void CBoss::Render()
 	animation_set->at(ani)->Render(x, y);
 
 	//RenderBoundingBox();
+	BigClawLeft.Render();
+	BigClawRight.Render();
 }
 
 void CBoss::SetState(int state)
@@ -101,4 +109,23 @@ void CBoss::SetStartPosition(float x, float y)
 {
 	startX = x;
 	startY = y;
+}
+
+CBoss::BossClawSection::BossClawSection(int anisetid)
+{
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(anisetid));
+}
+
+void CBoss::BossClawSection::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+}
+
+void CBoss::BossClawSection::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	
+}
+
+void CBoss::BossClawSection::Render()
+{
+	animation_set->at(0)->Render(x, y);
 }

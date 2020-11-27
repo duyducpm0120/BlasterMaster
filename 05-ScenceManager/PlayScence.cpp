@@ -17,6 +17,7 @@
 #include "Bee.h"
 #include "Flame.h"
 #include "Sophia.h"
+#include "Boss.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -54,6 +55,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_BEE	13
 #define OBJECT_TYPE_FLAME	14
 #define OBJECT_TYPE_PORTAL	50
+#define OBJECT_TYPE_BOSS	16
 
 #define MAX_SCENE_LINE 1024
 
@@ -213,6 +215,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_BEE: obj = new CBee();
 		dynamic_cast<CBee*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_BOSS: obj = new CBoss();
+		dynamic_cast<CBoss*>(obj)->SetStartPosition(x, y);
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
