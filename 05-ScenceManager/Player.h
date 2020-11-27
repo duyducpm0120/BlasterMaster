@@ -88,16 +88,16 @@ class CPlayer : public CGameObject
 	bool enableRocket;
 	int bulletLevel;
 public:
-	bool GetEnableRocket() { return  enableRocket; };
+	virtual bool GetEnableRocket() { return  enableRocket; };
 	CPlayer(float x = 0.0f, float y = 0.0f);
-	int GetHealth() { return this->health; }
-	int GetDamage() { return this->damage; }
-	int GetBulletLevel() { return bulletLevel; };
+	virtual int GetHealth() { return this->health; }
+	virtual int GetDamage() { return this->damage; }
+	virtual int GetBulletLevel() { return bulletLevel; };
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();
 	virtual void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-	bool IsJumping() { return isJumping; };
+	virtual bool IsJumping() { return isJumping; };
 	virtual void SetDimension(int width, int height);
 	virtual void GetDimension(int& width, int& height);
 	void Reset();

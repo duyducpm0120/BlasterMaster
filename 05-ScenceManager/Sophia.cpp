@@ -145,7 +145,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	DebugOut(L"\n \n  vy: %f \t \n", vy);
+	DebugOut(L"\n \n  touchtank: %d \t \n", isTouchTank);
 	HandleUntouchableTime();
 }
 
