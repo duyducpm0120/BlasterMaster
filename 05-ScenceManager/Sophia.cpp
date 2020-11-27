@@ -49,10 +49,17 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
+	vector<LPCOLLISIONEVENT> coCollisoningEvents;
 	coEvents.clear();
 	// turn off collision when die 
-	if (state != SOPHIA_STATE_DIE)
-		CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialCollisions(coObjects, coEvents);
+	CalcColliding(coObjects, coCollisoningEvents);
+
+	for (int i = 0; i < coCollisoningEvents.size(); i++) {
+		LPCOLLISIONEVENT e = coCollisoningEvents[i];
+		if (dynamic_cast<CTank*>(e->obj))
+			isTouchTank = true;
+	}
 
 	// reset untouchable timer if untouchable time has passed
 	/*if (GetTickCount() - untouchable_start > SOPHIA_UNTOUCHABLE_TIME)
@@ -76,12 +83,12 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		// block 
-		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		
+		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
-
 		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0.00f;
+		if (ny != 0) vy = 0;
+	
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{

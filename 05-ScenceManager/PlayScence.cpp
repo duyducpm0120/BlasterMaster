@@ -333,6 +333,17 @@ void CPlayScene::Update(DWORD dt)
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
+	if (dynamic_cast<CTank*>(player)) {
+		for (int i = 0; i < objects.size(); i++) {
+			if (dynamic_cast<CSophia*>(objects.at(i)))
+			{
+				objects.erase(objects.begin() + i);
+				break;
+			}
+
+		}
+	}
+
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
@@ -399,6 +410,13 @@ void CPlayScene::Update(DWORD dt)
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
+	
+	if (dynamic_cast<CTank*>(player)) {
+		int w, h;
+		player->GetDimension(w, h);
+		if (h == TANK_UP_GUN_HEIGHT)
+			cy += 16;
+	}
 
 	CGame* game = CGame::GetInstance();
 	//cx -= game->GetScreenWidth() / 2;

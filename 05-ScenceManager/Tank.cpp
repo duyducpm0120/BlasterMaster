@@ -45,17 +45,15 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
+	vector<LPCOLLISIONEVENT> coCollisoningEvents;
+
+	
 	coEvents.clear();
 	// turn off collision when die 
-	if (state != TANK_STATE_DIE)
-		CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialCollisions(coObjects, coEvents);
+	CalcColliding(coObjects, coCollisoningEvents);
 
-	// reset untouchable timer if untouchable time has passed
-	/*if (GetTickCount() - untouchable_start > TANK_UNTOUCHABLE_TIME)
-	{
-		untouchable_start = 0;
-		untouchable = 0;
-	}*/
+
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -71,42 +69,36 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float rdy = 0;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		
+		/*for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			if (dynamic_cast<CSophia*> (coEventsResult[i]->obj) || dynamic_cast<CRocket*> (coEventsResult[i]->obj) || dynamic_cast<CBullet*> (coEventsResult[i]->obj) || dynamic_cast<CItem*> (coEventsResult[i]->obj))
-			{
-				//x += dx * 0.5;
-				//y += dy;
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (dynamic_cast<CSophia*>(e->obj)) {
+				x += dx ;
+				y += dy + ny * 0.4; ;
 			}
 			else {
 				x += min_tx * dx + nx * 0.4f;
-				y += min_ty * dy + ( ny < 0 ? ny : 0) * 0.4f;
+				y += min_ty * dy + (ny < 0 ? ny : 0) * 0.4f;
+				if (nx != 0) vx = 0;
+				if (ny != 0) vy = 0;
 			}
-		}
-		// block 
-		
+			
+		}*/
 
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + (ny < 0 ? ny : 0) * 0.4f;
 		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0.00f;
-
-
-		/*if (vy == 0)
-			if (nx == -1)
-				SetState( TANK_STATE_IDLE_LEFT);
-			else
-				SetState( TANK_STATE_IDLE_RIGHT);*/
-		/*if(vy>0)
-			DebugOut(L"vy: %f \t",vy);*/
-
+		if (ny != 0) vy = 0;
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
+
 			if (e->obj->IsEnemy()) {	
 				if (untouchableTime == 0) {
 					health -= e->obj->GetDamage();
-					vx -= 0.3f;
 					untouchableTime = 1;
 				}
 				

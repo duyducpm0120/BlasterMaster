@@ -65,8 +65,22 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-
 	CalcPotentialCollisions(coObjects, coEvents);
+
+
+	vector<LPCOLLISIONEVENT> coCollisoningEvents;
+	CalcCollisioning(coObjects, coCollisoningEvents);
+
+	for (int i = 0; i < coCollisoningEvents.size(); i++) {
+		LPCOLLISIONEVENT e = coCollisoningEvents[i];
+		if ((e->obj)->IsEnemy()) {
+			e->obj->TakeDamage(this->damage);				//Destroy every enemy
+			this->visible = false;
+		}
+		else if (dynamic_cast<CBrick*>(e->obj)) {
+			this->visible = false;
+		}
+	}
 
 
 		float min_tx, min_ty, nx = 0, ny;
