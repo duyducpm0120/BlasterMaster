@@ -5,7 +5,7 @@
 #pragma region define
 
 #define	TANK_START_HEALTH	7
-#define TANK_START_DAMAGE	1
+#define TANK_START_DAMAGE	5
 
 #define TANK_WALKING_SPEED		0.1f 
 //0.1f

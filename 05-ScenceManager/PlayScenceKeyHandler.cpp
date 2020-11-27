@@ -183,11 +183,12 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				sophia->SetAnimationSet(ani_set);
 	
 				//dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer())->visible = false;
-				((CPlayScene*)scence)->SetPlayer(sophia);
-				if (tank->nx == -1)
-					tank->SetState(TANK_STATE_IDLE_LEFT);
+				
+				if (((CPlayScene*)scence)->GetPlayer()->nx == -1)
+					((CPlayScene*)scence)->GetPlayer()->SetState(TANK_STATE_IDLE_LEFT);
 				else
-					tank->SetState(TANK_STATE_IDLE_RIGHT);
+					((CPlayScene*)scence)->GetPlayer()->SetState(TANK_STATE_IDLE_RIGHT);
+				((CPlayScene*)scence)->SetPlayer(sophia);
 				((CPlayScene*)scence)->SetHUD(new HUD(player->GetHealth(), player->GetDamage()));
 				objects->push_back(sophia);
 			}
@@ -334,15 +335,14 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		case DIK_W:
 			if (dynamic_cast<CSophia*> (player)->IsTouchTank())
 			{
-				sophia->vy -= 0.01;
 				tank = ((CPlayScene*)scence)->GetTank();
 				tank->health = player->GetHealth();
 				tank->damage = player->GetDamage();
+				((CPlayScene*)scence)->GetPlayer()->vy -= 0.01;
 				//dynamic_cast<CTank*> (((CPlayScene*)scence)->GetPlayer())->visible = false;
 				((CPlayScene*)scence)->SetPlayer(&(*tank));
 				
 				((CPlayScene*)scence)->SetHUD(new HUD(player->GetHealth(), player->GetDamage()));
-				delete sophia;
 				
 			}
 			break;

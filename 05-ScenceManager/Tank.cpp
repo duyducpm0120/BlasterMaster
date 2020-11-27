@@ -16,8 +16,6 @@ CTank:: CTank(float x, float y)
 	bulletLevel = 1;
 	enableRocket = true;
 	isJumping = false;
-	health = TANK_START_HEALTH;
-	damage = TANK_START_DAMAGE;
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
 	tank_width = TANK_NORMAL_WIDTH;
@@ -52,7 +50,12 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// turn off collision when die 
 	CalcPotentialCollisions(coObjects, coEvents);
 	CalcColliding(coObjects, coCollisoningEvents);
-
+	for (int i = 0; i < coCollisoningEvents.size(); i++) {
+		LPCOLLISIONEVENT e = coCollisoningEvents[i];
+		if (dynamic_cast<CBrick*>(e->obj))
+		{
+		}
+	}
 
 
 	// No collision occured, proceed normally

@@ -337,6 +337,7 @@ void CPlayScene::Update(DWORD dt)
 		for (int i = 0; i < objects.size(); i++) {
 			if (dynamic_cast<CSophia*>(objects.at(i)))
 			{
+				dynamic_cast<CSophia*>(objects.at(i))->vy -= 0.01f;
 				objects.erase(objects.begin() + i);
 				break;
 			}

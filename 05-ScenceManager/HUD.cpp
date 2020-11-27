@@ -25,7 +25,7 @@ void HUD::Update(float x, float y, int currentPlayerHealth, int currentGunHealth
 void HUD::Render(CPlayer* playerInfo)
 {
 	UIanimationSet->at(HEALTH_TYPE_GUN_NULL)->Render(x, y + ARTICULAR_GUNPOWER_HEALTHBAR_Y,255);
-	UIanimationSet->at(HEALTH_TYPE_PLAYER_NULL)->Render(x, y + ARTICULAR_PLAYER_HEALTHBAR_Y,255);
+	UIanimationSet->at(HEALTH_TYPE_PLAYER_NULL)->Render(x+1, y + ARTICULAR_PLAYER_HEALTHBAR_Y,255);
 	gunHB->Render();
 	playerHB->Render();
 }
