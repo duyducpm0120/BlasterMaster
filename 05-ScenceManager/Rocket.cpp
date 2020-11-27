@@ -79,7 +79,7 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CalcPotentialCollisions(coObjects, coEvents);
 
 	vector<LPCOLLISIONEVENT> coCollisoningEvents;
-	CalcCollisioning(coObjects, coCollisoningEvents);
+	CalcColliding(coObjects, coCollisoningEvents);
 
 	for (int i = 0; i < coCollisoningEvents.size(); i++) {
 		LPCOLLISIONEVENT e = coCollisoningEvents[i];
