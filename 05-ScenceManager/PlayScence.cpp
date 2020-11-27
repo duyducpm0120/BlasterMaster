@@ -268,6 +268,54 @@ void CPlayScene::_ParseSection_TILE_MAP(string line)
 	
 }
 
+void CPlayScene::CallDestroyed(CGameObject* object)
+{
+	if (!dynamic_cast<CDestroyed*>(object)) {
+
+		if (dynamic_cast<CBullet*>(object)) {
+			CDestroyed* destroyed = new CDestroyed(1);
+			destroyed->SetPosition(object->x, object->y);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+		}
+		else if (dynamic_cast<CTank*>(object)) {
+			CDestroyed* destroyed = new CDestroyed(3);
+			destroyed->SetPosition(object->x - 19, object->y - 30);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+		}
+		else if (!dynamic_cast<CItem*>(object)) {
+			if (object->IsEnemy() == true)
+			{
+				srand(time(NULL));
+				int n = rand() % 2;
+				if (n == 1)
+				{
+					int type = rand() % 3;
+					CItem* item = new CItem(type);
+					item->SetPosition(object->x, object->y - 10);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
+					item->SetAnimationSet(ani_set);
+					objects.push_back(item);
+				}
+
+			}
+			CDestroyed* destroyed = new CDestroyed(2);
+			destroyed->SetPosition(object->x, object->y);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+		}
+
+	}
+}
+
 
 void CPlayScene::Load()
 {
@@ -344,14 +392,43 @@ void CPlayScene::Update(DWORD dt)
 
 		}
 	}
+	CGame* game = CGame::GetInstance();
+	grid->Clear();
 
-	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
-		coObjects.push_back(objects[i]);
+		//coObjects.push_back(objects[i]);
+		if (objects.at(i)->visible == false)
+		{
+			CallDestroyed(objects.at(i));
+			objects.erase(objects.begin() + i);
+		}
+
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
+	{
+		//coObjects.push_back(objects[i]);
+		grid->Add(objects[i]);
+		objects[i]->setToUpdate(true);
+
+	}
+	
+	updateObject.clear();
+	float left, top, right, bottom;
+	game->GetCameraBoundingBox(left, top, right, bottom);
+	grid->GetUpdateObjects(updateObject, left, top, right, bottom);
+	DebugOut(L"Size of update array %d\n", updateObject.size());
+	DebugOut(L"Size of object array %d\n", objects.size());
+
+	for (size_t i = 1; i < updateObject.size(); i++)
+	{
+		if (player == NULL) return;
+		if (updateObject[i]->visible == true && updateObject[i]->isToUpdate)
+			updateObject[i]->Update(dt, &updateObject);
+
+	}
+	/*for (size_t i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->visible == true)
 			objects[i]->Update(dt, &coObjects);
@@ -403,8 +480,9 @@ void CPlayScene::Update(DWORD dt)
 			objects.erase(objects.begin() + i);//erase obj at (i)
 			return;
 		}
+		
 	}
-
+	*/
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
@@ -419,7 +497,6 @@ void CPlayScene::Update(DWORD dt)
 			cy += 16;
 	}
 
-	CGame* game = CGame::GetInstance();
 	//cx -= game->GetScreenWidth() / 2;
 	//cy -= game->GetScreenHeight() / 2;
 	if (cx + game->GetScreenWidth() / 2 >= scene_width - 1)
