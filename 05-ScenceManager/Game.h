@@ -49,7 +49,7 @@ class CGame
 	void _ParseSection_SCENES(string line);
 
 	int playerHealth = 7;
-	int playerPower = 1;
+	int playerPower = 5;
 
 
 	//New Stuff

@@ -146,8 +146,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
 				CGame* game = CGame::GetInstance();				
-				game->SetPlayerHealth(this->health);
-				game->SetPlayerPower(this->damage);
 				game->SwitchScene(p->GetSceneId());
 			}
 			

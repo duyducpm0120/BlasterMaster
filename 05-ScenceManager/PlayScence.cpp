@@ -385,7 +385,8 @@ void CPlayScene::Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
-
+	*playerHealth = player->GetHealth();
+	*playerPower = player->GetDamage();
 	if (dynamic_cast<CTank*>(player)) {
 		for (int i = 0; i < objects.size(); i++) {
 			if (dynamic_cast<CSophia*>(objects.at(i)))
@@ -433,61 +434,7 @@ void CPlayScene::Update(DWORD dt)
 			updateObject[i]->Update(dt, &updateObject);
 
 	}
-	/*for (size_t i = 0; i < objects.size(); i++)
-	{
-		if (objects[i]->visible == true)
-			objects[i]->Update(dt, &coObjects);
-		else {
-			if (!dynamic_cast<CDestroyed*>(objects.at(i))) {
-
-				if (dynamic_cast<CBullet*>(objects.at(i))) {
-					CDestroyed* destroyed = new CDestroyed(1);
-					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
-					destroyed->SetAnimationSet(ani_set);
-					objects.push_back(destroyed);
-				}
-				else if (dynamic_cast<CTank*>(objects.at(i))) {
-					CDestroyed* destroyed = new CDestroyed(3);
-					destroyed->SetPosition(objects.at(i)->x - 19, objects.at(i)->y - 30);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
-					destroyed->SetAnimationSet(ani_set);
-					objects.push_back(destroyed);
-				}
-				else if(!dynamic_cast<CItem*>(objects.at(i))) {
-					if (objects[i]->IsEnemy() == true)
-					{
-						srand(time(NULL));
-						int n = rand() % 2 ;					
-						if (n == 1)
-						{
-							int type = rand() % 3 ;
-							CItem* item = new CItem(type);
-							item->SetPosition(objects[i]->x, objects[i]->y - 10);
-							CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-							LPANIMATION_SET ani_set = animation_sets->Get(11);		//call a Destroyed type 2
-							item->SetAnimationSet(ani_set);
-							objects.push_back(item);
-						}
-
-					}
-					CDestroyed* destroyed = new CDestroyed(2);
-					destroyed->SetPosition(objects.at(i)->x, objects.at(i)->y);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
-					destroyed->SetAnimationSet(ani_set);
-					objects.push_back(destroyed);
-				}
-
-			}
-			objects.erase(objects.begin() + i);//erase obj at (i)
-			return;
-		}
-		
-	}
-	*/
+	
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
