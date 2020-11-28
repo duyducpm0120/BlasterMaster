@@ -1,16 +1,18 @@
 #include "Boss.h"
-
+#include "Utils.h"
 CBoss::CBoss() :
 	BigClawLeft(18),
 	BigClawRight(18)
+	
 {
 	
 	damage = 1;
-	health = 3;
+	health = 100;
 	nx = -1;
 	SetState(Boss_STATE_WALKING_LEFT);
 	vx = -Boss_WALKING_SPEED;
 	vy = Boss_WALKING_SPEED;
+	init();
 }
 
 void CBoss::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -60,10 +62,15 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y = startY;
 		vy = -Boss_WALKING_SPEED;
 	}
-	this->BigClawLeft.x = this->x-60;
-	this->BigClawLeft.y = this->y;
-	this->BigClawRight.x = this->x + 60;
-	this->BigClawRight.y = this->y;
+	
+	for (int i = 0; i < 5; i++)
+	{
+		this->LeftArm[i].Update(dt, coObjects);
+	}
+	
+
+	
+	
 }
 
 
@@ -81,9 +88,25 @@ void CBoss::Render()
 
 	animation_set->at(ani)->Render(x, y);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
+	RenderArms();
+}
+
+void CBoss::init()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		this->LeftArm[i].setTarget(&this->LeftArm[i + 1]);
+		
+	}
+	this->LeftArm[4].setTarget(&this->BigClawLeft);
+}
+
+void CBoss::RenderArms()
+{
 	BigClawLeft.Render();
 	BigClawRight.Render();
+	for (int i = 0; i < 5; i++) LeftArm[i].Render();
 }
 
 void CBoss::SetState(int state)
@@ -114,18 +137,81 @@ void CBoss::SetStartPosition(float x, float y)
 CBoss::BossClawSection::BossClawSection(int anisetid)
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(anisetid));
+	this->x = 200;
+	this->y = 200;
 }
 
-void CBoss::BossClawSection::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+CBoss::BossClawSection::BossClawSection()
 {
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(17));
+	this->x = 0;
+	this->y = 0;
+	damage = 1;
+	this->vx = ARM_SPEED;
+	this->vy = ARM_SPEED;
+	this->target = NULL;
+}
+
+void CBoss::BossClawSection::GetBoundingBox(float& left, float& top, float& right, float& bottom) 
+{
+	isEnemy = true;
+	left = x;
+	top = y;
+	right = x + 15;
+	bottom = y + 15;
 }
 
 void CBoss::BossClawSection::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	Follow();
+	
+	CGameObject::Update(dt, coObjects);
+	x += dx;
+	y += dy;
 	
 }
 
 void CBoss::BossClawSection::Render()
 {
 	animation_set->at(0)->Render(x, y);
+	RenderBoundingBox();
+}
+
+void CBoss::BossClawSection::Follow()
+{
+	if (target->x > this->x) {
+		if (target->y > this->y) {
+			vx = ARM_SPEED;
+			vy = ARM_SPEED;
+			nx = 1;
+			
+		}
+		else
+		{
+			vx = ARM_SPEED;
+			vy = -ARM_SPEED;
+			nx = 1;
+			
+		}
+	}
+	else
+	{
+		if (target->y > this->y) {
+			vx = -ARM_SPEED;
+			vy = ARM_SPEED;
+			nx = -1;
+
+		}
+		else
+		{
+			vx = -ARM_SPEED;
+			vy = -ARM_SPEED;
+			nx = -1;
+		}
+	}
+}
+
+void CBoss::BossClawSection::setTarget(BossClawSection* target)
+{
+	this->target = target;
 }

@@ -13,7 +13,9 @@
 
 #define Boss_ANI_WALKING_LEFT 0
 #define Boss_ANI_WALKING_RIGHT 1
-#define Boss_ANI_DIE	2
+#define Boss_ANI_DIE	
+
+#define ARM_SPEED 0.05f;
 
 class CBoss : public CGameObject
 {
@@ -24,14 +26,19 @@ class CBoss : public CGameObject
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
+	void init();
 	
 private: 
 	class BossClawSection: public CGameObject{
+		BossClawSection* target;
 	public:
 		BossClawSection(int anisetid);
+		BossClawSection();
 		virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 		virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 		virtual void Render();
+		void Follow();
+		void setTarget(BossClawSection* target);
 	};
 public:
 
@@ -39,6 +46,9 @@ public:
 	virtual void SetState(int state);
 	void SetStartPosition(float x, float y);
 private: 
+	void RenderArms();
 	BossClawSection BigClawLeft;
 	BossClawSection BigClawRight;
+	BossClawSection LeftArm[5];
+	
 };
