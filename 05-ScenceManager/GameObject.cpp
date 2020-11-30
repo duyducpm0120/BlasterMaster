@@ -134,7 +134,17 @@ void CGameObject::FilterCollision(
 
 float CGameObject::GetDistance(CGameObject* obj)
 {
-	return sqrt(pow((this->x - obj->x), 2) + pow((this->y - obj->y), 2));
+	float l1, t1, r1, b1, l2, t2, r2, b2;
+	float x1, y1, x2, y2;
+	GetBoundingBox(l1, t1, r1, b1);
+	obj->GetBoundingBox(l2, t2, r2, b2);
+	x1 = l1 + (r1 - l1) / 2;
+	y1 = t1 + (b1 - t1) / 2;
+
+	x2 = l2 + (r2 - l2) / 2;
+	y2 = t2 + (b2 - t2) / 2;
+
+	return sqrt(pow((x1 - x2), 2) + pow((y1 - y2), 2));
 }
 
 void CGameObject::RenderBoundingBox()

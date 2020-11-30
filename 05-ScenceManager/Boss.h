@@ -22,6 +22,7 @@ class CBoss : public CGameObject
 	int nx;
 	float startX;
 	float startY;
+	int count;
 
 	
 	
@@ -36,6 +37,14 @@ private:
 		CGameObject* target;
 		int nI;
 		float angle;
+		float startX;
+		float startY;
+		int MovingSpaceX;
+		int MovingSpaceY;
+		CBoss* baseBoss;
+		float bossLastMoveX;
+		float bossLastMoveY;
+
 	public:
 		BossClawSection(int anisetid);
 		BossClawSection();
@@ -44,11 +53,22 @@ private:
 		virtual void Render();
 		void Follow();
 		void setTarget(CGameObject* target);
+		void setMovingSpace(int x, int y);
+		void setStartPosition(float x, float y) { this->startX = x; this->startY = y; };
+		void setnI(int i) { this->nI = i; };
+		void setBaseBoss(CBoss* boss) { this->baseBoss = boss; };
+		void FollowBoss();
+		void SetBossLastMove(float x, float y) {
+			bossLastMoveX = x;
+
+			bossLastMoveY = y;
+		};
 	};
 public:
 
 	CBoss();
-	CGameObject* LeftClawTargetRandomMovingObject;
+	CGameObject* LeftClawTargetRandomMovingObject1;
+	CGameObject* LeftClawTargetRandomMovingObject2;
 	virtual void SetState(int state);
 	void SetStartPosition(float x, float y);
 private: 
