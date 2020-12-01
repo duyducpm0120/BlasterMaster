@@ -25,20 +25,11 @@ class CBoss : public CGameObject
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	
-private: 
-	class BossClawSection: public CGameObject{
-	public:
-		BossClawSection(int anisetid);
-		virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-		virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-		virtual void Render();
-	};
+
 public:
 
 	CBoss();
 	virtual void SetState(int state);
 	void SetStartPosition(float x, float y);
-private: 
-	BossClawSection BigClawLeft;
-	BossClawSection BigClawRight;
+
 };
