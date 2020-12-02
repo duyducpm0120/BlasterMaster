@@ -1,5 +1,5 @@
 #include "Boss.h"
-
+#include "Utils.h"
 CBoss::CBoss() :
 	BigClawLeft(18),
 	BigClawRight(18)
@@ -64,6 +64,11 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	this->BigClawLeft.y = this->y;
 	this->BigClawRight.x = this->x + 60;
 	this->BigClawRight.y = this->y;
+	this->BigClawLeft.calculateEndpoint();
+	DebugOut(L"Claw end x, %d ", this->BigClawLeft.getEndpoint().x);
+	DebugOut(L"Claw end y, %d ", this->BigClawLeft.getEndpoint().y);
+	
+
 }
 
 
@@ -84,6 +89,7 @@ void CBoss::Render()
 	//RenderBoundingBox();
 	BigClawLeft.Render();
 	BigClawRight.Render();
+	this->Guy.Render();
 }
 
 void CBoss::SetState(int state)
@@ -111,9 +117,51 @@ void CBoss::SetStartPosition(float x, float y)
 	startY = y;
 }
 
+void CBoss::BossClawSection::calculateEndpoint()
+{
+	float delx = SectionLength * cos(Angle);
+	float dely = SectionLength * sin(Angle);
+	DebugOut(L"cos(0) =, %d ", cos(3.14159265));
+	DebugOut(L"sin(0) =, %d ", sin(0.0f));
+	DebugOut(L"delx, %d", delx);
+	DebugOut(L"dely, %d", dely);
+	this->endPoint = Vec2(delx, dely);
+}
+
+void CBoss::BossClawSection::Follow(float x, float y)
+{
+	Vec2 Target = Vec2(x, y);
+	DebugOut(L"Target x %d ", x);
+	DebugOut(L"Target y %d ", y);
+	Vec2 Direction = Target - this->startPoint;
+	DebugOut(L"Direction x %d, ", Direction.x);
+	DebugOut(L"Direction  y %d, ", Direction.y);
+	Angle = atan2(Direction.y, Direction.x);
+	DebugOut(L"Angle %d", Angle);
+	this->startPoint = Target + Direction.GetNormalized() * SectionLength * (-1);
+
+}
+
+void CBoss::BossClawSection::Follow(BossClawSection& target)
+{
+	Follow(target.startPoint.x, target.startPoint.y);
+	
+}
+
 CBoss::BossClawSection::BossClawSection(int anisetid)
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(anisetid));
+	this->startPoint=Vec2(120, 240);
+	this->Angle = 0;
+	
+}
+CBoss::BossClawSection::BossClawSection()
+{
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(17));
+	this->Angle = 0;
+	this->startPoint = Vec2(50, 0);
+	this->endPoint=Vec2(0, 0);
+	
 }
 
 void CBoss::BossClawSection::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -128,4 +176,5 @@ void CBoss::BossClawSection::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CBoss::BossClawSection::Render()
 {
 	animation_set->at(0)->Render(x, y);
+
 }

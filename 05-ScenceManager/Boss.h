@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
-
+#include "Vec2.h"
+#include <math.h>
 #define Boss_WALKING_SPEED 0.03f;
 
 #define Boss_BBOX_WIDTH 60
@@ -27,11 +28,22 @@ class CBoss : public CGameObject
 	
 private: 
 	class BossClawSection: public CGameObject{
+		Vec2 startPoint;
+		Vec2 endPoint;
+		float Angle;
 	public:
+		Vec2 getEndpoint() { return endPoint; };
+		float getAngle() { return this->Angle; };
+		static int constexpr SectionLength = 20;
+		void calculateEndpoint();
+		void Follow(float x, float y);
+		void Follow(BossClawSection& target);
 		BossClawSection(int anisetid);
+		BossClawSection();
 		virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 		virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 		virtual void Render();
+		
 	};
 public:
 
@@ -41,4 +53,5 @@ public:
 private: 
 	BossClawSection BigClawLeft;
 	BossClawSection BigClawRight;
+	BossClawSection Guy;
 };
