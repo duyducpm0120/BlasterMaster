@@ -519,16 +519,15 @@ void CPlayScene::Render()
 	for (int i = 0; i < tiledMap.size(); i++)
 		tiledMap[i]->Render();
 	//Object Rendering
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; i < updateObject.size(); i++)
 
 	{
-		if (objects[i]->visible == true)
+		if (updateObject[i]->visible == true)
 		{
-			objects[i]->Render();
+			updateObject[i]->Render();
 			//objects[i]->RenderBoundingBox();
 		}
 	}
-	//hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
 	hud->Render(player);
 }
 

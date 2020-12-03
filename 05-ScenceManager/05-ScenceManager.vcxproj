@@ -138,6 +138,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="OHSophia.cpp" />
+    <ClCompile Include="OHSophiaBullet.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScenceKeyHandler.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="OHSophia.h" />
+    <ClInclude Include="OHSophiaBullet.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScenceKeyHandler.h" />
     <ClInclude Include="Portal.h" />

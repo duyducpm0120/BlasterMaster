@@ -13,7 +13,6 @@
 #define BULLET_STATE_FLYING_LEFT 100
 #define BULLET_STATE_FLYING_RIGHT 200
 #define	BULLET_STATE_FLYING_UP	300
-#define BULLET_STATE_DIE		400
 
 #define BULLET_ANI_FLYING_LEFT_LV1	0
 #define BULLET_ANI_FLYING_RIGHT_LV1	1
@@ -23,11 +22,11 @@
 #define BULLET_ANI_FLYING_UP_LV2	5
 
 
-#define BULLET_ANI_DESTROYED	6
 
 
 class CBullet : public CGameObject
 {
+protected:
 	float startPositionX;
 	float startPositionY;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

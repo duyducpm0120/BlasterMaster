@@ -112,7 +112,10 @@
     <ClCompile Include="Sophia.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="OHSophia.cpp" />
+    <ClCompile Include="OHSophia.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="OHSophiaBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tank.h">
@@ -205,6 +208,9 @@
     <ClInclude Include="Sophia.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="OHSophia.h" />
+    <ClInclude Include="OHSophia.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="OHSophiaBullet.h" />
   </ItemGroup>
 </Project>

@@ -54,6 +54,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		LPCOLLISIONEVENT e = coCollisoningEvents[i];
 		if (dynamic_cast<CBrick*>(e->obj))
 		{
+			//vx = 0; vy = 0;
 		}
 	}
 
