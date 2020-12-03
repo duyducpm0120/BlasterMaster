@@ -38,7 +38,7 @@ protected:
 public:
 	CBullet(int level, int state);
 	virtual void SetState(int state);
-	virtual void SetStartPositon(float x, float y);
+	void SetStartPositon(float x, float y);
 	int GetState();
 };
 

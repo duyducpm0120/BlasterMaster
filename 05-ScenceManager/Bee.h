@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define BEE_WALKING_SPEED 0.03f;
+#define BEE_WALKING_SPEED 0.05f;
 
 #define BEE_BBOX_WIDTH 18
 #define BEE_BBOX_HEIGHT 18

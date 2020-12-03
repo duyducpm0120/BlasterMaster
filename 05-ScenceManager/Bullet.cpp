@@ -138,7 +138,6 @@ void CBullet::Render()
 			ani = BULLET_ANI_FLYING_RIGHT_LV2;
 	}
 	animation_set->at(ani)->Render(x, y, 255);
-
 }
 
 CBullet::CBullet(int level , int state) : CGameObject()

@@ -13,6 +13,8 @@
 #include "PlayScenceKeyHandler.h"
 #include "Rocket.h"
 #include "Sophia.h"
+#include "OHSophia.h"
+#include "OHSophiaBullet.h"
 using namespace std;
 
 void CPlayScenceKeyHandler::OnKeyUp(int KeyCode) {
@@ -375,4 +377,34 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		}
 
 	} 
+	else if (dynamic_cast<COHSophia*>(player)) {
+		switch (KeyCode)
+		{
+		case DIK_Z:
+			if (player->nx == -1)
+			{
+				COHSophiaBullet* bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_LEFT, OHSOPHIABULLET_TYPE_STRAIGHT);
+				float x1, y1;
+				player->GetPosition(x1, y1);
+				bullet->SetPosition(x1 - OHSOPHIABULLET_BBOX_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
+				bullet->SetStartPositon(x1 - OHSOPHIABULLET_BBOX_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
+				LPANIMATION_SET ani_set = animation_sets->Get(21);
+				bullet->SetAnimationSet(ani_set);
+				objects->push_back(bullet);
+			}
+			else
+			{
+				COHSophiaBullet* bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_RIGHT, OHSOPHIABULLET_TYPE_STRAIGHT);
+				float x1, y1;
+				player->GetPosition(x1, y1);
+				bullet->SetPosition(x1 + OHSOPHIA_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
+				bullet->SetStartPositon(x1 + OHSOPHIA_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
+				LPANIMATION_SET ani_set = animation_sets->Get(21);
+				bullet->SetAnimationSet(ani_set);
+				objects->push_back(bullet);
+			}
+			break;
+		}
+
+	}
 }

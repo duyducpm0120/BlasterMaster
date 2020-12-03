@@ -1,13 +1,11 @@
 #pragma once
 #include "Bullet.h"
 
-#define OHSOPHIABULLET_SPEED 0.1f
+#define OHSOPHIABULLET_SPEED 0.5f
 
-#define OHSOPHIABULLET_HORIZONTAL_BBOX_WIDTH 8
-#define OHSOPHIABULLET_HORIZONTAL_BBOX_HEIGHT 6
 
-#define OHSOPHIABULLET_VERTICAL_BBOX_WIDTH 6
-#define OHSOPHIABULLET_VERTICAL_BBOX_HEIGHT 8
+#define OHSOPHIABULLET_BBOX_WIDTH 8
+#define OHSOPHIABULLET_BBOX_HEIGHT 8
 
 #define OHSOPHIABULLET_FLYING_SPACE 100
 
@@ -18,29 +16,32 @@
 
 
 
-#define OHSOPHIABULLET_ANI_FLYING_LEFT_LV1	0
-#define OHSOPHIABULLET_ANI_FLYING_RIGHT_LV1	1
-#define OHSOPHIABULLET_ANI_FLYING_UP_LV1	2
-#define OHSOPHIABULLET_ANI_FLYING_DOWN_LV1	3
-#define OHSOPHIABULLET_ANI_FLYING_LEFT_LV2	4
-#define OHSOPHIABULLET_ANI_FLYING_RIGHT_LV2	5
-#define OHSOPHIABULLET_ANI_FLYING_UP_LV2	6
-#define OHSOPHIABULLET_ANI_FLYING_UP_LV2	7
+#define OHSOPHIABULLET_ANI_LV1	0
+#define OHSOPHIABULLET_ANI_LV2	1
+
 
 #define OHSOPHIABULLET_TYPE_STRAIGHT	0
 #define OHSOPHIABULLET_TYPE_ROUNDED		1
 #define OHSOPHIABULLET_TYPE_SIN			2
 
+struct Point
+{
+	float x;
+	float y;
 
+};
 
-class COHSophiaBullet : CBullet
+class COHSophiaBullet : public CBullet
 {
 	int type;
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Render();
+	Point point1, point2, point3, point4;
+	
 public:
-	void SetState(int state);
 	COHSophiaBullet(int level, int state, int type);
+	void SetAnchorPoint();
+	void SetState(int state);
 };
 
