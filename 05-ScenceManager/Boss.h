@@ -35,12 +35,13 @@ private:
 		void setStartPoint(Vec2 sp);
 		Vec2 getEndpoint() { return endPoint; };
 		float getAngle() { return this->Angle; };
-		static float constexpr SectionLength = 20;
+		static float constexpr SectionLength = 21;
 		void calculateEndpoint();
 		void Follow(float x, float y);
 		void Follow(BossClawSection& target); // Follow the start point of target
 		BossClawSection(int anisetid);
 		BossClawSection();
+		BossClawSection(Vec2 start, float angle);
 		virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 		virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 		virtual void Render();
@@ -51,9 +52,12 @@ public:
 	CBoss();
 	virtual void SetState(int state);
 	void SetStartPosition(float x, float y);
+	
 private: 
+
+	void Init();
 	BossClawSection BigClawLeft;
 	BossClawSection BigClawRight;
-	BossClawSection Guy;
+	BossClawSection LeftArm[4];
 
 };
