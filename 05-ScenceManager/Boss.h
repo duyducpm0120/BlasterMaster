@@ -1,8 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "Vec2.h"
-#include <math.h>
-#define Boss_WALKING_SPEED 0.03f;
+#include <cmath>
+#define Boss_WALKING_SPEED 0.07f;
 
 #define Boss_BBOX_WIDTH 60
 #define Boss_BBOX_HEIGHT 60
@@ -32,12 +32,13 @@ private:
 		Vec2 endPoint;
 		float Angle;
 	public:
+		void setStartPoint(Vec2 sp);
 		Vec2 getEndpoint() { return endPoint; };
 		float getAngle() { return this->Angle; };
-		static int constexpr SectionLength = 20;
+		static float constexpr SectionLength = 20;
 		void calculateEndpoint();
 		void Follow(float x, float y);
-		void Follow(BossClawSection& target);
+		void Follow(BossClawSection& target); // Follow the start point of target
 		BossClawSection(int anisetid);
 		BossClawSection();
 		virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
@@ -54,4 +55,5 @@ private:
 	BossClawSection BigClawLeft;
 	BossClawSection BigClawRight;
 	BossClawSection Guy;
+
 };

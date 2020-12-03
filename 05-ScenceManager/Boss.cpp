@@ -64,9 +64,12 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	this->BigClawLeft.y = this->y;
 	this->BigClawRight.x = this->x + 60;
 	this->BigClawRight.y = this->y;
-	this->BigClawLeft.calculateEndpoint();
-	DebugOut(L"Claw end x, %d ", this->BigClawLeft.getEndpoint().x);
-	DebugOut(L"Claw end y, %d ", this->BigClawLeft.getEndpoint().y);
+	
+	this->BigClawLeft.setStartPoint(Vec2(x, y));
+	this->Guy.Follow(BigClawLeft);
+	this->Guy.calculateEndpoint();
+	//DebugOut(L"Claw end x, %d ", this->BigClawLeft.getEndpoint().x);
+	//DebugOut(L"Claw end y, %d ", this->BigClawLeft.getEndpoint().y);
 	
 
 }
@@ -117,28 +120,38 @@ void CBoss::SetStartPosition(float x, float y)
 	startY = y;
 }
 
+void CBoss::BossClawSection::setStartPoint(Vec2 sp)
+{
+	this->startPoint = sp;
+}
+
 void CBoss::BossClawSection::calculateEndpoint()
 {
 	float delx = SectionLength * cos(Angle);
 	float dely = SectionLength * sin(Angle);
-	DebugOut(L"cos(0) =, %d ", cos(3.14159265));
-	DebugOut(L"sin(0) =, %d ", sin(0.0f));
-	DebugOut(L"delx, %d", delx);
-	DebugOut(L"dely, %d", dely);
+	
+	
+	
+	DebugOut(L"delx, %f \n", delx);
+	DebugOut(L"dely, %f \n", dely);
 	this->endPoint = Vec2(delx, dely);
+	this->x = this->endPoint.x;
+	this->y = this->endPoint.y;
 }
 
 void CBoss::BossClawSection::Follow(float x, float y)
 {
+	
 	Vec2 Target = Vec2(x, y);
-	DebugOut(L"Target x %d ", x);
-	DebugOut(L"Target y %d ", y);
+	DebugOut(L"Target x %f ", x);
+	DebugOut(L"Target y %f ", y);
 	Vec2 Direction = Target - this->startPoint;
-	DebugOut(L"Direction x %d, ", Direction.x);
-	DebugOut(L"Direction  y %d, ", Direction.y);
+	DebugOut(L"Direction x %f, ", Direction.x);
+	DebugOut(L"Direction  y %f, ", Direction.y);
 	Angle = atan2(Direction.y, Direction.x);
-	DebugOut(L"Angle %d", Angle);
-	this->startPoint = Target + Direction.GetNormalized() * SectionLength * (-1);
+	DebugOut(L"Angle %f", Angle);
+	this->startPoint = Target + Direction* (-1);
+	
 
 }
 
@@ -153,14 +166,16 @@ CBoss::BossClawSection::BossClawSection(int anisetid)
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(anisetid));
 	this->startPoint=Vec2(120, 240);
 	this->Angle = 0;
+	this->calculateEndpoint();
+	
 	
 }
 CBoss::BossClawSection::BossClawSection()
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(17));
 	this->Angle = 0;
-	this->startPoint = Vec2(50, 0);
-	this->endPoint=Vec2(0, 0);
+	this->startPoint = Vec2(200, 30);
+	this->calculateEndpoint();
 	
 }
 

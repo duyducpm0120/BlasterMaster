@@ -565,7 +565,7 @@ void CPlayScene::Render()
 		}
 	}
 	//hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
-	hud->Render(player);
+	//hud->Render(player);
 }
 
 /*
