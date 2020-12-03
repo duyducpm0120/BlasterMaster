@@ -54,7 +54,8 @@ public:
 	void SetStartPosition(float x, float y);
 	
 private: 
-
+	float a =200;
+	float b = 50;
 	void Init();
 	BossClawSection BigClawLeft;
 	BossClawSection BigClawRight;

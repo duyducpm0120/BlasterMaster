@@ -65,8 +65,9 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	this->BigClawRight.x = this->x + 60;
 	this->BigClawRight.y = this->y;
+	this->BigClawLeft.Follow(x, y);
 	
-	this->BigClawLeft.Follow(200,300);
+
 	LeftArm[3].Follow(BigClawLeft);
 	LeftArm[3].calculateEndpoint();
 	for (int i = 2; i >=0 ;  i--)
@@ -75,8 +76,8 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->LeftArm[i].calculateEndpoint();
 	}
 	
-
-	this->LeftArm[0].setStartPoint(Vec2(x, y));
+	//Rebasing the arm to the boss
+	this->LeftArm[0].setStartPoint(Vec2(90, 80));
 	this->LeftArm[0].calculateEndpoint();
 	for (int i = 1; i < 4; i++)
 	{
@@ -236,7 +237,6 @@ void CBoss::BossClawSection::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CBoss::BossClawSection::Render()
 {
 	animation_set->at(0)->Render(x, y);
-	RenderBoundingBox();
 
 }
 
