@@ -17,6 +17,8 @@
 #include "Bee.h"
 #include "Flame.h"
 #include "Sophia.h"
+#include "Boss.h"
+#include "OHSophia.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -53,7 +55,10 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_WORM	12
 #define OBJECT_TYPE_BEE	13
 #define OBJECT_TYPE_FLAME	14
+#define OBJECT_TYPE_SOPHIA	15
 #define OBJECT_TYPE_PORTAL	50
+#define OBJECT_TYPE_BOSS	16
+#define OBJECT_TYPE_OHSOPHIA	20
 
 #define MAX_SCENE_LINE 1024
 
@@ -182,7 +187,22 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object created!\n");
 		hud = new HUD(dynamic_cast<CTank*> (player)->GetHealth(), player->GetDamage());
 		break;
-	case 15:
+	case OBJECT_TYPE_OHSOPHIA:
+		if (player != NULL)
+		{
+			DebugOut(L"[ERROR] player was created before!\n");
+			return;
+		}
+		obj = new COHSophia(x, y);
+		player = (COHSophia*)obj;
+		OHSophia = dynamic_cast<COHSophia*> (obj);
+		player->health = *this->playerHealth;
+		player->damage = *this->playerPower;
+
+		DebugOut(L"[INFO] Player object created!\n");
+		hud = new HUD(dynamic_cast<COHSophia*> (player)->GetHealth(), player->GetDamage());
+		break;
+	case OBJECT_TYPE_SOPHIA:
 		obj = new CSophia(x, y);
 		player = (CSophia*)obj;
 		player->health = *this->playerHealth;
@@ -199,7 +219,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
 	case OBJECT_TYPE_FLAME: obj = new CFlame(); break;
-	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = atof(tokens[4].c_str());
@@ -213,6 +232,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_BEE: obj = new CBee();
 		dynamic_cast<CBee*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_BOSS: obj = new CBoss();
+		dynamic_cast<CBoss*>(obj)->SetStartPosition(x, y);
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);

@@ -96,7 +96,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 
 			player->SetState(SOPHIA_STATE_WALKING_RIGHT);
 		}
-		else if (game->IsKeyDown(DIK_LEFT) && !game->IsKeyDown(DIK_UP)) {
+		else if (game->IsKeyDown(DIK_LEFT)) {
 			player->nx = -1;
 			player->SetState(SOPHIA_STATE_WALKING_LEFT);
 		}
@@ -116,6 +116,32 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 
 		}
 	
+	}
+	else if (dynamic_cast<COHSophia*>(player)) {
+		if (player->visible == false)	return;
+		if (game->IsKeyDown(DIK_RIGHT)) {
+			player->SetState(OHSOPHIA_STATE_WALKING_RIGHT);
+		}
+		else if (game->IsKeyDown(DIK_LEFT) ) {
+			player->SetState(OHSOPHIA_STATE_WALKING_LEFT);
+		}
+		else if (game->IsKeyDown(DIK_UP)) {
+			player->SetState(OHSOPHIA_STATE_WALKING_UP);
+		}
+		else if (game->IsKeyDown(DIK_DOWN)) {
+			player->SetState(OHSOPHIA_STATE_WALKING_DOWN);
+		}
+		else
+		{
+			if (player->state == OHSOPHIA_STATE_WALKING_UP)
+				player->SetState(OHSOPHIA_STATE_IDLE_UP);
+			else if(player->state == OHSOPHIA_STATE_WALKING_DOWN)
+				player->SetState(OHSOPHIA_STATE_IDLE_DOWN);
+			else if(player->state == OHSOPHIA_STATE_WALKING_LEFT)
+				player->SetState(OHSOPHIA_STATE_IDLE_LEFT);
+			else if(player->state == OHSOPHIA_STATE_WALKING_RIGHT)
+				player->SetState(OHSOPHIA_STATE_IDLE_RIGHT);
+		}	
 	}
 }
 

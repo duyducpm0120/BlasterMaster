@@ -57,9 +57,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Koopas.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="PlayScence.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -115,6 +112,7 @@
     <ClCompile Include="Sophia.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="OHSophia.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tank.h">
@@ -177,9 +175,6 @@
     <ClInclude Include="Scence.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Destroyed.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -210,5 +205,6 @@
     <ClInclude Include="Sophia.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="OHSophia.h" />
   </ItemGroup>
 </Project>

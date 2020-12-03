@@ -4,7 +4,6 @@
 #include "Scence.h"
 #include "GameObject.h"
 #include "Brick.h"
-#include "Koopas.h"
 #include "Tile.h"
 #include "Tank.h"
 #include "Golem.h"
@@ -13,6 +12,7 @@
 #include "HUD.h"
 #include "Player.h"
 #include "Sophia.h"
+#include "OHSophia.h"
 
 class CPlayScene: public CScene
 {
@@ -21,7 +21,7 @@ protected:
 
 	CTank* tank;
 	CSophia* sophia;
-
+	COHSophia* OHSophia;
 	vector<LPGAMEOBJECT> objects;
 	HUD* hud;
 
