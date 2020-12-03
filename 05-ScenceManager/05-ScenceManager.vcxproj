@@ -137,7 +137,7 @@
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Koopas.cpp" />
+    <ClCompile Include="OHSophia.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScenceKeyHandler.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -170,7 +170,7 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="Koopas.h" />
+    <ClInclude Include="OHSophia.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScenceKeyHandler.h" />
     <ClInclude Include="Portal.h" />
