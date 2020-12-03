@@ -381,18 +381,19 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		switch (KeyCode)
 		{
 		case DIK_Z:
-			if (player->nx == -1)
+			if (player->state == OHSOPHIA_STATE_WALKING_LEFT || player->state == OHSOPHIA_STATE_IDLE_LEFT)
 			{
-				COHSophiaBullet* bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_LEFT, OHSOPHIABULLET_TYPE_STRAIGHT);
+				COHSophiaBullet* bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_LEFT, OHSOPHIABULLET_TYPE_ROUNDED);
 				float x1, y1;
 				player->GetPosition(x1, y1);
 				bullet->SetPosition(x1 - OHSOPHIABULLET_BBOX_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
 				bullet->SetStartPositon(x1 - OHSOPHIABULLET_BBOX_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
+				bullet->SetAnchorPoint();
 				LPANIMATION_SET ani_set = animation_sets->Get(21);
 				bullet->SetAnimationSet(ani_set);
 				objects->push_back(bullet);
 			}
-			else
+			else if(player->state == OHSOPHIA_STATE_WALKING_RIGHT || player->state == OHSOPHIA_STATE_IDLE_RIGHT)
 			{
 				COHSophiaBullet* bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_RIGHT, OHSOPHIABULLET_TYPE_STRAIGHT);
 				float x1, y1;
@@ -402,6 +403,28 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				LPANIMATION_SET ani_set = animation_sets->Get(21);
 				bullet->SetAnimationSet(ani_set);
 				objects->push_back(bullet);
+			}
+			else if (player->state == OHSOPHIA_STATE_WALKING_UP || player->state == OHSOPHIA_STATE_IDLE_UP) {
+				
+				COHSophiaBullet* bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_UP, OHSOPHIABULLET_TYPE_STRAIGHT);
+				float x1, y1;
+				player->GetPosition(x1, y1);
+				bullet->SetPosition(x1 + OHSOPHIA_WIDTH /4, y1);
+				bullet->SetStartPositon(x1 + OHSOPHIA_WIDTH / 4, y1);
+				LPANIMATION_SET ani_set = animation_sets->Get(21);
+				bullet->SetAnimationSet(ani_set);
+				objects->push_back(bullet);
+			}
+			else if (player->state == OHSOPHIA_STATE_WALKING_DOWN || player->state == OHSOPHIA_STATE_IDLE_DOWN) {
+				COHSophiaBullet* bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_DOWN, OHSOPHIABULLET_TYPE_STRAIGHT);
+				float x1, y1;
+				player->GetPosition(x1, y1);
+				bullet->SetPosition(x1 + OHSOPHIA_WIDTH / 4, y1 + OHSOPHIA_HEIGHT);
+				bullet->SetStartPositon(x1 + OHSOPHIA_WIDTH / 4, y1 + OHSOPHIA_HEIGHT);
+				LPANIMATION_SET ani_set = animation_sets->Get(21);
+				bullet->SetAnimationSet(ani_set);
+				objects->push_back(bullet);
+			
 			}
 			break;
 		}

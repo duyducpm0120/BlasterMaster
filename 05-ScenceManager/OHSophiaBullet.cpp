@@ -62,7 +62,24 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			break;
 		}
 		case OHSOPHIABULLET_TYPE_ROUNDED: {
-
+			if (state == OHSOPHIABULLET_STATE_FLYING_LEFT) {
+				if (angle >= 2 * 3.14)
+					visible = false;
+				angle -= 0.174444444 * dt / 50;
+				x = point1.x + OHSOPHIA_RADIUS_SPACE * cos(angle);
+				y = point1.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
+				//SetPosition(x, y);
+				
+			}
+			else if (state == OHSOPHIABULLET_STATE_FLYING_RIGHT) {
+				
+			}
+			else if (state == OHSOPHIABULLET_STATE_FLYING_UP) {
+				
+			}
+			else if (state == OHSOPHIABULLET_STATE_FLYING_DOWN) {
+				
+			}
 			break;
 		}
 		case OHSOPHIABULLET_TYPE_SIN: {
@@ -92,17 +109,17 @@ void COHSophiaBullet::Render()
 
 void COHSophiaBullet::SetAnchorPoint()
 {
-	this->point1.x = x - OHSOPHIABULLET_FLYING_SPACE/2;
-	this->point1.y = y - OHSOPHIABULLET_FLYING_SPACE/2;
+	this->point1.x = startPositionX - OHSOPHIABULLET_FLYING_SPACE/2;
+	this->point1.y = startPositionY - OHSOPHIABULLET_FLYING_SPACE/2;
 
-	this->point2.x = x + OHSOPHIABULLET_FLYING_SPACE/2;
-	this->point2.y = y - OHSOPHIABULLET_FLYING_SPACE/2;
+	this->point2.x = startPositionX + OHSOPHIABULLET_FLYING_SPACE/2;
+	this->point2.y = startPositionY - OHSOPHIABULLET_FLYING_SPACE/2;
 
-	this->point3.x = x + OHSOPHIABULLET_FLYING_SPACE/2;
-	this->point3.y = y + OHSOPHIABULLET_FLYING_SPACE/2;
+	this->point3.x = startPositionX + OHSOPHIABULLET_FLYING_SPACE/2;
+	this->point3.y = startPositionY + OHSOPHIABULLET_FLYING_SPACE/2;
 
-	this->point4.x = x - OHSOPHIABULLET_FLYING_SPACE/2;
-	this->point4.y = y + OHSOPHIABULLET_FLYING_SPACE/2;
+	this->point4.x = startPositionX - OHSOPHIABULLET_FLYING_SPACE/2;
+	this->point4.y = startPositionY + OHSOPHIABULLET_FLYING_SPACE/2;
 
 }
 
@@ -117,6 +134,8 @@ COHSophiaBullet::COHSophiaBullet(int level, int state, int type): CBullet(level,
 	this->level = level;
 	damage = level;
 	this->state = state;
+	float pi = 2 * acos(0.0);
+	this->angle = pi/4;
 }
 
 

@@ -2,7 +2,7 @@
 #include "Bullet.h"
 
 #define OHSOPHIABULLET_SPEED 0.5f
-
+#define	OHSOPHIA_RADIUS_SPACE	70.7106781f
 
 #define OHSOPHIABULLET_BBOX_WIDTH 8
 #define OHSOPHIABULLET_BBOX_HEIGHT 8
@@ -33,6 +33,7 @@ struct Point
 
 class COHSophiaBullet : public CBullet
 {
+	float angle;
 	int type;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
