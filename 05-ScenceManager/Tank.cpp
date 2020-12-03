@@ -142,6 +142,9 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (health <= 0)
 					visible = false;
 			}
+			else if (dynamic_cast<CSophia*>(e->obj)) {
+					x += - nx * 0.4f;
+			}
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);

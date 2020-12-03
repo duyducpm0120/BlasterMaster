@@ -246,7 +246,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 
 						CRocket* rocket = new CRocket();
 						for (int i = 0; i < objects->size(); i++) {
-							if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 200) {
+							if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 230) {
 								rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
 								rocket->SetTargetObject(objects->at(i));
 								float x1, y1;
@@ -263,7 +263,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 					{
 						CRocket* rocket = new CRocket();
 						for (int i = 0; i < objects->size(); i++) {
-							if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 200) {
+							if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 230) {
 								rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
 								rocket->SetTargetObject(objects->at(i));
 								float x1, y1;
@@ -281,7 +281,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				else {
 					CRocket* rocket = new CRocket();
 					for (int i = 0; i < objects->size(); i++) {
-						if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 200) {
+						if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 230) {
 							rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
 							rocket->SetTargetObject(objects->at(i));
 							float x1, y1;
