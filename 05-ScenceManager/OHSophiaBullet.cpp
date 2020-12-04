@@ -120,12 +120,45 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					y = point4.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
 				}
 			}
-			break;
+			break;	
 		}
-		case OHSOPHIABULLET_TYPE_SIN: {
+		case OHSOPHIABULLET_TYPE_SIN:
+			angle += ALPHA * direct * dt*100;
+			if (state == OHSOPHIABULLET_STATE_FLYING_LEFT) {
+				if (x < startPositionX - OHSOPHIABULLET_FLYING_SPACE )
+					visible = false;
+				else
+					x -= OHSOPHIABULLET_SPEED * dt;
 
+				y = startPositionY + OHSOPHIA_RADIUS_SPACE* sin(angle);
+				
+			}
+			else if (state == OHSOPHIABULLET_STATE_FLYING_RIGHT) {
+				if (x > startPositionX + OHSOPHIABULLET_FLYING_SPACE )
+					visible = false;
+				else
+					x += OHSOPHIABULLET_SPEED * dt;
+
+				y = startPositionY + OHSOPHIA_RADIUS_SPACE * sin(angle);
+			}
+			else if (state == OHSOPHIABULLET_STATE_FLYING_UP) {
+				if (y < startPositionY - OHSOPHIABULLET_FLYING_SPACE)
+					visible = false;
+				else
+					y += -OHSOPHIABULLET_SPEED * dt;
+
+				x = startPositionX + OHSOPHIA_RADIUS_SPACE * cos(angle);
+				
+			}
+			else if (state == OHSOPHIABULLET_STATE_FLYING_DOWN) {
+				if (y > startPositionY + OHSOPHIABULLET_FLYING_SPACE )
+					visible = false;
+				else
+					y += OHSOPHIABULLET_SPEED * dt;
+
+				x = startPositionX + OHSOPHIA_RADIUS_SPACE * cos(angle);
+			}
 			break;
-		}
 	}
 }
 
@@ -204,6 +237,8 @@ COHSophiaBullet::COHSophiaBullet(int level, int state, int type, int direct): CB
 	this->level = level;
 	damage = level;
 	this->state = state;
+	vx = 0 ;
+	vy = 0;
 	SetAngle();
 }
 
