@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Vec2.h"
 #include <cmath>
-#define Boss_WALKING_SPEED 0.07f;
+#define Boss_WALKING_SPEED 0.05f;
 
 #define Boss_BBOX_WIDTH 60
 #define Boss_BBOX_HEIGHT 60
@@ -35,9 +35,10 @@ private:
 		void setStartPoint(Vec2 sp);
 		Vec2 getEndpoint() { return endPoint; };
 		float getAngle() { return this->Angle; };
-		static float constexpr SectionLength = 21;
+		static float constexpr SectionLength = 20;
 		void calculateEndpoint();
 		void Follow(float x, float y);
+		void Follow(Vec2& target);
 		void Follow(BossClawSection& target); // Follow the start point of target
 		BossClawSection(int anisetid);
 		BossClawSection();
@@ -54,11 +55,16 @@ public:
 	void SetStartPosition(float x, float y);
 	
 private: 
-	float a =200;
-	float b = 50;
+	Vec2 Target1 = Vec2(350,150);
+	Vec2 Target2 = Vec2(410,150);
+	Vec2 Speed = Vec2(2 ,2);
+	Vec2 Speed2 = Vec2(-2 ,-2);
+	float TargetRotAngle = 0;
+	void updateTarget1();
+	void updateTarget2();
 	void Init();
 	BossClawSection BigClawLeft;
 	BossClawSection BigClawRight;
 	BossClawSection LeftArm[4];
-
+	BossClawSection RightArm[4];
 };

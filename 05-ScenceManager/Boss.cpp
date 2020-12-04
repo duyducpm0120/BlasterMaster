@@ -2,7 +2,7 @@
 #include "Utils.h"
 CBoss::CBoss() :
 	BigClawLeft(18),
-	BigClawRight(18)
+	BigClawRight(19)
 	
 {
 	
@@ -63,9 +63,9 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = -Boss_WALKING_SPEED;
 	}
 	
-	this->BigClawRight.x = this->x + 60;
-	this->BigClawRight.y = this->y;
-	this->BigClawLeft.Follow(x, y);
+	updateTarget1();
+	updateTarget2();
+	this->BigClawLeft.Follow(Target1);
 	
 
 	LeftArm[3].Follow(BigClawLeft);
@@ -77,7 +77,7 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	
 	//Rebasing the arm to the boss
-	this->LeftArm[0].setStartPoint(Vec2(90, 80));
+	this->LeftArm[0].setStartPoint(Vec2(x, y));
 	this->LeftArm[0].calculateEndpoint();
 	for (int i = 1; i < 4; i++)
 	{
@@ -90,7 +90,26 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOut(L"Claw end x, %d ", this->BigClawLeft.getEndpoint().x);
 	//DebugOut(L"Claw end y, %d ", this->BigClawLeft.getEndpoint().y);
 	
+	this->BigClawRight.Follow(Target2);
+	RightArm[3].Follow(BigClawRight);
+	RightArm[3].calculateEndpoint();
+	for (int i = 2; i >= 0; i--)
+	{
+		RightArm[i].Follow(RightArm[i + 1]);
+		this->RightArm[i].calculateEndpoint();
+	}
 
+	//Rebasing the arm to the boss
+	this->RightArm[0].setStartPoint(Vec2(x+40, y));
+	this->RightArm[0].calculateEndpoint();
+	for (int i = 1; i < 4; i++)
+	{
+		this->RightArm[i].setStartPoint(this->RightArm[i - 1].getEndpoint());
+		this->RightArm[i].calculateEndpoint();
+
+	}
+	this->BigClawRight.setStartPoint(RightArm[3].getEndpoint());
+	this->BigClawRight.calculateEndpoint();
 }
 
 
@@ -114,6 +133,10 @@ void CBoss::Render()
 	for (int i = 0; i < 4; i++)
 	{
 		LeftArm[i].Render();
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		RightArm[i].Render();
 	}
 }
 
@@ -142,13 +165,107 @@ void CBoss::SetStartPosition(float x, float y)
 	startY = y;
 }
 
+void CBoss::updateTarget1()
+{
+	
+	float left = x - 60;
+	float right = x + 30;
+	float bottom = y + 90;
+	float top = y - 60;
+	DebugOut(L"Left %f \n", left);
+	DebugOut(L"Right %f \n", right);
+	DebugOut(L"top %f \n", top);
+	DebugOut(L"bottom %f \n", bottom);
+	Target1 += Speed;
+	if (Target1.x >= right)
+	{
+		Target1.x = right;
+		Speed = Vec2(Speed.x * -1, Speed.y);
+		
+	}
+
+	if (Target1.x <= left)
+	{
+		Target1.x = left;
+		Speed = Speed = Vec2(Speed.x * -1, Speed.y);
+		DebugOut(L"Speed %f \n", Speed.x);
+		DebugOut(L"Speed %f \n", Speed.y);
+	}
+	
+	if (Target1.y >= bottom)
+	{
+		Target1.y = bottom;
+
+		Speed = Vec2(Speed.x , Speed.y*-1);
+		DebugOut(L"Speed %f \n", Speed.x);
+		DebugOut(L"Speed %f \n", Speed.y);
+	}
+	if (Target1.y <=top )
+	{
+		Target1.y = top;
+
+		Speed = Vec2(Speed.x, Speed.y * -1);
+		DebugOut(L"Speed %f \n", Speed.x);
+		DebugOut(L"Speed %f \n", Speed.y);
+	}
+
+}
+
+void CBoss::updateTarget2()
+{
+	float left = x ;
+	float right = x + 180;
+	float bottom = y + 90;
+	float top = y - 60;
+	DebugOut(L"Left %f \n", left);
+	DebugOut(L"Right %f \n", right);
+	DebugOut(L"top %f \n", top);
+	DebugOut(L"bottom %f \n", bottom);
+	Target2 += Speed2;
+	if (Target2.x >= right)
+	{
+		Target2.x = right;
+		Speed2 = Vec2(Speed2.x * -1, Speed2.y);
+
+	}
+
+	if (Target2.x <= left)
+	{
+		Target2.x = left;
+		Speed2 = Speed2 = Vec2(Speed2.x * -1, Speed2.y);
+		DebugOut(L"Speed2 %f \n", Speed2.x);
+		DebugOut(L"Speed2 %f \n", Speed2.y);
+	}
+
+	if (Target2.y >= bottom)
+	{
+		Target2.y = bottom;
+
+		Speed2 = Vec2(Speed2.x, Speed2.y * -1);
+		DebugOut(L"Speed2 %f \n", Speed2.x);
+		DebugOut(L"Speed2 %f \n", Speed2.y);
+	}
+	if (Target2.y <= top)
+	{
+		Target2.y = top;
+
+		Speed2 = Vec2(Speed2.x, Speed2.y * -1);
+		DebugOut(L"Speed2 %f \n", Speed2.x);
+		DebugOut(L"Speed2 %f \n", Speed2.y);
+	}
+}
+
 void CBoss::Init()
 {
 	for (int i = 0; i < 4; i++)
 	{
-		this->LeftArm[i].setStartPoint(Vec2(120 + i * 15, 120 + i * 15));
+		this->LeftArm[i].setStartPoint(Vec2(x+15, 120 + i * 15));
 		this->LeftArm[i].calculateEndpoint();
+		this->RightArm[i].setStartPoint(Vec2(x+60 + i * 15, 120 + i * 15));
+		this->RightArm[i].calculateEndpoint();
+
 	}
+	
 }
 
 void CBoss::BossClawSection::setStartPoint(Vec2 sp)
@@ -174,16 +291,21 @@ void CBoss::BossClawSection::Follow(float x, float y)
 {
 	
 	Vec2 Target = Vec2(x, y);
-	DebugOut(L"Target x %f ", x);
-	DebugOut(L"Target y %f ", y);
+	//DebugOut(L"Target x %f ", x);
+	//DebugOut(L"Target y %f ", y);
 	Vec2 Direction = Target - this->startPoint;
-	DebugOut(L"Direction x %f, ", Direction.x);
-	DebugOut(L"Direction  y %f, ", Direction.y);
+//	DebugOut(L"Direction x %f, ", Direction.x);
+//	DebugOut(L"Direction  y %f, ", Direction.y);
 	Angle = atan2(Direction.y, Direction.x);
-	DebugOut(L"Angle %f", Angle);
+	//DebugOut(L"Angle %f", Angle);
 	this->startPoint = Target + Direction.GetNormalized() * SectionLength * -1;
 	
 
+}
+
+void CBoss::BossClawSection::Follow(Vec2& target)
+{
+	Follow(target.x, target.y);
 }
 
 void CBoss::BossClawSection::Follow(BossClawSection& target)
