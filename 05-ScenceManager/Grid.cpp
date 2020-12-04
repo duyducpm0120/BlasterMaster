@@ -57,9 +57,9 @@ void CGrid::GetUpdateObjects(vector<LPGAMEOBJECT>& updateobjects, float left, fl
 
 	lastCellColumn = (int)(right) / CELL_WIDTH;
 	lastCellRow = (int)(bottom) / CELL_HEIGHT;
-	DebugOut(L"First Col index: %d, Last Col Index: %d\n", firstCellColumn, lastCellColumn);
+	//DebugOut(L"First Col index: %d, Last Col Index: %d\n", firstCellColumn, lastCellColumn);
 
-	DebugOut(L"First Row index: %d, Last Row Index: %d\n", firstCellRow, lastCellRow);
+	//DebugOut(L"First Row index: %d, Last Row Index: %d\n", firstCellRow, lastCellRow);
 	
 	for (int row = firstCellRow; row <= lastCellRow; row++)
 	{
