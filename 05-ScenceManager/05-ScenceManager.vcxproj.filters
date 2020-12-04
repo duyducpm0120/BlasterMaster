@@ -115,7 +115,12 @@
     <ClCompile Include="OHSophia.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="OHSophiaBullet.cpp" />
+    <ClCompile Include="OHSophiaBullet.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Vec2.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tank.h">
@@ -211,6 +216,11 @@
     <ClInclude Include="OHSophia.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="OHSophiaBullet.h" />
+    <ClInclude Include="OHSophiaBullet.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

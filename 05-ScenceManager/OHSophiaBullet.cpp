@@ -1,4 +1,5 @@
 #include "OHSophiaBullet.h"
+#include "Brick.h"
 
 void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -122,19 +123,19 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			break;	
 		}
-		case OHSOPHIABULLET_TYPE_SIN:
-			angle += ALPHA * direct * dt*100;
+		case OHSOPHIABULLET_TYPE_SIN: {
+			angle += ALPHA * direct * dt * 100;
 			if (state == OHSOPHIABULLET_STATE_FLYING_LEFT) {
-				if (x < startPositionX - OHSOPHIABULLET_FLYING_SPACE )
+				if (x < startPositionX - OHSOPHIABULLET_FLYING_SPACE)
 					visible = false;
 				else
 					x -= OHSOPHIABULLET_SPEED * dt;
 
-				y = startPositionY + OHSOPHIA_RADIUS_SPACE* sin(angle);
-				
+				y = startPositionY + OHSOPHIA_RADIUS_SPACE * sin(angle);
+
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_RIGHT) {
-				if (x > startPositionX + OHSOPHIABULLET_FLYING_SPACE )
+				if (x > startPositionX + OHSOPHIABULLET_FLYING_SPACE)
 					visible = false;
 				else
 					x += OHSOPHIABULLET_SPEED * dt;
@@ -148,18 +149,66 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					y += -OHSOPHIABULLET_SPEED * dt;
 
 				x = startPositionX + OHSOPHIA_RADIUS_SPACE * cos(angle);
-				
+
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_DOWN) {
-				if (y > startPositionY + OHSOPHIABULLET_FLYING_SPACE )
+				if (y > startPositionY + OHSOPHIABULLET_FLYING_SPACE)
 					visible = false;
 				else
 					y += OHSOPHIABULLET_SPEED * dt;
 
 				x = startPositionX + OHSOPHIA_RADIUS_SPACE * cos(angle);
 			}
-			break;
+			break; 
+		}
 	}
+
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+	CalcPotentialCollisions(coObjects, coEvents);
+
+
+	vector<LPCOLLISIONEVENT> coCollisoningEvents;
+	CalcColliding(coObjects, coCollisoningEvents);
+
+	for (int i = 0; i < coCollisoningEvents.size(); i++) {
+		LPCOLLISIONEVENT e = coCollisoningEvents[i];
+		if ((e->obj)->IsEnemy()) {
+			e->obj->TakeDamage(this->damage);				//Destroy every enemy
+			this->visible = false;
+		}
+	}
+
+
+	float min_tx, min_ty, nx = 0, ny;
+	float rtx = 0;
+	float rty = 0;
+
+	FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rtx, rty);
+	x += dx;
+	y += dy;
+	// block 
+	//x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+	//y += min_ty * dy + ny * 0.4f;
+
+
+	if (nx != 0) vx = 0;
+	if (ny != 0) vy = 0;
+
+	// Collision logic with Goombas
+	for (UINT i = 0; i < coEventsResult.size(); i++)
+	{
+		LPCOLLISIONEVENT e = coEventsResult[i];
+
+		if (e->obj->IsEnemy()) {
+			e->obj->TakeDamage(this->damage);				//Destroy every enemy
+			this->visible = false;
+		}
+		else if (dynamic_cast<CBrick*>(e->obj)) {
+			this->visible = false;
+		}
+	}
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void COHSophiaBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)

@@ -7,7 +7,7 @@ CBoss::CBoss() :
 {
 	
 	damage = 1;
-	health = 3;
+	health = 3000;
 	nx = -1;
 	SetState(Boss_STATE_WALKING_LEFT);
 	vx = -Boss_WALKING_SPEED;
