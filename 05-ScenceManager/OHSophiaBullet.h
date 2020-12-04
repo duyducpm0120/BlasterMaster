@@ -1,8 +1,9 @@
 #pragma once
 #include "Bullet.h"
 
-#define OHSOPHIABULLET_SPEED 0.5f
-#define	OHSOPHIA_RADIUS_SPACE	70.7106781f
+#define OHSOPHIABULLET_SPEED 0.3f
+#define	OHSOPHIA_RADIUS_SPACE	50.0f
+#define ALPHA	0.00348888888f
 
 #define OHSOPHIABULLET_BBOX_WIDTH 8
 #define OHSOPHIABULLET_BBOX_HEIGHT 8
@@ -35,14 +36,16 @@ class COHSophiaBullet : public CBullet
 {
 	float angle;
 	int type;
+	int direct;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Render();
 	Point point1, point2, point3, point4;
 	
 public:
-	COHSophiaBullet(int level, int state, int type);
+	COHSophiaBullet(int level, int state, int type, int direct);
 	void SetAnchorPoint();
 	void SetState(int state);
+	void SetAngle();
 };
 
