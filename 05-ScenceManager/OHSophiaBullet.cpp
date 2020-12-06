@@ -67,29 +67,31 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (angle >= 2*3.14 || angle <-2*3.14)
 					visible = false;
 				angle += ALPHA* direct * dt ;
+				radius_increase += 0.1;
 				if (direct == 1) {
-					x = point1.x + OHSOPHIA_RADIUS_SPACE * cos(angle);
-					y = point1.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
+					x = point1.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
+					y = point1.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);
 				}
 				else {
 				
-					x = point3.x + OHSOPHIA_RADIUS_SPACE * cos(angle);
-					y = point3.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
+					x = point3.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
+					y = point3.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);
 				}
 				
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_RIGHT) {
-				if (angle >= 2 * 3.14 || angle < -2 * 3.14)
-					visible = false;
+				/*if (angle >= 2 * 3.14 || angle < -2 * 3.14)
+					visible = false;*/
 				angle += ALPHA * direct * dt;
+				radius_increase+=0.1;
 				if (direct == -1) {
-					x = point1.x + OHSOPHIA_RADIUS_SPACE * cos(angle);
-					y = point1.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
+					x = point1.x + (OHSOPHIA_RADIUS_SPACE + radius_increase) * cos(angle);
+					y = point1.y + (OHSOPHIA_RADIUS_SPACE + radius_increase) * sin(angle);
 				}
 				else {
 
-					x = point3.x + OHSOPHIA_RADIUS_SPACE * cos(angle);
-					y = point3.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
+					x = point3.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
+					y = point3.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);
 				}
 
 			}
@@ -97,28 +99,30 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (angle >= 2 * 3.14 || angle < -2 * 3.14)
 					visible = false;
 				angle += ALPHA * direct * dt;
+				radius_increase += 0.1;
 				if (direct == -1) {
-					x = point4.x + OHSOPHIA_RADIUS_SPACE * cos(angle);
-					y = point4.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
+					x = point4.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
+					y = point4.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);
 				}
 				else {
 
-					x = point2.x + OHSOPHIA_RADIUS_SPACE * cos(angle);
-					y = point2.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
+					x = point2.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
+					y = point2.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);
 				}
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_DOWN) {
 				if (angle >= 2 * 3.14 || angle < -2 * 3.14)
 					visible = false;
 				angle += ALPHA * direct * dt;
+				radius_increase += 0.1;
 				if (direct == -1) {
-					x = point2.x + OHSOPHIA_RADIUS_SPACE * cos(angle);
-					y = point2.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
+					x = point2.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
+					y = point2.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);
 				}
 				else {
 
-					x = point4.x + OHSOPHIA_RADIUS_SPACE * cos(angle);
-					y = point4.y + OHSOPHIA_RADIUS_SPACE * sin(angle);
+					x = point4.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
+					y = point4.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);
 				}
 			}
 			break;	
@@ -176,7 +180,12 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if ((e->obj)->IsEnemy()) {
 			e->obj->TakeDamage(this->damage);				//Destroy every enemy
 			this->visible = false;
+
 		}
+		else if (dynamic_cast<CBrick*>(e->obj)) {
+			this->visible = false;
+		}
+
 	}
 
 
@@ -284,8 +293,9 @@ COHSophiaBullet::COHSophiaBullet(int level, int state, int type, int direct): CB
 	this->direct = direct;
 	this->type = type;
 	this->level = level;
-	damage = level;
+	this->damage = level;
 	this->state = state;
+	radius_increase = 0;
 	vx = 0 ;
 	vy = 0;
 	SetAngle();

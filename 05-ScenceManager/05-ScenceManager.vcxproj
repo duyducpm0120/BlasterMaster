@@ -23,6 +23,7 @@
     <ProjectGuid>{C83A385D-5992-4E1B-B783-AB1D446414D5}</ProjectGuid>
     <RootNamespace>My05ScenceManager</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Blaster Master</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -137,6 +138,7 @@
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="OHSophia.cpp" />
     <ClCompile Include="OHSophiaBullet.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -172,6 +174,7 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Ladder.h" />
     <ClInclude Include="OHSophia.h" />
     <ClInclude Include="OHSophiaBullet.h" />
     <ClInclude Include="Player.h" />

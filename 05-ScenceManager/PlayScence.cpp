@@ -19,6 +19,7 @@
 #include "Sophia.h"
 #include "Boss.h"
 #include "OHSophia.h"
+#include "Ladder.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -59,6 +60,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_PORTAL	50
 #define OBJECT_TYPE_BOSS	16
 #define OBJECT_TYPE_OHSOPHIA	20
+#define OBJECT_TYPE_LADDER	21
 
 #define MAX_SCENE_LINE 1024
 
@@ -219,6 +221,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
 	case OBJECT_TYPE_FLAME: obj = new CFlame(); break;
+	case OBJECT_TYPE_LADDER: obj = new CLadder(); break;
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = atof(tokens[4].c_str());
@@ -507,6 +510,8 @@ void CPlayScene::Update(DWORD dt)
 	//game->GetCameraBoundingBox(left, top, right, bottom);
 	//grid->GetUpdateObjects(updateObject, left, top, right, bottom);
 	DebugOut(L"Size of object array %d\n", objects.size());
+	DebugOut(L"Scene width %d \n", scene_width);
+	DebugOut(L"Scene height %d \n", scene_height);
 	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }

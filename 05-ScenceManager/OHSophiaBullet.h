@@ -34,6 +34,7 @@ struct Point
 
 class COHSophiaBullet : public CBullet
 {
+	float radius_increase;
 	float angle;
 	int type;
 	int direct;
