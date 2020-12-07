@@ -42,8 +42,8 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	y += dy;
 
 
-	if (vx < 0 && x < (startX - 100)) {
-		x = startX - 100;
+	if (vx < 0 && x < (startX - 200)) {
+		x = startX - 200;
 		SetState(Boss_STATE_WALKING_RIGHT);
 		nx = 1;
 		vx = Boss_WALKING_SPEED;
@@ -54,8 +54,8 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = -Boss_WALKING_SPEED;
 		SetState(Boss_STATE_WALKING_LEFT);
 	}
-	if (vy < 0 && y < (startY - 50)) {
-		y = startY - 50;
+	if (vy < 0 && y < (startY - 100)) {
+		y = startY - 100;
 		vy = Boss_WALKING_SPEED;
 	}
 	if (vy > 0 && y > startY) {
