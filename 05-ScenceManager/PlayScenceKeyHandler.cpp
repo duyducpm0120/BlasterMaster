@@ -79,8 +79,6 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 		}
 		else if (game->IsKeyDown(DIK_SPACE)) {
 
-			//player->vy -= 0.0001f;
-
 		}
 		else
 		{

@@ -15,9 +15,9 @@ CTank:: CTank(float x, float y)
 {
 	bulletLevel = 1;
 	enableRocket = true;
-	isJumping = false;
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
+	isJumping = true;
 	tank_width = TANK_NORMAL_WIDTH;
 	tank_height = TANK_NORMAL_HEIGHT;
 	start_x = x;
@@ -39,7 +39,8 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt);
 
 	// Simple fall down
-	vy += TANK_GRAVITY * dt;
+	if(isJumping == true)
+		vy += TANK_GRAVITY * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -52,9 +53,16 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CalcColliding(coObjects, coCollisoningEvents);
 	for (int i = 0; i < coCollisoningEvents.size(); i++) {
 		LPCOLLISIONEVENT e = coCollisoningEvents[i];
-		if (dynamic_cast<CBrick*>(e->obj))
-		{
-			//vx = 0; vy = 0;
+		if (dynamic_cast<CBrick*>(e->obj)) {
+			if (e->ny != -1)
+				isJumping = true;
+			else {
+				isJumping = false;
+			}
+		}
+		if (!dynamic_cast<CBrick*>(e->obj)) {
+
+				isJumping = true;
 		}
 	}
 
@@ -74,21 +82,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 		
-		/*for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CSophia*>(e->obj)) {
-				x += dx ;
-				y += dy + ny * 0.4; ;
-			}
-			else {
-				x += min_tx * dx + nx * 0.4f;
-				y += min_ty * dy + (ny < 0 ? ny : 0) * 0.4f;
-				if (nx != 0) vx = 0;
-				if (ny != 0) vy = 0;
-			}
-			
-		}*/
 
 		x += min_tx * dx + nx * 1.0f;
 		y += min_ty * dy + (ny < 0 ? ny : 0) * 0.4f;
@@ -98,8 +91,17 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (!dynamic_cast<CBrick*>(e->obj)) {
 
-
+				isJumping = true;
+			}
+			if (dynamic_cast<CBrick*>(e->obj)) {
+				if (e->ny != -1)
+					isJumping = true;
+				else {
+					isJumping = false;
+				}
+			}			
 			if (e->obj->IsEnemy()) {	
 				if (untouchableTime == 0) {
 					health -= e->obj->GetDamage();
@@ -180,9 +182,11 @@ void CTank::Render()
 		break;
 	case TANK_STATE_JUMP_IDLE_LEFT:
 		ani = TANK_ANI_JUMP_IDLE_LEFT;
+		isJumping = true;
 		break;
 	case TANK_STATE_JUMP_IDLE_RIGHT:
 		ani = TANK_ANI_JUMP_IDLE_RIGHT;
+		isJumping = true;
 		break;
 	case TANK_STATE_IDLE_RIGHT:
 		ani = TANK_ANI_IDLE_RIGHT;
@@ -195,6 +199,7 @@ void CTank::Render()
 		break;
 	case TANK_STATE_JUMP_RIGHT:
 		ani = TANK_ANI_JUMP_RIGHT;
+		isJumping = true;
 		break;
 	case TANK_STATE_UPING_GUN_LEFT:
 		ani = TANK_ANI_UPING_GUN_LEFT;
@@ -227,7 +232,7 @@ void CTank::Render()
 	else
 		animation_set->at(ani)->Render(x, y, 50);
 
-	
+	DebugOut(L" \n Is Jumping: %d \n ", isJumping);
 	//RenderBoundingBox();
 
 }
@@ -239,19 +244,17 @@ void CTank::SetState(int state)
 	switch (state)
 	{
 	case TANK_STATE_WALKING_RIGHT:
-		isJumping = false;
 		vx = TANK_WALKING_SPEED;
 		nx = 1;
 		break;
 	case TANK_STATE_WALKING_LEFT:
-		isJumping = false;
 		vx = -TANK_WALKING_SPEED;
 		nx = -1;
 		break;
 	case TANK_STATE_JUMP_IDLE_LEFT:
-		isJumping = false;
 		nx = -1;
 		vy = -TANK_JUMP_SPEED_Y;
+		isJumping = true;
 		break;
 	case TANK_STATE_JUMP_IDLE_RIGHT:
 		isJumping = true;
@@ -259,12 +262,10 @@ void CTank::SetState(int state)
 		vy = -TANK_JUMP_SPEED_Y;
 		break;
 	case TANK_STATE_IDLE_RIGHT:
-		isJumping = false;
 		vx = 0;
 		nx = 1;
 		break;
 	case TANK_STATE_IDLE_LEFT:
-		isJumping = false;
 		vx = 0;
 		nx = -1;
 		break;
@@ -283,22 +284,18 @@ void CTank::SetState(int state)
 		nx = 1;
 		break;
 	case TANK_STATE_UP_GUN_WALKING_LEFT:
-		isJumping = false;
 		vx = -TANK_WALKING_SPEED;
 		nx = -1;
 		break;
 	case TANK_STATE_UP_GUN_WALKING_RIGHT:
-		isJumping = false;
 		vx = TANK_WALKING_SPEED;
 		nx = 1;
 		break;
 	case TANK_STATE_UP_GUN_LEFT:
-		isJumping = false;
 		vx = 0;
 		nx = -1;
 		break;
 	case TANK_STATE_UP_GUN_RIGHT:
-		isJumping = false;
 		vx = 0;
 		nx = 1;
 		break;
