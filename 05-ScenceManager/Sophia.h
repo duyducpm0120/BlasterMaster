@@ -18,8 +18,10 @@
 #define SOPHIA_STATE_IDLE_RIGHT		100
 #define SOPHIA_STATE_WALKING_LEFT		200
 #define SOPHIA_STATE_WALKING_RIGHT	300
-#define	SOPHIA_STATE_CLIMBING_LADDER	400
-#define SOPHIA_STATE_JUMP	500
+#define SOPHIA_STATE_CLIMBING_IDLE	400
+#define	SOPHIA_STATE_CLIMBING_LADDER	500
+
+#define SOPHIA_STATE_JUMP	600
 
 #define SOPHIA_STATE_DIE				800
 
@@ -34,9 +36,10 @@
 #define SOPHIA_ANI_IDLE_RIGHT			1
 #define SOPHIA_ANI_WALKING_LEFT		2
 #define SOPHIA_ANI_WALKING_RIGHT		3
-#define SOPHIA_ANI_CLIMBING_LADDER	4
+#define SOPHIA_ANI_CLIMBING_IDLE	4
+#define SOPHIA_ANI_CLIMBING_LADDER	5
 
-#define SOPHIA_ANI_DIE				5
+#define SOPHIA_ANI_DIE				99
 
 
 
@@ -69,6 +72,8 @@ class CSophia : public CPlayer
 	bool isTouchTank;
 	bool isTouchLadder;
 	bool isClimbing;
+	float climbingPositionX;
+	float climbingPositionY;
 public:
 	CSophia(float x = 0.0f, float y = 0.0f);
 	int GetHealth() { return this->health; }
@@ -79,11 +84,14 @@ public:
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	bool IsTouchTank() { return isTouchTank; };
+	bool IsTouchLadder() { return isTouchLadder; };
+	bool IsClimbing() { return isClimbing; };
+	void SetIsClimbing(bool a) { isClimbing = a; };
 	void SetDimension(int width, int height);
 	void GetDimension(int& width, int& height);
 	void Reset();
 	void HandleUntouchableTime();
-
+	void GetClimbingPosition(float& x, float& y);
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

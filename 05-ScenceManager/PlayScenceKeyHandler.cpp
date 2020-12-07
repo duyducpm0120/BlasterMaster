@@ -94,28 +94,42 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 	else if (dynamic_cast<CSophia*> (player)) {
 		if (player->visible == false)	return;
 		if (game->IsKeyDown(DIK_RIGHT) ) {
-			player->nx = 1;
-
-			player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+			if (!dynamic_cast<CSophia*> (player)->IsClimbing()) {
+				player->nx = 1;
+				player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+			}
 		}
 		else if (game->IsKeyDown(DIK_LEFT)) {
-			player->nx = -1;
-			player->SetState(SOPHIA_STATE_WALKING_LEFT);
+			if (!dynamic_cast<CSophia*> (player)->IsClimbing()) {
+				player->nx = -1;
+				player->SetState(SOPHIA_STATE_WALKING_LEFT);
+			}
 		}
 		else if (game->IsKeyDown(DIK_UP)) {			
+			if (dynamic_cast<CSophia*> (player)->IsClimbing()) {
+				player->SetState(SOPHIA_STATE_CLIMBING_LADDER);
+				dynamic_cast<CSophia*> (player)->vy = -SOPHIA_WALKING_SPEED;
+			}
+		}
+		else if (game->IsKeyDown(DIK_DOWN)) {
+			if (dynamic_cast<CSophia*> (player)->IsClimbing()) {
+				player->SetState(SOPHIA_STATE_CLIMBING_LADDER);
+				dynamic_cast<CSophia*> (player)->vy = SOPHIA_WALKING_SPEED;
+			}
 		}
 		else if (game->IsKeyDown(DIK_SPACE)) {
 
 			//player->vy -= 0.0001f;			
 
-		}
+		}		
 		else
 		{
-			if (player->nx == -1)
+			if (player->state == SOPHIA_STATE_WALKING_LEFT)
 				player->SetState(SOPHIA_STATE_IDLE_LEFT);
-			else
+			else if (player->state == SOPHIA_STATE_WALKING_RIGHT)
 				player->SetState(SOPHIA_STATE_IDLE_RIGHT);
-
+			else if (player->state == SOPHIA_STATE_CLIMBING_LADDER)
+				player->SetState(SOPHIA_STATE_CLIMBING_IDLE);
 		}
 	
 	}
@@ -359,6 +373,8 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		case DIK_SPACE:
 			if(player->vy >= 0.0f && player->vy <= 0.35f)
 				player->SetState(SOPHIA_STATE_JUMP);
+			if (dynamic_cast<CSophia*> (player)->IsClimbing() == true)
+				dynamic_cast<CSophia*> (player)->SetIsClimbing(false);
 			break;
 		case DIK_W:
 			if (dynamic_cast<CSophia*> (player)->IsTouchTank())
@@ -372,6 +388,20 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				
 				((CPlayScene*)scence)->SetHUD(new HUD(player->GetHealth(), player->GetDamage()));
 				
+			}
+			
+			if (dynamic_cast<CSophia*> (player)->IsTouchLadder() && dynamic_cast<CSophia*> (player)->IsClimbing() == false) {
+				float x, y;
+				dynamic_cast<CSophia*> (player)->GetClimbingPosition(x, y);
+				player->SetPosition(x, y);
+				dynamic_cast<CSophia*> (player)->SetState(SOPHIA_STATE_CLIMBING_IDLE);
+			}
+			else if (dynamic_cast<CSophia*> (player)->IsClimbing() == true) {
+				dynamic_cast<CSophia*> (player)->SetIsClimbing(false);
+				float x = player->x + 13;
+				float y = player->y - 2;
+				player->SetPosition(x, y);
+				player->SetState(SOPHIA_STATE_IDLE_RIGHT);
 			}
 			break;
 		}

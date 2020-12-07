@@ -43,9 +43,11 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (vy >= 0.0f && vy <= 0.35f)
 		isJumping = false;
-
+	if (isTouchLadder == false)
+		isClimbing = false;
 	// Simple fall down
-	vy += SOPHIA_GRAVITY * dt;
+	if(!isClimbing)
+		vy += SOPHIA_GRAVITY * dt;
 	isTouchTank = false;	
 	isTouchLadder = false;
 	//isClimbing = false;
@@ -63,7 +65,14 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (dynamic_cast<CTank*>(e->obj))
 			isTouchTank = true;
 		else if (dynamic_cast<CLadder*>(e->obj))
+		{
 			isTouchLadder = true;
+			climbingPositionX = e->obj->x + 2;
+			if (y < e->obj->y)
+				climbingPositionY = e->obj->y;
+			else if (y > e->obj->y)
+				climbingPositionY = e->obj->y + 192;
+		}
 	}
 
 	// reset untouchable timer if untouchable time has passed
@@ -100,6 +109,14 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (dynamic_cast<CTank*>(e->obj)) {
 				isTouchTank = true;
+			}
+			if (dynamic_cast<CLadder*>(e->obj)) {
+				isTouchLadder = true;
+				climbingPositionX = e->obj->x + 2;
+				if (y < e->obj->y)
+					climbingPositionY = e->obj->y;
+				else if (y > e->obj->y)
+					climbingPositionY = e->obj->y + 192;
 			}
 			if (e->obj->IsEnemy()) {
 				if (untouchableTime == 0) {
@@ -151,6 +168,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
 	DebugOut(L"\n \n  touchtank: %d \t \n", isTouchTank);
+	DebugOut(L"\n \n  touchladder: %d \t \n", isTouchLadder);
 	HandleUntouchableTime();
 }
 
@@ -180,6 +198,12 @@ void CSophia::Render()
 			ani = SOPHIA_ANI_IDLE_RIGHT;
 		else if(nx == -1)
 			ani = SOPHIA_ANI_IDLE_LEFT;
+		break;
+	case SOPHIA_STATE_CLIMBING_IDLE:
+		ani = SOPHIA_ANI_CLIMBING_IDLE;
+		break;
+	case SOPHIA_STATE_CLIMBING_LADDER:
+		ani = SOPHIA_ANI_CLIMBING_LADDER;
 		break;
 	}
 
@@ -227,6 +251,16 @@ void CSophia::SetState(int state)
 	case SOPHIA_STATE_JUMP:
 		vy -= SOPHIA_JUMP_SPEED_Y;
 		break;
+	case SOPHIA_STATE_CLIMBING_LADDER:
+		vx = 0;
+		vy = 0;
+		isClimbing = true;
+		break;
+	case SOPHIA_STATE_CLIMBING_IDLE:
+		vx = 0;
+		vy = 0;
+		isClimbing = true;
+		break;
 	}
 
 }
@@ -263,4 +297,10 @@ void CSophia::HandleUntouchableTime()
 	untouchableTime += 1;
 	if (untouchableTime == SOPHIA_UNTOUCHABLE_TIME)
 		untouchableTime = 0;
+}
+
+void CSophia::GetClimbingPosition(float& x, float& y)
+{
+	x = climbingPositionX;
+	y = climbingPositionY;
 }

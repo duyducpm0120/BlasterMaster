@@ -9,7 +9,7 @@ CLadder::CLadder()
 
 void CLadder::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CLadder::GetBoundingBox(float& l, float& t, float& r, float& b)
