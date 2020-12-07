@@ -12,6 +12,7 @@
 90	textures\sophia.png	216	225	53
 100	textures\boss.png	255	0	255
 101	textures\bossclaw.png	255	0	255
+
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
 2	textures\Area22.png	5	5	5
@@ -21,6 +22,19 @@
 6	textures\Area26.png	5	5	5
 7	textures\Area27.png	5	5	5
 8	textures\Area28.png	5	5	5
+9	textures\AreaO1.png	5	5	5
+10	textures\AreaO2.png	5	5	5
+11	textures\AreaO3.png	5	5	5
+12	textures\AreaO4.png	5	5	5
+13	textures\AreaO5.png	5	5	5
+14	textures\AreaO6.png	5	5	5
+15	textures\AreaO7.png	5	5	5
+16	textures\AreaO8.png	5	5	5
+17	textures\AreaO9.png	5	5	5
+18	textures\AreaO10.png	5	5	5
+19	textures\AreaO10.png	5	5	5
+20	textures\AreaO12.png	5	5	5
+21	textures\AreaO13.png	5	5	5
 [SPRITES]
 
 #TANK
