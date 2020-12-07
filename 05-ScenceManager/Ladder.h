@@ -2,12 +2,9 @@
 
 #include "GameObject.h"
 
-/*
-	Object that triggers scene switching
-*/
 class CLadder : public CGameObject
 {
-	int scene_id;	// target scene to switch to 
+	int scene_id;	
 
 	int width;
 	int height;

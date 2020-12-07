@@ -67,6 +67,8 @@ class CSophia : public CPlayer
 	bool isJumping;
 	int untouchableTime;
 	bool isTouchTank;
+	bool isTouchLadder;
+	bool isClimbing;
 public:
 	CSophia(float x = 0.0f, float y = 0.0f);
 	int GetHealth() { return this->health; }

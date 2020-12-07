@@ -8,6 +8,7 @@
 #include "Item.h"
 #include "Flame.h"
 #include "Tank.h"
+#include "Ladder.h"
 CSophia::CSophia(float x, float y)
 {
 	nx = -1;
@@ -45,7 +46,9 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// Simple fall down
 	vy += SOPHIA_GRAVITY * dt;
-	isTouchTank = false;
+	isTouchTank = false;	
+	isTouchLadder = false;
+	//isClimbing = false;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -59,6 +62,8 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		LPCOLLISIONEVENT e = coCollisoningEvents[i];
 		if (dynamic_cast<CTank*>(e->obj))
 			isTouchTank = true;
+		else if (dynamic_cast<CLadder*>(e->obj))
+			isTouchLadder = true;
 	}
 
 	// reset untouchable timer if untouchable time has passed
