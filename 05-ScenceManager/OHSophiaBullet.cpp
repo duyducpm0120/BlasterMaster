@@ -63,7 +63,9 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			break;
 		}
 		case OHSOPHIABULLET_TYPE_ROUNDED: {
-			if (state == OHSOPHIABULLET_STATE_FLYING_LEFT) {				
+			if (state == OHSOPHIABULLET_STATE_FLYING_LEFT) {
+				if (angle >= 2*3.14 || angle <-2*3.14)
+					visible = false;
 				angle += ALPHA* direct * dt ;
 				radius_increase += 0.1;
 				if (direct == 1) {
@@ -94,6 +96,8 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_UP) {
+				if (angle >= 2 * 3.14 || angle < -2 * 3.14)
+					visible = false;
 				angle += ALPHA * direct * dt;
 				radius_increase += 0.1;
 				if (direct == -1) {
@@ -107,6 +111,8 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_DOWN) {
+				if (angle >= 2 * 3.14 || angle < -2 * 3.14)
+					visible = false;
 				angle += ALPHA * direct * dt;
 				radius_increase += 0.1;
 				if (direct == -1) {

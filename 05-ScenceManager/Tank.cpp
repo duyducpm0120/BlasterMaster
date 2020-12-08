@@ -95,7 +95,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				isJumping = true;
 			}
-			else {
+			if (dynamic_cast<CBrick*>(e->obj)) {
 				if (e->ny != -1)
 					isJumping = true;
 				else {

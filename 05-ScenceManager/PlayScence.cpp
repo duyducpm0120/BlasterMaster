@@ -510,7 +510,8 @@ void CPlayScene::Update(DWORD dt)
 	//game->GetCameraBoundingBox(left, top, right, bottom);
 	//grid->GetUpdateObjects(updateObject, left, top, right, bottom);
 	DebugOut(L"Size of object array %d\n", objects.size());
-	//DebugOut(L"dt: %d \n", dt);
+	DebugOut(L"Scene width %d \n", scene_width);
+	DebugOut(L"Scene height %d \n", scene_height);
 	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }
