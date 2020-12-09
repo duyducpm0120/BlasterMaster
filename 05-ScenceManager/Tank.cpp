@@ -91,26 +91,20 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (!dynamic_cast<CBrick*>(e->obj)) {
-
-				isJumping = true;
+			
+			
+			if (dynamic_cast<CPortal*>(e->obj))
+			{
+				CPortal* p = dynamic_cast<CPortal*>(e->obj);
+				CGame* game = CGame::GetInstance();
+				game->SwitchScene(p->GetSceneId());
 			}
-			if (dynamic_cast<CBrick*>(e->obj)) {
+			else if (dynamic_cast<CBrick*>(e->obj)) {
 				if (e->ny != -1)
 					isJumping = true;
 				else {
 					isJumping = false;
 				}
-			}			
-			if (e->obj->IsEnemy()) {	
-				if (untouchableTime == 0) {
-					health -= e->obj->GetDamage();
-					untouchableTime = 1;
-				}
-				
-				//vy -= 0.3f;
-				if (health <= 0)
-					visible = false;
 			}
 			else if (dynamic_cast<CItem*>(e->obj)) {
 				switch (dynamic_cast<CItem*>(e->obj)->GetType())
@@ -147,15 +141,20 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CSophia*>(e->obj)) {
 					x += - nx * 0.4f;
-			}
-			else if (dynamic_cast<CPortal*>(e->obj))
-			{
-				CPortal* p = dynamic_cast<CPortal*>(e->obj);
-				CGame* game = CGame::GetInstance();				
-				game->SwitchScene(p->GetSceneId());
-			}
+			}	
+			else {
 			
-			
+				if (e->obj->IsEnemy()) {
+					if (untouchableTime == 0) {
+						health -= e->obj->GetDamage();
+						untouchableTime = 1;
+					}
+
+					//vy -= 0.3f;
+					if (health <= 0)
+						visible = false;
+				}
+			}
 		}
 	}
 
@@ -182,11 +181,9 @@ void CTank::Render()
 		break;
 	case TANK_STATE_JUMP_IDLE_LEFT:
 		ani = TANK_ANI_JUMP_IDLE_LEFT;
-		isJumping = true;
 		break;
 	case TANK_STATE_JUMP_IDLE_RIGHT:
 		ani = TANK_ANI_JUMP_IDLE_RIGHT;
-		isJumping = true;
 		break;
 	case TANK_STATE_IDLE_RIGHT:
 		ani = TANK_ANI_IDLE_RIGHT;
@@ -199,7 +196,6 @@ void CTank::Render()
 		break;
 	case TANK_STATE_JUMP_RIGHT:
 		ani = TANK_ANI_JUMP_RIGHT;
-		isJumping = true;
 		break;
 	case TANK_STATE_UPING_GUN_LEFT:
 		ani = TANK_ANI_UPING_GUN_LEFT;
@@ -232,7 +228,6 @@ void CTank::Render()
 	else
 		animation_set->at(ani)->Render(x, y, 50);
 
-	DebugOut(L" \n Is Jumping: %d \n ", isJumping);
 	//RenderBoundingBox();
 
 }

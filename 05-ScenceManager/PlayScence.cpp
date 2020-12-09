@@ -345,7 +345,7 @@ void CPlayScene::CallDestroyed(CGameObject* object)
 void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
-
+	isLoaded = true;
 	ifstream f;
 	f.open(sceneFilePath);
 
@@ -400,6 +400,10 @@ void CPlayScene::Load()
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 	
 }
+void CPlayScene::Load(vector<LPGAMEOBJECT> objects)
+{
+}
+
 
 void CPlayScene::Update(DWORD dt)
 {
@@ -444,8 +448,8 @@ void CPlayScene::Update(DWORD dt)
 	float left, top, right, bottom;
 	game->GetCameraBoundingBox(left, top, right, bottom);
 	grid->GetUpdateObjects(updateObject, left, top, right, bottom);
-	DebugOut(L"Size of update array %d\n", updateObject.size());
-	DebugOut(L"Size of object array %d\n", objects.size());
+	//DebugOut(L"Size of update array %d\n", updateObject.size());
+	//DebugOut(L"Size of object array %d\n", objects.size());
 
 	for (size_t i = 1; i < updateObject.size(); i++)
 	{
@@ -509,9 +513,6 @@ void CPlayScene::Update(DWORD dt)
 	//float left, top, right, bottom;
 	//game->GetCameraBoundingBox(left, top, right, bottom);
 	//grid->GetUpdateObjects(updateObject, left, top, right, bottom);
-	DebugOut(L"Size of object array %d\n", objects.size());
-	DebugOut(L"Scene width %d \n", scene_width);
-	DebugOut(L"Scene height %d \n", scene_height);
 	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
 
 }

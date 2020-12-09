@@ -387,7 +387,8 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				((CPlayScene*)scence)->SetHUD(new HUD(player->GetHealth(), player->GetDamage()));
 				
 			}
-			
+			break;
+		case DIK_E:
 			if (dynamic_cast<CSophia*> (player)->IsTouchLadder() && dynamic_cast<CSophia*> (player)->IsClimbing() == false) {
 				float x, y;
 				dynamic_cast<CSophia*> (player)->GetClimbingPosition(x, y);

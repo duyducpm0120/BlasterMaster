@@ -35,6 +35,7 @@
 19	textures\AreaO10.png	5	5	5
 20	textures\AreaO12.png	5	5	5
 21	textures\AreaO13.png	5	5	5
+22	textures\OHSubLevel.png	5	5	5
 [SPRITES]
 
 #TANK

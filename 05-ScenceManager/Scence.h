@@ -11,10 +11,11 @@ protected:
 	LPCWSTR sceneFilePath;
 	int scene_width;
 	int scene_height;
+	bool isLoaded;
 
 public: 
 	CScene(int id, LPCWSTR filePath);
-
+	bool IsLoaded() { return isLoaded; };
 	CKeyEventHandler * GetKeyEventHandler() { return key_handler; }
 	virtual void Load() = 0;
 	virtual void Unload() = 0;

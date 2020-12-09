@@ -4,6 +4,7 @@ CScene::CScene(int id, LPCWSTR filePath)
 {
 	this->id = id;
 	this->sceneFilePath = filePath;
+	isLoaded = false;
 	switch (id)
 	{
 	case 1:
@@ -37,6 +38,10 @@ CScene::CScene(int id, LPCWSTR filePath)
 	case 8:
 		scene_width = 496;
 		scene_height = 238;
+		break;
+	case 22:
+		scene_width = 256;
+		scene_height = 512;
 		break;
 	default:
 		scene_width = 256;

@@ -73,6 +73,12 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else if (y > e->obj->y)
 				climbingPositionY = e->obj->y + 192;
 		}
+		if (dynamic_cast<CPortal*>(e->obj))
+		{
+			CPortal* p = dynamic_cast<CPortal*>(e->obj);
+			CGame* game = CGame::GetInstance();
+			game->SwitchScene(p->GetSceneId());
+		}
 	}
 
 	// reset untouchable timer if untouchable time has passed
@@ -107,27 +113,24 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CTank*>(e->obj)) {
+			if (dynamic_cast<CPortal*>(e->obj))
+			{
+				if (e->ny != -1 && e->ny != 1) {
+					CPortal* p = dynamic_cast<CPortal*>(e->obj);
+					CGame* game = CGame::GetInstance();
+					game->SwitchScene(p->GetSceneId());
+				}
+			}
+			else if (dynamic_cast<CTank*>(e->obj)) {
 				isTouchTank = true;
 			}
-			if (dynamic_cast<CLadder*>(e->obj)) {
+			else if (dynamic_cast<CLadder*>(e->obj)) {
 				isTouchLadder = true;
 				climbingPositionX = e->obj->x + 2;
 				if (y < e->obj->y)
 					climbingPositionY = e->obj->y;
 				else if (y > e->obj->y)
 					climbingPositionY = e->obj->y + 192;
-			}
-			if (e->obj->IsEnemy()) {
-				if (untouchableTime == 0) {
-					health -= e->obj->GetDamage();
-					vx -= 0.3f;
-					untouchableTime = 1;
-				}
-
-				//vy -= 0.3f;
-				if (health <= 0)
-					visible = false;
 			}
 			else if (dynamic_cast<CItem*>(e->obj)) {
 				switch (dynamic_cast<CItem*>(e->obj)->GetType())
@@ -161,14 +164,27 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (health <= 0)
 					visible = false;
 			}
+			else {
+				if (e->obj->IsEnemy()) {
+					if (untouchableTime == 0) {
+						health -= e->obj->GetDamage();
+						vx -= 0.3f;
+						untouchableTime = 1;
+					}
+
+					//vy -= 0.3f;
+					if (health <= 0)
+						visible = false;
+				}
+			}
 		}
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	DebugOut(L"\n \n  touchtank: %d \t \n", isTouchTank);
-	DebugOut(L"\n \n  touchladder: %d \t \n", isTouchLadder);
+	//DebugOut(L"\n \n  touchtank: %d \t \n", isTouchTank);
+	//DebugOut(L"\n \n  touchladder: %d \t \n", isTouchLadder);
 	HandleUntouchableTime();
 }
 

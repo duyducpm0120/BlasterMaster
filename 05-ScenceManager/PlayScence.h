@@ -41,6 +41,7 @@ public:
 	CPlayScene(int id, LPCWSTR filePath);
 	CTank* GetTank() { return tank; };
 	virtual void Load();
+	virtual void Load(vector<LPGAMEOBJECT> objects);
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();

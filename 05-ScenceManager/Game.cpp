@@ -564,14 +564,13 @@ void CGame::Load(LPCWSTR gameFile)
 void CGame::SwitchScene(int scene_id)
 {
 	DebugOut(L"[INFO] Switching to scene %d\n", scene_id);
-
-	scenes[current_scene]->Unload();;
-
-	//CSprites::GetInstance()->Clear();
-	//CAnimations::GetInstance()->Clear();
-
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
-	s->Load();	
+	if(s->IsLoaded() == false)
+		s->Load();
+}
+
+void CGame::SwitchOldScene()
+{
 }
