@@ -66,7 +66,11 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_FLAME	14
 #define OBJECT_TYPE_SOPHIA	15
 #define OBJECT_TYPE_PORTAL	100
+<<<<<<< Updated upstream
 #define OBJECT_TYPE_AUTORUNPORTAL	60
+=======
+#define OBJECT_TYPE_AUTORUNPORTAL	101
+>>>>>>> Stashed changes
 #define OBJECT_TYPE_BOSS	16
 #define OBJECT_TYPE_OHSOPHIA	20
 #define OBJECT_TYPE_LADDER	21
@@ -621,7 +625,7 @@ void CPlayScene::SetCameraAutorunTarget(float movingSpaceX, float movingSpaceY)
 	this->CameraAutorunTargetX = x + movingSpaceX;
 	this->CameraAutorunTargetY = y + movingSpaceY;
 	if(movingSpaceX == 0)
-		player->SetPosition(player->x, player->y + (movingSpaceY/abs(movingSpaceY)) * 80 );
+		player->SetPosition(player->x, player->y + (movingSpaceY/abs(movingSpaceY)) * 96 );
 	if (movingSpaceY == 0)
 		player->SetPosition(player->x + (movingSpaceX / abs(movingSpaceX)) * 80, player->y );
 	isCameraAutorun = true;
