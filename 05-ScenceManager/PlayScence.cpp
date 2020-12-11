@@ -20,6 +20,11 @@
 #include "Boss.h"
 #include "OHSophia.h"
 #include "Ladder.h"
+#include "Robot.h"
+#include "CWall.h"
+#include "Skull.h"
+#include "Face.h"
+#include "Eye.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -57,10 +62,15 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_BEE	13
 #define OBJECT_TYPE_FLAME	14
 #define OBJECT_TYPE_SOPHIA	15
-#define OBJECT_TYPE_PORTAL	50
+#define OBJECT_TYPE_PORTAL	100
 #define OBJECT_TYPE_BOSS	16
 #define OBJECT_TYPE_OHSOPHIA	20
 #define OBJECT_TYPE_LADDER	21
+#define OBJECT_TYPE_ROBOT 50
+#define OBJECT_TYPE_CWALL 51
+#define OBJECT_TYPE_SKULL 52
+#define OBJECT_TYPE_FACE 53
+#define OBJECT_TYPE_EYE 54
 
 #define MAX_SCENE_LINE 1024
 
@@ -238,6 +248,21 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_BOSS: obj = new CBoss();
 		dynamic_cast<CBoss*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_ROBOT: obj = new CRobot();
+		dynamic_cast<CRobot*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_CWALL: obj = new CCwall();
+		dynamic_cast<CCwall*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_SKULL: obj = new CSkull();
+		dynamic_cast<CSkull*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_FACE: obj = new CFace();
+		dynamic_cast<CFace*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_EYE: obj = new CEye();
+		dynamic_cast<CEye*>(obj)->SetStartPosition(x, y);
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
