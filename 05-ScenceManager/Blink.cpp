@@ -18,7 +18,7 @@ void CBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	BlinkCounter += dt;
 	if (BlinkCounter >= 1000)
 	{
-		srand(time(NULL));
+		srand(rand()%100);
 		int n = (rand() % 3);
 
 		if (n ==0)
@@ -36,7 +36,7 @@ void CBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		BlinkCounter = 0;
 	}
 	
-	if (BlinkIncsCounter >= 3)
+	if (BlinkIncsCounter >= 4)
 	{
 		BlinkBack();
 		BlinkIncsCounter = 0;
@@ -58,7 +58,7 @@ void CBlink::Render()
 
 void CBlink::BlinkFoward()
 {
-	this->SetState(BLINK_STATE_UNCLOAKED);
+	this->ToggleState();
 	this->y += BLINK_DISTANCE;
 
 	BlinkIncsCounter++;
@@ -66,7 +66,7 @@ void CBlink::BlinkFoward()
 
 void CBlink::BlinkBack()
 {
-	this->SetState(BLINK_STATE_CLOAKED);
+	this->ToggleState();
 	this->x = this->startX;
 	this->y = this->startY;
 	
@@ -74,7 +74,7 @@ void CBlink::BlinkBack()
 
 void CBlink::BlinkLeft()
 {
-	this->SetState(BLINK_STATE_UNCLOAKED);
+	this->ToggleState();
 	this->x -= BLINK_DISTANCE;
 	BlinkIncsCounter++;
 	
@@ -82,10 +82,17 @@ void CBlink::BlinkLeft()
 
 void CBlink::BlinkRight()
 {
-	this->SetState(BLINK_STATE_UNCLOAKED);
+	this->ToggleState();
 	this->x += BLINK_DISTANCE;
 	BlinkIncsCounter++;
 	
+}
+
+void CBlink::ToggleState()
+{
+	if (state == BLINK_STATE_CLOAKED) state = BLINK_STATE_UNCLOAKED;
+	else if (state == BLINK_STATE_UNCLOAKED) state = BLINK_STATE_CLOAKED;
+
 }
 
 

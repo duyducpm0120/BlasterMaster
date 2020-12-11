@@ -24,7 +24,7 @@ class CBlink : public CGameObject
 	void BlinkLeft();
 	void BlinkRight();
 	int BlinkCounter = 0;
-
+	void ToggleState();
 	int BlinkIncsCounter = 0;
 
 public:
