@@ -124,9 +124,6 @@
     <ClCompile Include="Ladder.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Cwall.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Eye.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
@@ -139,6 +136,7 @@
     <ClCompile Include="Skull.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Quadcannon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tank.h">
@@ -243,9 +241,6 @@
     <ClInclude Include="Ladder.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Cwall.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="Eye.h">
       <Filter>Enemies</Filter>
     </ClInclude>
@@ -258,5 +253,6 @@
     <ClInclude Include="Skull.h">
       <Filter>Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Quadcannon.h" />
   </ItemGroup>
 </Project>
