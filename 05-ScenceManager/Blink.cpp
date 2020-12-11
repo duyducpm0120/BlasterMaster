@@ -1,5 +1,6 @@
 #include "Blink.h"
-
+#include <time.h> 
+#include "Utils.h"
 void CBlink::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
@@ -12,11 +13,35 @@ void CBlink::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void CBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	this->x += 100;
-	if (this->x >= this->startX )
+	
+	
+	BlinkCounter += dt;
+	if (BlinkCounter >= 1000)
 	{
-		this->x = this->startX;
+		srand(time(NULL));
+		int n = (rand() % 3);
+
+		if (n ==0)
+		{
+			BlinkFoward();
+		}
+		else if (n==1)
+		{
+			BlinkRight();
+		}
+		else 
+		{
+			BlinkLeft();
+		}
+		BlinkCounter = 0;
 	}
+	
+	if (BlinkIncsCounter >= 3)
+	{
+		BlinkBack();
+		BlinkIncsCounter = 0;
+	}
+	
 }
 
 void CBlink::Render()
@@ -30,6 +55,40 @@ void CBlink::Render()
 
 	animation_set->at(ani)->Render(x, y);
 }
+
+void CBlink::BlinkFoward()
+{
+	this->SetState(BLINK_STATE_UNCLOAKED);
+	this->y += BLINK_DISTANCE;
+
+	BlinkIncsCounter++;
+}
+
+void CBlink::BlinkBack()
+{
+	this->SetState(BLINK_STATE_CLOAKED);
+	this->x = this->startX;
+	this->y = this->startY;
+	
+}
+
+void CBlink::BlinkLeft()
+{
+	this->SetState(BLINK_STATE_UNCLOAKED);
+	this->x -= BLINK_DISTANCE;
+	BlinkIncsCounter++;
+	
+}
+
+void CBlink::BlinkRight()
+{
+	this->SetState(BLINK_STATE_UNCLOAKED);
+	this->x += BLINK_DISTANCE;
+	BlinkIncsCounter++;
+	
+}
+
+
 
 CBlink::CBlink()
 {
