@@ -146,8 +146,11 @@
     <ClCompile Include="PlayScenceKeyHandler.cpp" />
     <ClCompile Include="Portal.cpp" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="Quadcannon.cpp" />
     <ClCompile Include="Robot.cpp" />
+=======
+>>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 =======
 >>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
     <ClCompile Include="Rocket.cpp" />
@@ -188,8 +191,11 @@
     <ClInclude Include="PlayScenceKeyHandler.h" />
     <ClInclude Include="Portal.h" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="Quadcannon.h" />
     <ClInclude Include="Robot.h" />
+=======
+>>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 =======
 >>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
     <ClInclude Include="Rocket.h" />

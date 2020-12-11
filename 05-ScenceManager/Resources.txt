@@ -259,6 +259,7 @@
 210005	124	83	132	92	50
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ROBOT
 #Walking Left
 500001	96	49	122	75	40
@@ -341,6 +342,8 @@
 550006	152	277	170	293	40
 550007	172	275	190	293	40
 550008
+=======
+>>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 =======
 >>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 
@@ -508,6 +511,7 @@
 2102	210002	40	210003	40	210004	40	210005	40
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #----ROBOT----
 #Walking left
 5001	500001	40	500002	40
@@ -560,6 +564,8 @@
 #Recharging
 5602	560004	40	560005	40	560006	40
 
+=======
+>>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 =======
 >>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 [ANIMATION_SETS]
@@ -616,6 +622,7 @@
 
 #OHSOPHIABULLET
 <<<<<<< HEAD
+<<<<<<< HEAD
 21	2101	2102
 
 #ROBOT
@@ -637,6 +644,9 @@
 
 #QUADCANNON
 56	5601	5602
+=======
+21	2101	2102
+>>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 =======
 21	2101	2102
 >>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
