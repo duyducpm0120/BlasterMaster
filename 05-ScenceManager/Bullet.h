@@ -36,6 +36,7 @@ protected:
 
 
 public:
+	CBullet() = default;
 	CBullet(int level, int state);
 	virtual void SetState(int state);
 	void SetStartPositon(float x, float y);
