@@ -127,6 +127,18 @@
     <ClCompile Include="AutoRunPortal.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Face.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadcannon.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Robot.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Skull.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tank.h">
@@ -233,6 +245,18 @@
     </ClInclude>
     <ClInclude Include="AutoRunPortal.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Face.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadcannon.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Skull.h">
+      <Filter>Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
