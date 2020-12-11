@@ -132,7 +132,10 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Butterfly.cpp" />
+    <ClCompile Include="Cwall.cpp" />
     <ClCompile Include="Destroyed.cpp" />
+    <ClCompile Include="Eye.cpp" />
+    <ClCompile Include="Face.cpp" />
     <ClCompile Include="Flame.cpp" />
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -145,7 +148,9 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScenceKeyHandler.cpp" />
     <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Rocket.cpp" />
+    <ClCompile Include="Skull.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="StupidHead.cpp" />
     <ClCompile Include="Tank.cpp" />
@@ -169,7 +174,10 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Butterfly.h" />
+    <ClInclude Include="Cwall.h" />
     <ClInclude Include="Destroyed.h" />
+    <ClInclude Include="Eye.h" />
+    <ClInclude Include="Face.h" />
     <ClInclude Include="Flame.h" />
     <ClInclude Include="Golem.h" />
     <ClInclude Include="Grid.h" />
@@ -182,7 +190,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScenceKeyHandler.h" />
     <ClInclude Include="Portal.h" />
+    <ClInclude Include="Robot.h" />
     <ClInclude Include="Rocket.h" />
+    <ClInclude Include="Skull.h" />
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="StupidHead.h" />
     <ClInclude Include="Tank.h" />
