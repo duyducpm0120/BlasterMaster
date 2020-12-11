@@ -66,11 +66,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_FLAME	14
 #define OBJECT_TYPE_SOPHIA	15
 #define OBJECT_TYPE_PORTAL	100
-<<<<<<< Updated upstream
-#define OBJECT_TYPE_AUTORUNPORTAL	60
-=======
 #define OBJECT_TYPE_AUTORUNPORTAL	101
->>>>>>> Stashed changes
 #define OBJECT_TYPE_BOSS	16
 #define OBJECT_TYPE_OHSOPHIA	20
 #define OBJECT_TYPE_LADDER	21
