@@ -2,8 +2,8 @@
 
 void CBrick::Render()
 {
-	return;
-	//RenderBoundingBox();
+	
+	RenderBoundingBox();
 }
 
 void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
