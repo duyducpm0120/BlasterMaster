@@ -133,8 +133,6 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Butterfly.cpp" />
     <ClCompile Include="Destroyed.cpp" />
-    <ClCompile Include="Eye.cpp" />
-    <ClCompile Include="Face.cpp" />
     <ClCompile Include="Flame.cpp" />
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -147,10 +145,12 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScenceKeyHandler.cpp" />
     <ClCompile Include="Portal.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Quadcannon.cpp" />
     <ClCompile Include="Robot.cpp" />
+=======
+>>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
     <ClCompile Include="Rocket.cpp" />
-    <ClCompile Include="Skull.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="StupidHead.cpp" />
     <ClCompile Include="Tank.cpp" />
@@ -175,8 +175,6 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Butterfly.h" />
     <ClInclude Include="Destroyed.h" />
-    <ClInclude Include="Eye.h" />
-    <ClInclude Include="Face.h" />
     <ClInclude Include="Flame.h" />
     <ClInclude Include="Golem.h" />
     <ClInclude Include="Grid.h" />
@@ -189,10 +187,12 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScenceKeyHandler.h" />
     <ClInclude Include="Portal.h" />
+<<<<<<< HEAD
     <ClInclude Include="Quadcannon.h" />
     <ClInclude Include="Robot.h" />
+=======
+>>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
     <ClInclude Include="Rocket.h" />
-    <ClInclude Include="Skull.h" />
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="StupidHead.h" />
     <ClInclude Include="Tank.h" />
