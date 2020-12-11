@@ -14,7 +14,7 @@ void CBlink::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void CBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	
-	
+	if (health <=0)visible = false;
 	BlinkCounter += dt;
 	if (BlinkCounter >= 1000)
 	{
@@ -54,6 +54,7 @@ void CBlink::Render()
 
 
 	animation_set->at(ani)->Render(x, y);
+	RenderBoundingBox();
 }
 
 void CBlink::BlinkFoward()
@@ -99,6 +100,11 @@ void CBlink::ToggleState()
 
 CBlink::CBlink()
 {
+	damage = 3;
+	health = 2;
+	nx = -1;
+	isEnemy = true;
+	vy = 0;
 	this->state = BLINK_STATE_CLOAKED;
 }
 
