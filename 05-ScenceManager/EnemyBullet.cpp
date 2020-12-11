@@ -20,7 +20,7 @@ void CEnemyBullet::GetBoundingBox(float& left, float& top, float& right, float& 
 
 void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	damage = 1;
+	
 	CGameObject::Update(dt);
 	if (state == BULLET_STATE_FLYING_LEFT) {
 		SetSpeed(-BULLET_SPEED, 0.0f);
@@ -85,13 +85,13 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	for (int i = 0; i < coCollisoningEvents.size(); i++) {
 		LPCOLLISIONEVENT e = coCollisoningEvents[i];
-		if (dynamic_cast<CPlayer*>(e->obj)) {
-			e->obj->TakeDamage(this->damage);				//Destroy every enemy
-			this->visible = false;
-		}
-		else if (dynamic_cast<CBrick*>(e->obj)) {
-			this->visible = false;
-		}
+		//if (dynamic_cast<CPlayer*>(e->obj)) {
+		//	e->obj->TakeDamage(this->damage);				//Destroy every enemy
+		//	this->visible = false;
+		//}
+		//else if (dynamic_cast<CBrick*>(e->obj)) {
+		//	this->visible = false;
+		//}
 	}
 
 
@@ -133,11 +133,15 @@ void CEnemyBullet::Render()
 
 CEnemyBullet::CEnemyBullet()
 {
+	damage = 1;
+
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(61));
 }
 
 CEnemyBullet::CEnemyBullet(int state)
 {
+	damage = 1;
+
 	isEnemy = true;
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(61));
 	this->state = state;

@@ -25,6 +25,7 @@
 #include "Skull.h"
 #include "Face.h"
 #include "Quadcannon.h"
+#include "Blink.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -74,6 +75,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_SKULL 52
 #define OBJECT_TYPE_FACE 53
 #define OBJECT_TYPE_QUADCANNON 56
+#define OBJECT_TYPE_BLINK 57
 
 #define MAX_SCENE_LINE 1024
 
@@ -272,6 +274,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_QUADCANNON: obj = new CQuadcannon();
 		dynamic_cast<CQuadcannon*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_BLINK: obj = new CBlink();
+		dynamic_cast<CBlink*>(obj)->SetStartPosition(x, y);
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);

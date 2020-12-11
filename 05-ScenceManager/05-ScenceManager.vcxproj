@@ -128,6 +128,7 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="AutoRunPortal.cpp" />
     <ClCompile Include="Bee.cpp" />
+    <ClCompile Include="Blink.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AutoRunPortal.h" />
     <ClInclude Include="Bee.h" />
+    <ClInclude Include="Blink.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Bullet.h" />
