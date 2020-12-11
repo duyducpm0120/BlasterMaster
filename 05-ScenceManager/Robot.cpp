@@ -1,4 +1,7 @@
 #include "Robot.h"
+#include "Game.h"
+#include "PlayScence.h"
+#include "EnemyBullet.h"
 CRobot::CRobot()
 {
 	damage = 1;
@@ -43,6 +46,13 @@ void CRobot::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x = startX; vx = -vx;
 		SetState(ROBOT_STATE_WALKING_LEFT);
 	}
+	shootCounter += dt;
+	if(shootCounter>=1000)
+	{ 
+		Shoot();
+		shootCounter = 0;
+	}
+	
 }
 
 void CRobot::Render()
@@ -61,6 +71,19 @@ void CRobot::Render()
 	animation_set->at(ani)->Render(x, y);
 
 	//RenderBoundingBox();
+}
+
+void CRobot::Shoot()
+{
+	CGame* game = CGame::GetInstance();
+	CScene* scence = game->GetCurrentScene();
+	vector<LPGAMEOBJECT>* objects = ((CPlayScene*)scence)->GetObjects();
+	CEnemyBullet* bullet;
+	if (this->state == ROBOT_STATE_WALKING_LEFT) bullet = new CEnemyBullet(BULLET_STATE_FLYING_LEFT);
+	else bullet = new CEnemyBullet(BULLET_STATE_FLYING_RIGHT);
+	bullet->SetPosition(this->x + 13 - 5, this->y+5);
+	bullet->SetStartPositon(this->x + 13 - 5, this->y+5);
+	objects->push_back(bullet);
 }
 
 void CRobot::SetState(int state)
