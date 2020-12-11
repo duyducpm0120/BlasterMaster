@@ -14,6 +14,8 @@ CGameObject::CGameObject()
 	x = y = 0;
 	vx = vy = 0;
 	nx = 1;	
+	isPlayer = false;
+	isEnemy = false;
 }
 
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -71,12 +73,13 @@ void CGameObject::CalcPotentialCollisions(
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
-
-		if (e->t > 0 && e->t <= 1.0f)
-			coEvents.push_back(e);
-		else
-			delete e;
+		if (!(this->isPlayer== true && coObjects->at(i)->isPlayer == true)) {
+			LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
+			if (e->t > 0 && e->t <= 1.0f)
+				coEvents.push_back(e);
+			else
+				delete e;
+		}
 	}
 
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
@@ -127,8 +130,10 @@ void CGameObject::FilterCollision(
 		}
 	}
 
-	if (min_ix>=0) coEventsResult.push_back(coEvents[min_ix]);
-	if (min_iy>=0) coEventsResult.push_back(coEvents[min_iy]);
+	//if(!(this->isPlayer == true && coEvents[min_ix]->obj->isPlayer == true))
+		if (min_ix>=0) coEventsResult.push_back(coEvents[min_ix]);
+	//if (!(this->isPlayer == true && coEvents[min_iy]->obj->isPlayer == true))
+		if (min_iy>=0) coEventsResult.push_back(coEvents[min_iy]);
 }
 
 

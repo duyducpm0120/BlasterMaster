@@ -170,37 +170,35 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	CGameObject* obj = objects->at(0);
 	switch (KeyCode)
 	{
-	case DIK_1:
-		
+	case DIK_1:		
 		CGame::GetInstance()->SwitchScene(1);
 		break;
-	case DIK_2:
-		
+	case DIK_2:		
 		CGame::GetInstance()->SwitchScene(2);
 		break;
-	case DIK_3:
-		
+	case DIK_3:		
 		CGame::GetInstance()->SwitchScene(3);
 		break;
-	case DIK_4:
-		
+	case DIK_4:		
 		CGame::GetInstance()->SwitchScene(4);
 		break;
-	case DIK_5:
-		
+	case DIK_5:		
 		CGame::GetInstance()->SwitchScene(5);
 		break;
-	case DIK_6:
-	
+	case DIK_6:	
 		CGame::GetInstance()->SwitchScene(6);
 		break;
-	case DIK_7:
-		
+	case DIK_7:		
 		CGame::GetInstance()->SwitchScene(7);
 		break;
-	case DIK_8:
-		
+	case DIK_8:		
 		CGame::GetInstance()->SwitchScene(8);
+		break;
+	case DIK_9:
+		CGame::GetInstance()->SwitchScene(9);
+		break;
+	case DIK_0:
+		CGame::GetInstance()->SwitchScene(10);
 		break;
 	}		// Switch scenes	 
 

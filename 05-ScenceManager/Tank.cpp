@@ -13,6 +13,7 @@
 #include "Sophia.h"
 CTank:: CTank(float x, float y) 
 {
+	isPlayer = true;
 	bulletLevel = 1;
 	enableRocket = true;
 	untouchable = 0;
@@ -82,7 +83,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 		
-
 		x += min_tx * dx + nx * 1.0f;
 		y += min_ty * dy + (ny < 0 ? ny : 0) * 0.4f;
 		if (nx != 0) vx = 0;
@@ -90,9 +90,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			
-			
+			LPCOLLISIONEVENT e = coEventsResult[i];		
 			if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);

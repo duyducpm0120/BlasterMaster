@@ -15,6 +15,7 @@
 #include "PlayScence.h"
 COHSophia::COHSophia(float x, float y)
 {
+	isPlayer = true;
 	bulletLevel = 1;
 	enableRocket = true;
 	isJumping = false;
@@ -142,7 +143,8 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CGame* game = CGame::GetInstance();
 				float movX, movY;
 				dynamic_cast<CAutoRunPortal*>(e->obj)->GetMovingSpace(movX, movY);
-				dynamic_cast<CPlayScene*>(game->GetCurrentScene())->SetCameraAutorunTarget(movX, movY);
+				if(dynamic_cast<CPlayScene*>(game->GetCurrentScene())->IsCameraAutorun() == false)
+					dynamic_cast<CPlayScene*>(game->GetCurrentScene())->SetCameraAutorunTarget(movX, movY);
 			}
 
 

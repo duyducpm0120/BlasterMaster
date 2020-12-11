@@ -11,6 +11,7 @@
 #include "Ladder.h"
 CSophia::CSophia(float x, float y)
 {
+	isPlayer = true;
 	nx = -1;
 	bulletLevel = 1;
 	//health = 8;
