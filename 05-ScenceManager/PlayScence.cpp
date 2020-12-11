@@ -20,15 +20,19 @@
 #include "Boss.h"
 #include "OHSophia.h"
 #include "Ladder.h"
+#include "AutoRunPortal.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
+	isCameraAutorun = false;
 	CGame *game = CGame::GetInstance();
 	this->playerHealth = game->GetHealth();
 	this->playerPower = game->GetPower();
 	key_handler = new CPlayScenceKeyHandler(this);
+	if (id == 10)
+		game->SetCamPos(0, 1296);
 }
 
 /*
@@ -58,6 +62,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_FLAME	14
 #define OBJECT_TYPE_SOPHIA	15
 #define OBJECT_TYPE_PORTAL	50
+#define OBJECT_TYPE_AUTORUNPORTAL	60
 #define OBJECT_TYPE_BOSS	16
 #define OBJECT_TYPE_OHSOPHIA	20
 #define OBJECT_TYPE_LADDER	21
@@ -228,6 +233,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float b = atof(tokens[5].c_str());
 		int scene_id = atoi(tokens[6].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
+	}
+	break;
+	case OBJECT_TYPE_AUTORUNPORTAL:
+	{
+		float r = atof(tokens[4].c_str());
+		float b = atof(tokens[5].c_str());
+		float targetx = atof(tokens[6].c_str());
+		float targety = atof(tokens[7].c_str());
+		obj = new CAutoRunPortal(x, y, r, b, targetx,targety);
 	}
 	break;
 	case OBJECT_TYPE_WORM: obj = new CWorm();
@@ -459,62 +473,56 @@ void CPlayScene::Update(DWORD dt)
 
 	}
 	
-	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
-	// Update camera to follow mario
-	float cx, cy;
-	player->GetPosition(cx, cy);
-	
-	if (dynamic_cast<CTank*>(player)) {
-		int w, h;
-		player->GetDimension(w, h);
-		if (h == TANK_UP_GUN_HEIGHT)
-			cy += 16;
-	}
+	if (this->id != 10) {
+		// Update camera to follow player
+		float cx, cy;
+		player->GetPosition(cx, cy);
 
-	//cx -= game->GetScreenWidth() / 2;
-	//cy -= game->GetScreenHeight() / 2;
-	if (cx + game->GetScreenWidth() / 2 >= scene_width - 1)
-		cx = (scene_width - 1) - game->GetScreenWidth();
-	else
-	{
-		if (cx < game->GetScreenWidth() / 2)
-		{
-			cx = 0;
+		if (dynamic_cast<CTank*>(player)) {
+			int w, h;
+			player->GetDimension(w, h);
+			if (h == TANK_UP_GUN_HEIGHT)
+				cy += 16;
 		}
-		else
-			cx -= game->GetScreenWidth() / 2;
-	}
-
-	if (scene_height <= 270) {
-	
-		cy = 0;
-	}
-	else {
-		if (cy + game->GetScreenHeight() / 2 >= (scene_height - 1))
-			cy = (scene_height - 1) - game->GetScreenHeight();
+		if (cx + game->GetScreenWidth() / 2 >= scene_width - 1)
+			cx = (scene_width - 1) - game->GetScreenWidth();
 		else
 		{
-			if (cy < game->GetScreenHeight() / 2)
+			if (cx < game->GetScreenWidth() / 2)
 			{
-				cy = 0;
+				cx = 0;
 			}
 			else
-				cy -= game->GetScreenHeight() / 2;
+				cx -= game->GetScreenWidth() / 2;
 		}
+
+		if (scene_height <= 270) {
+
+			cy = 0;
+		}
+		else {
+			if (cy + game->GetScreenHeight() / 2 >= (scene_height - 1))
+				cy = (scene_height - 1) - game->GetScreenHeight();
+			else
+			{
+				if (cy < game->GetScreenHeight() / 2)
+				{
+					cy = 0;
+				}
+				else
+					cy -= game->GetScreenHeight() / 2;
+			}
+		}
+
+		game->SetCamPos(cx, cy);
+		hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
 	}
-
-	game->SetCamPos(cx, cy);
-
-
-
-	//updateObject.clear();
-	//float left, top, right, bottom;
-	//game->GetCameraBoundingBox(left, top, right, bottom);
-	//grid->GetUpdateObjects(updateObject, left, top, right, bottom);
-	hud->Update(cx+5, cy, player->GetHealth(), player->GetDamage());
-
+	else {
+		if(isCameraAutorun)
+			UpdateAutorunCamera();
+	}
 }
 
 void CPlayScene::Render()
@@ -537,9 +545,43 @@ void CPlayScene::Render()
 	hud->Render(player);
 }
 
-/*
-	Unload current scene
-*/
+void CPlayScene::UpdateAutorunCamera()
+{
+	float x, y;
+	CGame* game = CGame::GetInstance();
+	game->GetCamPosition(x, y);
+	if (x < CameraAutorunTargetX) {
+		x+=5;
+		if (x >= CameraAutorunTargetX)
+			x = CameraAutorunTargetX;
+	}
+	else if (x > CameraAutorunTargetX) {
+		x-=5;
+		if (x <= CameraAutorunTargetX)
+			x = CameraAutorunTargetX;
+	}
+	else {
+		x = x;
+
+	}
+	if (y < CameraAutorunTargetY) {
+		y+=5;
+		if (y >= CameraAutorunTargetY)
+			y = CameraAutorunTargetY;
+	}
+	else if (y > CameraAutorunTargetY) {
+		y-=5;
+		if (y <= CameraAutorunTargetY)
+			y = CameraAutorunTargetY;
+	}
+	else {
+		y = y;
+	}
+	game->SetCamPos(x, y);	
+	hud->Update(x + 5, y, player->GetHealth(), player->GetDamage());
+	if (x == CameraAutorunTargetX && y == CameraAutorunTargetY)
+		isCameraAutorun = false;
+}
 void CPlayScene::Unload()
 {
 	for (int i = 0; i < objects.size(); i++)
@@ -551,9 +593,24 @@ void CPlayScene::Unload()
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
+void CPlayScene::SetCameraAutorunTarget(float movingSpaceX, float movingSpaceY)
+{
+	float x, y;
+	CGame* game = CGame::GetInstance();
+	game->GetCamPosition(x, y);
+	this->CameraAutorunTargetX = x + movingSpaceX;
+	this->CameraAutorunTargetY = y + movingSpaceY;
+	if(movingSpaceX == 0)
+		player->SetPosition(player->x, player->y + (movingSpaceY/abs(movingSpaceY)) * 80 );
+	if (movingSpaceY == 0)
+		player->SetPosition(player->x + (movingSpaceX / abs(movingSpaceX)) * 80, player->y );
+	isCameraAutorun = true;
+}
+
 void CPlayScene::SetPlayer(CPlayer* player)
 {
 	this->player = player;
 }
+
 
 

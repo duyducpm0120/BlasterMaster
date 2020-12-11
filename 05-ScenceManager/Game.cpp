@@ -571,6 +571,3 @@ void CGame::SwitchScene(int scene_id)
 		s->Load();
 }
 
-void CGame::SwitchOldScene()
-{
-}

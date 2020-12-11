@@ -124,6 +124,9 @@
     <ClCompile Include="Ladder.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="AutoRunPortal.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tank.h">
@@ -226,6 +229,9 @@
       <Filter>Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Ladder.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoRunPortal.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

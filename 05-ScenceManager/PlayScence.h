@@ -27,6 +27,9 @@ protected:
 
 	int *playerHealth;
 	int *playerPower;
+	bool isCameraAutorun;
+	float CameraAutorunTargetX;
+	float CameraAutorunTargetY;
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
@@ -49,11 +52,15 @@ public:
 	CPlayer * GetPlayer() { return player; } 
 	int GetPlayerHealth() { return *playerHealth; };
 	int GetPlayerPower() { return *playerPower; };
+	bool IsCameraAutorun() { return isCameraAutorun; };
+	void SetIsCameraAutorun(bool param) { isCameraAutorun = param; };
+	void SetCameraAutorunTarget(float movingSpaceX, float movingSpaceY);
 	void SetPlayer(CPlayer* player);
 	HUD* GetHUD() { return hud; };
 	void SetHUD(HUD* hud) { this->hud = hud; };
 	vector<LPGAMEOBJECT>* GetObjects(){ return &objects; }
 	vector<LPGAMEOBJECT>* GetUpdateObjects() { return &updateObject; }
+	void UpdateAutorunCamera();
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:

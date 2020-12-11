@@ -1,5 +1,5 @@
 [SETTINGS]
-start	5	
+start	10	
 #scene list
 [SCENES]
 1	scene1.txt
@@ -10,17 +10,5 @@ start	5
 6	scene6.txt
 7	scene7.txt
 8	scene8.txt
-9	sceneO1.txt
-10	sceneO2.txt
-11	sceneO3.txt
-12	sceneO4.txt
-13	sceneO5.txt
-14	sceneO6.txt
-15	sceneO7.txt
-16	sceneO8.txt
-17	sceneO9.txt
-18	sceneO10.txt
-19	sceneO11.txt
-20	sceneO12.txt
-21	sceneO13.txt
-22	sceneOHSubLevel.txt
+9	sceneOHSubLevel.txt
+10	sceneOH.txt

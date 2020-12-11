@@ -65,6 +65,7 @@ public:
 	void SetPlayerHealth(int health) { playerHealth = health; };
 	void SetPlayerPower(int power) { playerPower = power; };
 	void LoadResources();
+	void GetCamPosition(float& x, float& y) { x = cam_x; y = cam_y; };
 
 
 public:
@@ -79,7 +80,6 @@ public:
 	void Load(LPCWSTR gameFile);
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void SwitchScene(int scene_id);
-	void SwitchOldScene();
 
 	int GetScreenWidth() { return screen_width; }
 	int GetScreenHeight() { return screen_height; }

@@ -11,6 +11,8 @@
 #include "Brick.h"
 #include "Bullet.h"
 #include "Sophia.h"
+#include "AutoRunPortal.h"
+#include "PlayScence.h"
 COHSophia::COHSophia(float x, float y)
 {
 	bulletLevel = 1;
@@ -133,6 +135,14 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
 				CGame* game = CGame::GetInstance();
 				game->SwitchScene(p->GetSceneId());
+			}
+			else if (dynamic_cast<CAutoRunPortal*>(e->obj))
+			{
+				CAutoRunPortal* p = dynamic_cast<CAutoRunPortal*>(e->obj);
+				CGame* game = CGame::GetInstance();
+				float movX, movY;
+				dynamic_cast<CAutoRunPortal*>(e->obj)->GetMovingSpace(movX, movY);
+				dynamic_cast<CPlayScene*>(game->GetCurrentScene())->SetCameraAutorunTarget(movX, movY);
 			}
 
 
