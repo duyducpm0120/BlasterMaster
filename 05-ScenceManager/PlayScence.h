@@ -53,6 +53,7 @@ public:
 	int GetPlayerHealth() { return *playerHealth; };
 	int GetPlayerPower() { return *playerPower; };
 	bool IsCameraAutorun() { return isCameraAutorun; };
+	bool isCamSetInit = false;
 	void SetIsCameraAutorun(bool param) { isCameraAutorun = param; };
 	void SetCameraAutorunTarget(float movingSpaceX, float movingSpaceY);
 	void SetPlayer(CPlayer* player);

@@ -99,7 +99,9 @@
 6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	6	7	
 [OBJECTS]
 #OHSOPHIA
-20	120	1392	20
+20	112	1408	20
+#PORTAL
+100	112	1424	0	128	1440	8
 #AUTORUNPORTAL
 # type	l	t	ani_set_id	r	b	targetX	targetY
 #1(fixed)

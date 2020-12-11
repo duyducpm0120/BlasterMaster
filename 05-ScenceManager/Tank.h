@@ -65,7 +65,7 @@
 #define TANK_UP_GUN_WIDHT	26
 #define TANK_UP_GUN_HEIGHT	34
 
-#define TANK_UNTOUCHABLE_TIME 200
+#define TANK_UNTOUCHABLE_TIME 100
 
 
 #pragma endregion

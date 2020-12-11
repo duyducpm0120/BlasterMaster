@@ -569,5 +569,10 @@ void CGame::SwitchScene(int scene_id)
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
 	if(s->IsLoaded() == false)
 		s->Load();
+	if (current_scene == 10) {
+		SetCamPos(0, 1296);
+		DebugOut(L"AAAAAA");
+		dynamic_cast<CPlayScene*>(scenes[current_scene])->isCamSetInit = false;
+	}
 }
 

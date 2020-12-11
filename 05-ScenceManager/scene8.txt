@@ -116,7 +116,9 @@
 1	448	208	2
 1	464	208	2
 1	480	208	2
-
+#PORTAL
+# type	l	t	ani_set_id	r	b	scene_id
+100	64	190	0	80	206	10
 #BEE
 13	208	176	13
 #GOLEM

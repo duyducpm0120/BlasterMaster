@@ -36,8 +36,6 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	this->playerHealth = game->GetHealth();
 	this->playerPower = game->GetPower();
 	key_handler = new CPlayScenceKeyHandler(this);
-	if (id == 10)
-		game->SetCamPos(0, 1296);
 }
 
 /*
@@ -544,7 +542,11 @@ void CPlayScene::Update(DWORD dt)
 		game->SetCamPos(cx, cy);
 		hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
 	}
-	else {
+	else if(id ==10) {
+		if (isCamSetInit == false) {
+			game->SetCamPos(0, 1296);
+			isCamSetInit = true;
+		}
 		if(isCameraAutorun)
 			UpdateAutorunCamera();
 	}
