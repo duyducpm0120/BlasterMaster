@@ -63,6 +63,7 @@ public:
 	bool visible;
 	
 	bool isEnemy;
+	bool isPlayer;
 	int health;
 	int damage;
 

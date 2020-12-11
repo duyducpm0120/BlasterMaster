@@ -626,9 +626,9 @@ void CPlayScene::SetCameraAutorunTarget(float movingSpaceX, float movingSpaceY)
 	this->CameraAutorunTargetX = x + movingSpaceX;
 	this->CameraAutorunTargetY = y + movingSpaceY;
 	if(movingSpaceX == 0)
-		player->SetPosition(player->x, player->y + (movingSpaceY/abs(movingSpaceY)) * 96 );
+		player->SetPosition(player->x, player->y + (movingSpaceY/abs(movingSpaceY)) * 114 );
 	if (movingSpaceY == 0)
-		player->SetPosition(player->x + (movingSpaceX / abs(movingSpaceX)) * 80, player->y );
+		player->SetPosition(player->x + (movingSpaceX / abs(movingSpaceX)) * 90, player->y );
 	isCameraAutorun = true;
 }
 
