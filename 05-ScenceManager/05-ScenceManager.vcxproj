@@ -147,8 +147,11 @@
     <ClCompile Include="Portal.cpp" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="Quadcannon.cpp" />
     <ClCompile Include="Robot.cpp" />
+=======
+>>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 =======
 >>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 =======
@@ -192,8 +195,11 @@
     <ClInclude Include="Portal.h" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="Quadcannon.h" />
     <ClInclude Include="Robot.h" />
+=======
+>>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 =======
 >>>>>>> parent of 84d01ba... Merge branch 'master' of https://github.com/duyducpm0120/BlasterMaster
 =======
