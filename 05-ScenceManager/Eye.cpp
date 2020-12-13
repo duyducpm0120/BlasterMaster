@@ -1,5 +1,25 @@
 #include "Eye.h"
+#include "Game.h"
+#include "PlayScence.h"
+#include "EnemyBullet.h"
+#include "Vec2.h"
+void CEye::Shoot()
+{
+	this->SetState(EYE_STATE_SHOOTING);
+	CGame* game = CGame::GetInstance();
+	CScene* scence = game->GetCurrentScene();
+	vector<LPGAMEOBJECT>* objects = ((CPlayScene*)scence)->GetObjects();
+	float px, py;
+	((CPlayScene*)scence)->GetPlayer()->GetPosition(px, py);
+	CEnemyBullet* bullet1 = new CEnemyBullet(BULLET_STATE_UNDEF);
+	Vec2 speed = Vec2(px - x, py - y);
+	speed = speed.Normalize() * BULLET_SPEED;
+	bullet1->SetSpeed(speed.x, speed.y);
+	bullet1->SetPosition(this->x, this->y);
+	bullet1->SetStartPositon(this->x, this->y);
 
+	objects->push_back(bullet1);
+}
 void CEye::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
@@ -43,7 +63,13 @@ void CEye::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = -EYE_WALKING_SPEED;
 	}
 
-	
+	counter += dt;
+	if (counter >= 1000)
+	{
+		Shoot();
+		counter = 0;
+
+	}
 }
 
 void CEye::Render()
@@ -57,6 +83,7 @@ void CEye::Render()
 
 CEye::CEye()
 {
+	isEnemy = true;
 	damage = 1;
 	health = 3;
 	nx = -1;
