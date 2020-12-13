@@ -1,5 +1,9 @@
 #include "Boss.h"
 #include "Utils.h"
+#include "Game.h"
+#include "PlayScence.h"
+#include "EnemyBullet.h"
+#include "Vec2.h"
 CBoss::CBoss() :
 	BigClawLeft(18),
 	BigClawRight(19)
@@ -110,6 +114,31 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	this->BigClawRight.setStartPoint(RightArm[3].getEndpoint());
 	this->BigClawRight.calculateEndpoint();
+	counter1 += dt;
+	counter2 += dt;
+	counter3 += dt;
+	counter4 += dt;
+	if(counter1>=3000)
+	{
+		Shoot();
+		counter1 = 0;
+	}
+	if (counter2 >= 3000)
+	{
+		Shoot();
+		counter2 = 0;
+	}
+	if (counter3 >= 3000)
+	{
+		Shoot();
+		counter3 = 0;
+	}
+	if (counter4 >= 3000)
+	{
+		Shoot();
+		counter4 = 0;
+	}
+
 }
 
 
@@ -276,6 +305,20 @@ void CBoss::Init()
 
 	}
 	
+}
+
+void CBoss::Shoot()
+{
+	CGame* game = CGame::GetInstance();
+	CScene* scence = game->GetCurrentScene();
+	vector<LPGAMEOBJECT>* objects = ((CPlayScene*)scence)->GetObjects();
+	CEnemyBullet* bullet1 = new CEnemyBullet(BULLET_STATE_BOSS);
+	
+	bullet1->SetSpeed(0.0f, BULLET_SPEED/4);
+	bullet1->SetPosition(this->x+20, this->y+20);
+	bullet1->SetStartPositon(this->x+20, this->y+20);
+
+	objects->push_back(bullet1);
 }
 
 void CBoss::BossClawSection::setStartPoint(Vec2 sp)

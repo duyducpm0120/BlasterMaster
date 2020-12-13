@@ -3,6 +3,14 @@
 #include "Brick.h"
 #include "GameObject.h"
 #include "PlayScence.h"
+#include "Vec2.h"
+float CEnemyBullet::CaclDistance()
+{
+	Vec2 pos = Vec2(x, y);
+	Vec2 old = Vec2(startPositionX, startPositionY);
+
+	return (pos - old).GetLength();
+}
 void CEnemyBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
@@ -62,14 +70,17 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		
 	}
-	else if (state == BULLET_STATE_UNDEF)
+	else if (state == BULLET_STATE_UNDEF|| state==BULLET_STATE_BOSS)
 	{
-		
-		
+		if (this->CaclDistance() >= 100) this->visible = false;
+		else {
 			x += dx;
 			y += dy;
+		}
+			
 		
 	}
+
 	else //Flying Down
 	{
 		SetSpeed(0.0f, BULLET_SPEED);
@@ -136,7 +147,10 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CEnemyBullet::Render()
 {
+	if (state == BULLET_STATE_BOSS) animation_set->at(1)->Render(x, y);
+	else
 	animation_set->at(0)->Render(x, y);
+	
 }
 
 CEnemyBullet::CEnemyBullet()

@@ -67,4 +67,10 @@ private:
 	BossClawSection BigClawRight;
 	BossClawSection LeftArm[4];
 	BossClawSection RightArm[4];
+	void Shoot();
+	int counter = 0;
+	int counter1 = 0;
+	int counter2 = 300;
+	int counter3 = 600;
+	int counter4 = 900;
 };
