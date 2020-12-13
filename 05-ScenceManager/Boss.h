@@ -53,13 +53,13 @@ public:
 	CBoss();
 	virtual void SetState(int state);
 	void SetStartPosition(float x, float y);
-	
+	void getLeftClawPos(float& x, float& y);
+	void getRightClawPos(float& x, float& y);
 private: 
 	Vec2 Target1 = Vec2(350,150);
 	Vec2 Target2 = Vec2(410,150);
-	Vec2 Speed = Vec2(2 ,2);
-	Vec2 Speed2 = Vec2(-2 ,-2);
-	float TargetRotAngle = 0;
+	Vec2 Speed = Vec2(1 ,1);
+	Vec2 Speed2 = Vec2(-1 ,-1);
 	void updateTarget1();
 	void updateTarget2();
 	void Init();

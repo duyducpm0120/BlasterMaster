@@ -54,8 +54,8 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = -Boss_WALKING_SPEED;
 		SetState(Boss_STATE_WALKING_LEFT);
 	}
-	if (vy < 0 && y < (startY - 50)) {
-		y = startY - 50;
+	if (vy < 0 && y < (startY - 25)) {
+		y = startY - 25;
 		vy = Boss_WALKING_SPEED;
 	}
 	if (vy > 0 && y > startY) {
@@ -115,11 +115,9 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBoss::Render()
 {
-	int ani;
 	
-		ani = Boss_ANI_WALKING_LEFT;
 
-		animation_set->at(0)->Render(x,y);
+	animation_set->at(0)->Render(x,y);
 
 	/*if (state == Boss_STATE_DIE) {
 		return;
@@ -128,8 +126,8 @@ void CBoss::Render()
 	
 
 	//RenderBoundingBox();
-	BigClawLeft.Render();
-	BigClawRight.Render();
+	//BigClawLeft.Render();
+	//BigClawRight.Render();
 	for (int i = 0; i < 4; i++)
 	{
 		LeftArm[i].Render();
@@ -163,6 +161,18 @@ void CBoss::SetStartPosition(float x, float y)
 {
 	startX = x;
 	startY = y;
+}
+
+void CBoss::getLeftClawPos(float& x, float& y)
+{
+	x = this->BigClawLeft.x;
+	y = this->BigClawLeft.y;
+}
+
+void CBoss::getRightClawPos(float& x, float& y)
+{
+	x = this->BigClawRight.x;
+	y = this->BigClawRight.y;
 }
 
 void CBoss::updateTarget1()

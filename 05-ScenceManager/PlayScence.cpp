@@ -26,6 +26,7 @@
 #include "Quadcannon.h"
 #include "Blink.h"
 #include "Eye.h"
+#include "BossArm.h"
 
 using namespace std;
 
@@ -259,9 +260,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BEE: obj = new CBee();
 		dynamic_cast<CBee*>(obj)->SetStartPosition(x, y);
 		break;
-	case OBJECT_TYPE_BOSS: obj = new CBoss();
-		dynamic_cast<CBoss*>(obj)->SetStartPosition(x, y);
-		break;
+	case OBJECT_TYPE_BOSS: 
+	{
+	obj = new CBoss();
+	dynamic_cast<CBoss*>(obj)->SetStartPosition(x, y);
+	BossArm *left = new BossArm(dynamic_cast<CBoss*>(obj), TYPE_LEFT_CLAW);
+	objects.push_back(left);
+	BossArm* right = new BossArm(dynamic_cast<CBoss*>(obj), TYPE_RIGHT_CLAW);
+	objects.push_back(right);
+	break;
+	}
 	case OBJECT_TYPE_ROBOT: obj = new CRobot();
 		dynamic_cast<CRobot*>(obj)->SetStartPosition(x, y);
 		break;

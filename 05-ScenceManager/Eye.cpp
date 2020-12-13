@@ -42,8 +42,8 @@ void CEye::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	y += dy;
 
 
-	if (vx < 0 && x < (startX - 200)) {
-		x = startX - 200;
+	if (vx < 0 && x < (startX - 100)) {
+		x = startX - 100;
 		SetState(EYE_STATE_WALKING_RIGHT);
 		nx = 1;
 		vx = EYE_WALKING_SPEED;
