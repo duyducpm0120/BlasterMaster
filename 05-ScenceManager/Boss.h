@@ -58,8 +58,8 @@ public:
 private: 
 	Vec2 Target1 = Vec2(350,150);
 	Vec2 Target2 = Vec2(410,150);
-	Vec2 Speed = Vec2(1 ,1);
-	Vec2 Speed2 = Vec2(-1 ,-1);
+	Vec2 Speed = Vec2(1.5f ,1.5f);
+	Vec2 Speed2 = Vec2(-1.5f ,-1.5f);
 	void updateTarget1();
 	void updateTarget2();
 	void Init();

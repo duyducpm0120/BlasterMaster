@@ -7,7 +7,7 @@ CBoss::CBoss() :
 {
 	
 	damage = 1;
-	health = 3000;
+	health = 30;
 	nx = -1;
 	SetState(Boss_STATE_WALKING_LEFT);
 	vx = -Boss_WALKING_SPEED;
@@ -77,7 +77,7 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	
 	//Rebasing the arm to the boss
-	this->LeftArm[0].setStartPoint(Vec2(x, y));
+	this->LeftArm[0].setStartPoint(Vec2(x, y+20));
 	this->LeftArm[0].calculateEndpoint();
 	for (int i = 1; i < 4; i++)
 	{
@@ -100,7 +100,7 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	//Rebasing the arm to the boss
-	this->RightArm[0].setStartPoint(Vec2(x+40, y));
+	this->RightArm[0].setStartPoint(Vec2(x+40, y+20));
 	this->RightArm[0].calculateEndpoint();
 	for (int i = 1; i < 4; i++)
 	{
@@ -126,8 +126,8 @@ void CBoss::Render()
 	
 
 	//RenderBoundingBox();
-	//BigClawLeft.Render();
-	//BigClawRight.Render();
+	BigClawLeft.Render();
+	BigClawRight.Render();
 	for (int i = 0; i < 4; i++)
 	{
 		LeftArm[i].Render();

@@ -24,6 +24,8 @@ void BossArm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->x = x_;
 		this->y = y_;
 	}
+
+	if (Boss->visible == false) visible = false;
 }
 
 void BossArm::Render()
@@ -38,9 +40,8 @@ BossArm::BossArm(CBoss* boss, int _type)
 	damage = 1;
 	health = 10000;
 	this->Boss = boss;
-	this->type = type;
-	x = 100;
-	y = 100;
+	x = Boss->x;
+	y = Boss->y;
 	visible = true;
 	
 }
