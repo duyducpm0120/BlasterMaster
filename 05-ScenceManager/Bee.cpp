@@ -1,6 +1,7 @@
 #include "BEE.h"
 CBee::CBee()
 {
+	isEnemy = true;
 	damage = 1;
 	health = 3;
 	nx = -1;
@@ -11,7 +12,6 @@ CBee::CBee()
 
 void CBee::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	isEnemy = true;
 	left = x;
 	top = y;
 	right = x + BEE_BBOX_WIDTH;

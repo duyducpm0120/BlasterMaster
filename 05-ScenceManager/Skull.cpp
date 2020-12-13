@@ -1,16 +1,21 @@
 #include "Skull.h"
+#include "Game.h"
+#include "PlayScence.h"
+#include "EnemyBullet.h"
+#include "Vec2.h"
 CSkull::CSkull()
 {
 	damage = 1;
+	isEnemy = true;
+
 	health = 2;
 	nx = -1;
 	vy = 0;
-	SetState(SKULL_STATE_WALKING_LEFT_MOUTH_CLOSED);
+	SetState(SKULL_STATE_WALKING_RIGHT_MOUTH_CLOSED);
 }
 
 void CSkull::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	isEnemy = true;
 	left = x;
 	top = y;
 	right = x + SKULL_BBOX_WIDTH;
@@ -43,6 +48,14 @@ void CSkull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x = startX; vx = -vx;
 		SetState(SKULL_STATE_WALKING_LEFT_MOUTH_CLOSED);
 	}
+
+	counter += dt;
+	if (counter >= 1000)
+	{
+		Shoot();
+		counter = 0;
+
+	}
 }
 
 void CSkull::Render()
@@ -62,9 +75,26 @@ void CSkull::Render()
 		return;
 	}*/
 
-	animation_set->at(ani)->Render(x, y);
+	animation_set->at(0)->Render(x, y);
 
 	//RenderBoundingBox();
+}
+
+void CSkull::Shoot()
+{
+	CGame* game = CGame::GetInstance();
+	CScene* scence = game->GetCurrentScene();
+	vector<LPGAMEOBJECT>* objects = ((CPlayScene*)scence)->GetObjects();
+	float px, py;
+	((CPlayScene*)scence)->GetPlayer()->GetPosition(px, py);
+	CEnemyBullet* bullet1 = new CEnemyBullet(BULLET_STATE_UNDEF);
+	Vec2 speed = Vec2(px - x, py - y);
+	speed = speed.Normalize() * BULLET_SPEED;
+	bullet1->SetSpeed(speed.x, speed.y);
+	bullet1->SetPosition(this->x  , this->y);
+	bullet1->SetStartPositon(this->x , this->y);
+	
+	objects->push_back(bullet1);
 }
 
 void CSkull::SetState(int state)

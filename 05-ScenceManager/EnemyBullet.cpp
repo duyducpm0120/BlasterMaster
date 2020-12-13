@@ -62,6 +62,14 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		
 	}
+	else if (state == BULLET_STATE_UNDEF)
+	{
+		
+		
+			x += dx;
+			y += dy;
+		
+	}
 	else //Flying Down
 	{
 		SetSpeed(0.0f, BULLET_SPEED);
@@ -146,3 +154,6 @@ CEnemyBullet::CEnemyBullet(int state)
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(61));
 	this->state = state;
 }
+
+
+
