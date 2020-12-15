@@ -55,6 +55,7 @@ public:
 	float vy;
 
 	int nx;	 
+	int ny;
 	//New Stuff
 
 	bool isToUpdate;

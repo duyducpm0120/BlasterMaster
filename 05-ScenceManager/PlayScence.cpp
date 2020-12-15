@@ -27,6 +27,7 @@
 #include "Blink.h"
 #include "Eye.h"
 #include "BossArm.h"
+#include "StupidHead.h"
 
 using namespace std;
 
@@ -77,6 +78,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_QUADCANNON 56
 #define OBJECT_TYPE_BLINK 57
 #define OBJECT_TYPE_EYE 58
+#define OBJECT_TYPE_STUPIDHEAD	63
 #define MAX_SCENE_LINE 1024
 
 
@@ -228,6 +230,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_GOLEM: obj = new CGolem();
 		dynamic_cast<CGolem*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_STUPIDHEAD: obj = new CStupidHead();
+		dynamic_cast<CStupidHead*>(obj)->SetPosition(x, y);
 		break;
 	case OBJECT_TYPE_BUTTERFLY: {
 		obj = new CButterfly(); 

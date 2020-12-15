@@ -211,10 +211,10 @@ void CBoss::updateTarget1()
 	float right = x + 30;
 	float bottom = y + 90;
 	float top = y - 60;
-	DebugOut(L"Left %f \n", left);
+	/*DebugOut(L"Left %f \n", left);
 	DebugOut(L"Right %f \n", right);
 	DebugOut(L"top %f \n", top);
-	DebugOut(L"bottom %f \n", bottom);
+	DebugOut(L"bottom %f \n", bottom);*/
 	Target1 += Speed;
 	if (Target1.x >= right)
 	{
@@ -227,8 +227,8 @@ void CBoss::updateTarget1()
 	{
 		Target1.x = left;
 		Speed = Speed = Vec2(Speed.x * -1, Speed.y);
-		DebugOut(L"Speed %f \n", Speed.x);
-		DebugOut(L"Speed %f \n", Speed.y);
+		/*DebugOut(L"Speed %f \n", Speed.x);
+		DebugOut(L"Speed %f \n", Speed.y);*/
 	}
 	
 	if (Target1.y >= bottom)
@@ -236,16 +236,16 @@ void CBoss::updateTarget1()
 		Target1.y = bottom;
 
 		Speed = Vec2(Speed.x , Speed.y*-1);
-		DebugOut(L"Speed %f \n", Speed.x);
-		DebugOut(L"Speed %f \n", Speed.y);
+		/*DebugOut(L"Speed %f \n", Speed.x);
+		DebugOut(L"Speed %f \n", Speed.y);*/
 	}
 	if (Target1.y <=top )
 	{
 		Target1.y = top;
 
 		Speed = Vec2(Speed.x, Speed.y * -1);
-		DebugOut(L"Speed %f \n", Speed.x);
-		DebugOut(L"Speed %f \n", Speed.y);
+		/*DebugOut(L"Speed %f \n", Speed.x);
+		DebugOut(L"Speed %f \n", Speed.y);*/
 	}
 
 }
@@ -256,10 +256,10 @@ void CBoss::updateTarget2()
 	float right = x + 180;
 	float bottom = y + 90;
 	float top = y - 60;
-	DebugOut(L"Left %f \n", left);
+	/*DebugOut(L"Left %f \n", left);
 	DebugOut(L"Right %f \n", right);
 	DebugOut(L"top %f \n", top);
-	DebugOut(L"bottom %f \n", bottom);
+	DebugOut(L"bottom %f \n", bottom);*/
 	Target2 += Speed2;
 	if (Target2.x >= right)
 	{
@@ -272,8 +272,8 @@ void CBoss::updateTarget2()
 	{
 		Target2.x = left;
 		Speed2 = Speed2 = Vec2(Speed2.x * -1, Speed2.y);
-		DebugOut(L"Speed2 %f \n", Speed2.x);
-		DebugOut(L"Speed2 %f \n", Speed2.y);
+		/*DebugOut(L"Speed2 %f \n", Speed2.x);
+		DebugOut(L"Speed2 %f \n", Speed2.y);*/
 	}
 
 	if (Target2.y >= bottom)
@@ -281,16 +281,16 @@ void CBoss::updateTarget2()
 		Target2.y = bottom;
 
 		Speed2 = Vec2(Speed2.x, Speed2.y * -1);
-		DebugOut(L"Speed2 %f \n", Speed2.x);
-		DebugOut(L"Speed2 %f \n", Speed2.y);
+	/*	DebugOut(L"Speed2 %f \n", Speed2.x);
+		DebugOut(L"Speed2 %f \n", Speed2.y);*/
 	}
 	if (Target2.y <= top)
 	{
 		Target2.y = top;
 
 		Speed2 = Vec2(Speed2.x, Speed2.y * -1);
-		DebugOut(L"Speed2 %f \n", Speed2.x);
-		DebugOut(L"Speed2 %f \n", Speed2.y);
+		/*DebugOut(L"Speed2 %f \n", Speed2.x);
+		DebugOut(L"Speed2 %f \n", Speed2.y);*/
 	}
 }
 

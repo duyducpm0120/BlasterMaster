@@ -2,27 +2,42 @@
 #include "GameObject.h"
 
 #define STUPIDHEAD_WALKING_SPEED 0.05f;
+#define STUPIDHEAD_CLIMBING_SPEED 0.05f;
 
-#define STUPIDHEAD_BBOX_WIDTH 17
-#define STUPIDHEAD_BBOX_HEIGHT 10
+#define STUPIDHEAD_BBOX_WIDTH 18
+#define STUPIDHEAD_BBOX_HEIGHT 18
 #define STUPIDHEAD_BBOX_HEIGHT_DIE 9
 
-#define STUPIDHEAD_STATE_WALKING_LEFT 100
-#define STUPIDHEAD_STATE_WALKING_RIGHT 200
-#define STUPIDHEAD_STATE_DIE 300
+#define STUPIDHEAD_STATE_CLIMBING_TOP 100
+#define STUPIDHEAD_STATE_CLIMBING_BOT 200
+#define STUPIDHEAD_STATE_CLIMBING_LEFT 300
+#define STUPIDHEAD_STATE_CLIMBING_RIGHT 400
 
-#define STUPIDHEAD_ANI_WALKING_LEFT 0
-#define STUPIDHEAD_ANI_WALKING_RIGHT 1
-#define STUPIDHEAD_ANI_DIE	2
+
+#define STUPIDHEAD_ANI_CLIMBING_TOP_LEFT 0
+#define STUPIDHEAD_ANI_CLIMBING_TOP_RIGHT 1
+#define STUPIDHEAD_ANI_CLIMBING_BOT_LEFT 2
+#define STUPIDHEAD_ANI_CLIMBING_BOT_RIGHT 3
+#define STUPIDHEAD_ANI_CLIMBING_LEFT_LEFT 4
+#define STUPIDHEAD_ANI_CLIMBING_LEFT_RIGHT 5
+#define STUPIDHEAD_ANI_CLIMBING_RIGHT_LEFT 6
+#define STUPIDHEAD_ANI_CLIMBING_RIGHT_RIGHT 7
+
 
 class CStupidHead : public CGameObject
 {
 	int nx;
+	int state;
+	int ani;
+	bool isTouchBrick;
+public:
+	void Fall();
+	void ChangeDirection();
+	void ChangeDirectionInverse();
+	void HandleIsTouchBrick();
+	CStupidHead();
+	virtual void SetState(int state);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
-
-public:
-	CStupidHead();
-	virtual void SetState(int state);
 };
