@@ -233,6 +233,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_STUPIDHEAD: obj = new CStupidHead();
 		dynamic_cast<CStupidHead*>(obj)->SetPosition(x, y);
+		dynamic_cast<CStupidHead*>(obj)->SetTarget(player);
 		break;
 	case OBJECT_TYPE_BUTTERFLY: {
 		obj = new CButterfly(); 

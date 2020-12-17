@@ -154,7 +154,6 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	HandleUntouchableTime();
-
 }
 
 void COHSophia::Render()
