@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="AutoRunPortal.cpp" />
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Bee.cpp" />
     <ClCompile Include="Blink.cpp" />
     <ClCompile Include="Boss.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="OHSophia.cpp" />
     <ClCompile Include="OHSophiaBullet.cpp" />
@@ -173,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AutoRunPortal.h" />
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="Bee.h" />
     <ClInclude Include="Blink.h" />
     <ClInclude Include="Boss.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Jumper.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="OHSophia.h" />
     <ClInclude Include="OHSophiaBullet.h" />

@@ -7,8 +7,6 @@ void CBlink::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	top = y;
 	right = x + BLINK_BBOX_WIDTH;
 	bottom = y + BLINK_BBOX_HEIGHT;
-
-	
 }
 
 void CBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
