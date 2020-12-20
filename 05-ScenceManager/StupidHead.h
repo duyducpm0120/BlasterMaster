@@ -24,7 +24,6 @@
 #define STUPIDHEAD_ANI_CLIMBING_RIGHT_LEFT 6
 #define STUPIDHEAD_ANI_CLIMBING_RIGHT_RIGHT 7
 #define DEVIATIONS	2.5
-
 class CStupidHead : public CGameObject
 {
 	int nx;

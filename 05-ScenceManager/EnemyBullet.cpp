@@ -104,13 +104,10 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	for (int i = 0; i < coCollisoningEvents.size(); i++) {
 		LPCOLLISIONEVENT e = coCollisoningEvents[i];
-		//if (dynamic_cast<CPlayer*>(e->obj)) {
-		//	e->obj->TakeDamage(this->damage);				//Destroy every enemy
-		//	this->visible = false;
-		//}
-		//else if (dynamic_cast<CBrick*>(e->obj)) {
-		//	this->visible = false;
-		//}
+		/*if (dynamic_cast<CPlayer*>(e->obj)) {
+			e->obj->TakeDamage(this->damage);				
+			this->visible = false;
+		}*/
 	}
 
 
@@ -135,8 +132,9 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		LPCOLLISIONEVENT e = coEventsResult[i];
 
 		if (dynamic_cast<CPlayer*>(e->obj)) {
-			e->obj->TakeDamage(this->damage);				//Destroy every enemy
-			this->visible = false;
+			/*e->obj->TakeDamage(this->damage);
+			dynamic_cast<CPlayer*>(e->obj)->SetUntouchableTime(1);
+			this->visible = false;*/
 		}
 		else if (dynamic_cast<CBrick*>(e->obj)) {
 			this->visible = false;

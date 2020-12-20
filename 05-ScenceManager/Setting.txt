@@ -12,3 +12,4 @@ start	1
 8	scene8.txt
 9	sceneOHSubLevel.txt
 10	sceneOH.txt
+11	sceneSelectWeapons.txt

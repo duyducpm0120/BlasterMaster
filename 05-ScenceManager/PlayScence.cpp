@@ -28,6 +28,7 @@
 #include "Eye.h"
 #include "BossArm.h"
 #include "StupidHead.h"
+#include "Choose.h"
 
 using namespace std;
 
@@ -79,6 +80,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_BLINK 57
 #define OBJECT_TYPE_EYE 58
 #define OBJECT_TYPE_STUPIDHEAD	63
+#define OBJECT_TYPE_CHOOSE	70
 #define MAX_SCENE_LINE 1024
 
 
@@ -241,6 +243,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break; 
 	}
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
+	case OBJECT_TYPE_CHOOSE: obj = new CChoose();
+		this->choose = (CChoose*) obj;
+		break;
 	case OBJECT_TYPE_FLAME: obj = new CFlame(); break;
 	case OBJECT_TYPE_LADDER: obj = new CLadder(); break;
 	case OBJECT_TYPE_PORTAL:
@@ -307,12 +312,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
 	
-	
 }
 
 void CPlayScene::_ParseSection_TILE_MAP(string line)
 {
-	int curentMapId = (CGame::GetInstance()->GetSceneId());
+	int curentMapId = (CGame::GetInstance()->GetCurrentSceneId());
 	LPDIRECT3DTEXTURE9 tilesheet = CTextures::GetInstance()->Get(curentMapId);
 
 	//Texture IDs and SceneIDs are identical (this is not good design but yeah...
@@ -464,17 +468,19 @@ void CPlayScene::Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
-	*playerHealth = player->GetHealth();
-	*playerPower = player->GetDamage();
-	if (dynamic_cast<CTank*>(player)) {
-		for (int i = 0; i < objects.size(); i++) {
-			if (dynamic_cast<CSophia*>(objects.at(i)))
-			{
-				dynamic_cast<CSophia*>(objects.at(i))->vy -= 0.01f;
-				objects.erase(objects.begin() + i);
-				break;
-			}
+	if (player != NULL) {
+		*playerHealth = player->GetHealth();
+		*playerPower = player->GetDamage();
+		if (dynamic_cast<CTank*>(player)) {
+			for (int i = 0; i < objects.size(); i++) {
+				if (dynamic_cast<CSophia*>(objects.at(i)))
+				{
+					dynamic_cast<CSophia*>(objects.at(i))->vy -= 0.01f;
+					objects.erase(objects.begin() + i);
+					break;
+				}
 
+			}
 		}
 	}
 	CGame* game = CGame::GetInstance();
@@ -514,7 +520,7 @@ void CPlayScene::Update(DWORD dt)
 
 	}
 	
-	if (player == NULL) return;
+	
 
 	if (this->id != 10) {
 		// Update camera to follow player

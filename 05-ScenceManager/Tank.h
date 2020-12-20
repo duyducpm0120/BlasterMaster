@@ -84,7 +84,6 @@ class CTank : public CPlayer
 	bool isJumping;
 	bool enableRocket;
 	int bulletLevel;
-	int untouchableTime;
 public:
 	bool GetEnableRocket() { return  enableRocket; };
 	CTank(float x = 0.0f, float y = 0.0f);

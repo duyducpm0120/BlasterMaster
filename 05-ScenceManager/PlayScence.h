@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "Sophia.h"
 #include "OHSophia.h"
+#include "Choose.h"
 
 class CPlayScene: public CScene
 {
@@ -24,6 +25,7 @@ protected:
 	COHSophia* OHSophia;
 	vector<LPGAMEOBJECT> objects;
 	HUD* hud;
+	CChoose* choose;
 
 	int *playerHealth;
 	int *playerPower;
@@ -62,6 +64,7 @@ public:
 	vector<LPGAMEOBJECT>* GetObjects(){ return &objects; }
 	vector<LPGAMEOBJECT>* GetUpdateObjects() { return &updateObject; }
 	void UpdateAutorunCamera();
+	CChoose* GetChoose(){ return choose; };
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:

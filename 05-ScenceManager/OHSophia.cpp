@@ -13,6 +13,7 @@
 #include "Sophia.h"
 #include "AutoRunPortal.h"
 #include "PlayScence.h"
+#include "EnemyBullet.h"
 COHSophia::COHSophia(float x, float y)
 {
 	isPlayer = true;
@@ -59,6 +60,17 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			
 		}
+		else if (dynamic_cast<CEnemyBullet*>(e->obj))
+		{
+			if (untouchableTime == 0) {
+				health -= e->obj->GetDamage();
+				untouchableTime = 1;			
+			}			
+			e->obj->visible = false;
+			//vy -= 0.3f;
+			if (health <= 0)
+				visible = false;
+		}
 	}
 
 
@@ -91,9 +103,10 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (e->obj->IsEnemy()) {
 				if (untouchableTime == 0) {
 					health -= e->obj->GetDamage();
-					untouchableTime = 1;
+					untouchableTime = 1;					
 				}
-
+				if (dynamic_cast<CEnemyBullet*>(e->obj))
+					e->obj->visible = false;
 				//vy -= 0.3f;
 				if (health <= 0)
 					visible = false;

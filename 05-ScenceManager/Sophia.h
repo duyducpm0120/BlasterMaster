@@ -68,7 +68,6 @@ class CSophia : public CPlayer
 	int sophia_height;
 	int bulletLevel;
 	bool isJumping;
-	int untouchableTime;
 	bool isTouchTank;
 	bool isTouchLadder;
 	bool isClimbing;

@@ -87,6 +87,8 @@ class CPlayer : public CGameObject
 	bool isJumping;
 	bool enableRocket;
 	int bulletLevel;
+protected:
+	int untouchableTime;
 public:
 	virtual bool GetEnableRocket() { return  enableRocket; };
 	CPlayer(float x = 0.0f, float y = 0.0f);
@@ -102,6 +104,6 @@ public:
 	virtual void GetDimension(int& width, int& height);
 	void Reset();
 
-
+	void SetUntouchableTime(int time) { untouchableTime = time; };
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

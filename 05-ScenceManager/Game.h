@@ -44,7 +44,7 @@ class CGame
 
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene; 
-	CScene* OldScene;
+	int HolderSceneId;
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
@@ -66,7 +66,7 @@ public:
 	void SetPlayerPower(int power) { playerPower = power; };
 	void LoadResources();
 	void GetCamPosition(float& x, float& y) { x = cam_x; y = cam_y; };
-
+	void SwitchToSelectWeaponScene();
 
 public:
 	void InitKeyboard();
@@ -111,7 +111,7 @@ public:
 
 	//New Stuff
 public:
-int GetSceneId() { return current_scene; }
+int GetCurrentSceneId() { return current_scene; }
 void GetCameraBoundingBox(float& left, float& top, float& right, float& bottom);
 	
 	

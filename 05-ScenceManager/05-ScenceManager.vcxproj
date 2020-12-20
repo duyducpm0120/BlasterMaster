@@ -134,6 +134,7 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Butterfly.cpp" />
+    <ClCompile Include="Choose.cpp" />
     <ClCompile Include="Destroyed.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
     <ClCompile Include="Eye.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Butterfly.h" />
+    <ClInclude Include="Choose.h" />
     <ClInclude Include="Destroyed.h" />
     <ClInclude Include="EnemyBullet.h" />
     <ClInclude Include="Eye.h" />

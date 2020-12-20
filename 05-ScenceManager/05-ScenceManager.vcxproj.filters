@@ -151,6 +151,7 @@
     <ClCompile Include="BossArm.cpp">
       <Filter>Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="Choose.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tank.h">
@@ -282,5 +283,6 @@
     <ClInclude Include="BossArm.h">
       <Filter>Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="Choose.h" />
   </ItemGroup>
 </Project>

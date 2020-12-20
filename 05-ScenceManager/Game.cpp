@@ -521,6 +521,8 @@ void CGame::LoadResources()
 	
 }
 
+
+
 /*
 	Load game campaign file and load/initiate first scene
 */
@@ -570,9 +572,23 @@ void CGame::SwitchScene(int scene_id)
 	if(s->IsLoaded() == false)
 		s->Load();
 	if (current_scene == 10) {
-		SetCamPos(0, 1296);
-		DebugOut(L"AAAAAA");
+		SetCamPos(0, 1296);		
 		dynamic_cast<CPlayScene*>(scenes[current_scene])->isCamSetInit = false;
+	}
+	if (current_scene == 11) {
+		SetCamPos(0,0);
+	}
+}
+void CGame::SwitchToSelectWeaponScene()
+{
+	if (current_scene != 11) {
+		HolderSceneId = current_scene;
+		SwitchScene(11);
+		DebugOut(L"Holder: %d \n", HolderSceneId);
+	}
+	else {
+		SwitchScene(HolderSceneId);
+		DebugOut(L"Holder: %d \n", HolderSceneId);
 	}
 }
 

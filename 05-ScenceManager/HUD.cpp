@@ -1,4 +1,6 @@
 #include "HUD.h"
+#include "Game.h"
+#include "PlayScence.h"
 
 HUD::HUD(int initPlayerHealth, int initGunHealth)
 {
@@ -13,6 +15,9 @@ HUD::~HUD()
 
 void HUD::Update(float x, float y, int currentPlayerHealth, int currentGunHealth)
 {
+	CGame* game = CGame::GetInstance();
+	if (dynamic_cast<CPlayScene*>(game->GetCurrentScene())->GetPlayer() == NULL)
+		return;
 	this->x = x;
 	this->y = y;
 	gunHB = new HealthBar(currentGunHealth, true);
@@ -24,6 +29,9 @@ void HUD::Update(float x, float y, int currentPlayerHealth, int currentGunHealth
 
 void HUD::Render(CPlayer* playerInfo)
 {
+	CGame* game = CGame::GetInstance();
+	if (dynamic_cast<CPlayScene*>(game->GetCurrentScene())->GetPlayer() == NULL)
+		return;
 	UIanimationSet->at(HEALTH_TYPE_GUN_NULL)->Render(x, y + ARTICULAR_GUNPOWER_HEALTHBAR_Y,255);
 	UIanimationSet->at(HEALTH_TYPE_PLAYER_NULL)->Render(x+1, y + ARTICULAR_PLAYER_HEALTHBAR_Y,255);
 	gunHB->Render();

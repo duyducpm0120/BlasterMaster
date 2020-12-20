@@ -12,7 +12,7 @@
 90	textures\sophia.png	216	225	53
 100	textures\boss.png	255	0	255
 101	textures\bossclaw.png	255	0	255
-
+102	textures\Choose.png	255	255	255
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
 2	textures\Area22.png	5	5	5
@@ -24,6 +24,7 @@
 8	textures\Area28.png	5	5	5
 9	textures\OHSubLevel.png	5	5	5
 10	textures\OH.png	5	5	5
+11	textures\SelectWeapons.png	5	5	5
 [SPRITES]
 
 #TANK
@@ -381,6 +382,9 @@
 590016	49	461	67	479	40
 
 
+#CHOOSE
+700001	12	3	47	19	102
+
 
 [ANIMATIONS]
 # ==== BRICK =========
@@ -615,7 +619,8 @@
 6306	590011	40	590012	40
 6307	590013	40	590014	40
 6308	590015	40	590016	40
-
+#-------CHOOSE--------
+7001	700001	100
 [ANIMATION_SETS]
 # MARIO
 1	400	401	402	403	500	501	502	503	599
@@ -705,3 +710,5 @@
 58	5801	5802
 #StupidHead
 63	6301	6302	6303	6304	6305	6306	6307	6308
+#CHOOSE
+70	7001

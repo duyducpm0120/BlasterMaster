@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-
 #include "PlayScence.h"
 #include "PlayScenceKeyHandler.h"
 #include "Utils.h"
@@ -15,6 +14,7 @@
 #include "Sophia.h"
 #include "OHSophia.h"
 #include "OHSophiaBullet.h"
+#include "Choose.h"
 using namespace std;
 
 void CPlayScenceKeyHandler::OnKeyUp(int KeyCode) {
@@ -167,7 +167,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	vector<LPGAMEOBJECT>* objects = ((CPlayScene*)scence)->GetObjects();
 	vector<LPGAMEOBJECT>* updateObjects = ((CPlayScene*)scence)->GetUpdateObjects();
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	CGameObject* obj = objects->at(0);
+	CGame* game = CGame::GetInstance();
 	switch (KeyCode)
 	{
 	case DIK_1:		
@@ -202,13 +202,35 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	}		// Switch scenes	 
 
+	if (game->GetCurrentSceneId() == 11) {
+		CChoose* choose = dynamic_cast<CPlayScene*> (game->GetCurrentScene())->GetChoose();
+		switch (KeyCode) {
+		case DIK_RIGHT:
+			if (choose->x < 142)
+				choose->x += 32;
+			else
+				choose->x = 78;
+			break;
+		case DIK_LEFT:
+			if (choose->x > 78)
+				choose->x -= 32;
+			else
+				choose->x = 142;
+			break;
+		}
+	}
 
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
-	
+	switch (KeyCode) {
+	case DIK_RETURN:
+		game->SwitchToSelectWeaponScene();
+		break;
+	}
+
 	if (dynamic_cast<CTank*>(player)) {				 // if player is tank
 		switch (KeyCode)
-		{
+		{		
 		case DIK_W:
 			if (dynamic_cast<CTank*> (player))
 			{
