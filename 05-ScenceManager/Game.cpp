@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 
 #include "Game.h"
@@ -588,6 +588,10 @@ void CGame::SwitchScene(int scene_id)
 	if (current_scene >= 1 && current_scene <= 8)
 	{
 		Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_UNDERWORLD);
+		Sound::GetInstance()->LoadSound("Sources/Sound/Area2.wav", "map2");
+		Sound::GetInstance()->Play("map2", 1, 10000);
+		//Sound::GetInstance()->Stop("map2");	//nếu muốn dừng âm thanh thì dùng hàm stop
+		Sound::GetInstance()->Play("PlayerUnderworldFire", 0, 1);
 	}
 }
 void CGame::SwitchToSelectWeaponScene()

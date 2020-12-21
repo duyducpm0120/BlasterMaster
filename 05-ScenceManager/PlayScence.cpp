@@ -467,10 +467,7 @@ void CPlayScene::Load(vector<LPGAMEOBJECT> objects)
 
 void CPlayScene::Update(DWORD dt)
 {
-	Sound::GetInstance()->LoadSound("Sources/Sound/Area2.wav","map2");
-	Sound::GetInstance()->Play("map2", 1, 10000);
-	//Sound::GetInstance()->Stop("map2");	//nếu muốn dừng âm thanh thì dùng hàm stop
-	Sound::GetInstance()->Play("PlayerUnderworldFire", 0, 1);
+	
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	if (player != NULL) {

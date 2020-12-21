@@ -1,49 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Player">
-      <UniqueIdentifier>{e330f90c-dd82-46cc-a170-3ed6ce5b10b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enemies">
-      <UniqueIdentifier>{5b922120-4c5f-4802-90d5-26438447ee38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HUD">
-      <UniqueIdentifier>{50c748ab-23d1-4fc6-92a7-654e5e823325}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework">
-      <UniqueIdentifier>{37030885-21eb-48ec-9b03-7468b8f8d539}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Weapons">
-      <UniqueIdentifier>{edce1bb9-8fec-414b-8dcc-bbaacf842424}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects">
-      <UniqueIdentifier>{fed5e1b1-bae0-4f91-ab35-f66a1f161766}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Spatial Partitioning">
-      <UniqueIdentifier>{3efbdf56-e295-4674-9dd7-3bafbdcae968}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Sound">
-      <UniqueIdentifier>{df14357c-22f6-479f-8154-c9c9311f22cc}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Tank.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Golem.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Butterfly.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthBar.cpp">
-      <Filter>HUD</Filter>
-    </ClCompile>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Animations.cpp">
       <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoRunPortal.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Bee.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Blink.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="BossArm.cpp">
+      <Filter>Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
       <Filter>Objects</Filter>
@@ -51,13 +29,55 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="Butterfly.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Choose.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
     <ClCompile Include="Destroyed.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBullet.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Eye.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Face.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Flame.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Golem.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Jumper.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Ladder.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="IntroScene.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="PlayScence.cpp">
@@ -66,72 +86,23 @@
     <ClCompile Include="PlayScenceKeyHandler.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Portal.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Rocket.cpp">
-      <Filter>Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="Scence.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprites.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Textures.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>Spatial Partitioning</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Worm.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Bee.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Flame.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="StupidHead.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Sophia.cpp">
-      <Filter>Player</Filter>
+    <ClCompile Include="OHSophiaBullet.cpp">
+      <Filter>Weapons</Filter>
     </ClCompile>
     <ClCompile Include="OHSophia.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Vec2.cpp">
-      <Filter>Framework</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="OHSophiaBullet.cpp">
-      <Filter>Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="Ladder.cpp">
+    <ClCompile Include="Portal.cpp">
       <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="AutoRunPortal.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Face.cpp">
-      <Filter>Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Quadcannon.cpp">
       <Filter>Enemies</Filter>
@@ -142,88 +113,138 @@
     <ClCompile Include="Skull.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBullet.cpp">
+    <ClCompile Include="Rocket.cpp">
       <Filter>Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="Blink.cpp">
-      <Filter>Enemies</Filter>
+    <ClCompile Include="Scence.cpp">
+      <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Eye.cpp">
-      <Filter>Enemies</Filter>
+    <ClCompile Include="Tank.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="BossArm.cpp">
+    <ClCompile Include="Sophia.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Thunder.cpp">
       <Filter>Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="Choose.cpp">
-      <Filter>Objects</Filter>
+    <ClCompile Include="StupidHead.cpp">
+      <Filter>Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Thunder.cpp" />
-    <ClCompile Include="IntroScene.cpp">
+    <ClCompile Include="Vec2.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Worm.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlparser.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlerror.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="tinystr.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
-      <Filter>Framework\Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="tinystr.cpp">
-      <Filter>Framework\Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyxml.cpp">
-      <Filter>Framework\Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyxmlerror.cpp">
-      <Filter>Framework\Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyxmlparser.cpp">
-      <Filter>Framework\Sound</Filter>
+      <Filter>Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tank.h">
-      <Filter>Player</Filter>
+    <ClInclude Include="Animations.h">
+      <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Golem.h">
+    <ClInclude Include="AutoRunPortal.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
       <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Bee.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Blink.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BossArm.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Butterfly.h">
       <Filter>Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="HUD.h">
-      <Filter>HUD</Filter>
+    <ClInclude Include="Choose.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Destroyed.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBullet.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Eye.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Face.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Flame.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Golem.h">
+      <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="HealthBar.h">
       <Filter>HUD</Filter>
     </ClInclude>
-    <ClInclude Include="Animations.h">
-      <Filter>Framework</Filter>
+    <ClInclude Include="HUD.h">
+      <Filter>HUD</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="Item.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Jumper.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Ladder.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="KeyEventHandler.h">
+    <ClInclude Include="Game.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScenceKeyHandler.h">
+    <ClInclude Include="IntroScene.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyEventHandler.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="PlayScence.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="Rocket.h">
-      <Filter>Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="Portal.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprites.h">
+    <ClInclude Include="PlayScenceKeyHandler.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Textures.h">
@@ -232,59 +253,17 @@
     <ClInclude Include="Tile.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Scence.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Destroyed.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Grid.h">
-      <Filter>Spatial Partitioning</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Worm.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Bee.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Flame.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="StupidHead.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Boss.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sophia.h">
-      <Filter>Player</Filter>
+    <ClInclude Include="OHSophiaBullet.h">
+      <Filter>Weapons</Filter>
     </ClInclude>
     <ClInclude Include="OHSophia.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Vec2.h">
-      <Filter>Framework</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="OHSophiaBullet.h">
-      <Filter>Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="Ladder.h">
+    <ClInclude Include="Portal.h">
       <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="AutoRunPortal.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Face.h">
-      <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Quadcannon.h">
       <Filter>Enemies</Filter>
@@ -295,33 +274,67 @@
     <ClInclude Include="Skull.h">
       <Filter>Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBullet.h">
+    <ClInclude Include="Rocket.h">
       <Filter>Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="Blink.h">
-      <Filter>Enemies</Filter>
+    <ClInclude Include="Scence.h">
+      <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Eye.h">
-      <Filter>Enemies</Filter>
+    <ClInclude Include="Tank.h">
+      <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="BossArm.h">
+    <ClInclude Include="Sophia.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Thunder.h">
       <Filter>Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="Choose.h">
-      <Filter>Objects</Filter>
+    <ClInclude Include="StupidHead.h">
+      <Filter>Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Thunder.h" />
-    <ClInclude Include="IntroScene.h">
+    <ClInclude Include="Vec2.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Worm.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="tinystr.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
-      <Filter>Framework\Sound</Filter>
+      <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="tinystr.h">
-      <Filter>Framework\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyxml.h">
-      <Filter>Framework\Sound</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Enemies">
+      <UniqueIdentifier>{6f5bfa4c-382d-4cd8-b6a0-8385a12ec3f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spartial Partitioning">
+      <UniqueIdentifier>{bbc45ece-02f5-4843-ad0c-9c6580dc992f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Weapons">
+      <UniqueIdentifier>{127d49ba-4f44-465c-b594-49b6c01309f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{a44a92d5-b2ae-47a7-9b56-bb655dce1a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{5b309115-14fe-4b4c-b7bb-61ae5c262506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{a9ab7ac7-269a-4bca-8556-a82cd80e3189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{c267fb51-e124-4c15-a8b5-d1ead88d13a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

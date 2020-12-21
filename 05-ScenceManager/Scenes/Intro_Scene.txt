@@ -1,14 +1,14 @@
 [TEXTURES]
-22	textures/Intro/Roll_Out_Cutscene.png	255	0	255
-21	textures/Intro/Opening_Cutscene.png	255	0	255
-24	textures/Intro/Intro_Light.png	255	0	255
-23	textures/Intro/Intro_Dark.png	255	0	255
-25	textures/Intro/Ending_Cutscene.png	255	0	255
-26	textures/Intro/Ending1.jpg	255	0	255
-27	textures/Intro/Ending2.jpg	255	0	255
-28	textures/Intro/Ending3.png	63	72	204
-29	textures/Intro/Ending_Color.png	63	72	204
-34	textures/Intro/Logo.jpg	255	0	255
+22	./textures/Intro/Roll_Out_Cutscene.png	255	0	255
+21	./textures/Intro/Opening_Cutscene.png	255	0	255
+24	./textures/Intro/Intro_Light.png	255	0	255
+23	./textures/Intro/Intro_Dark.png	255	0	255
+25	./textures/Intro/Ending_Cutscene.png	255	0	255
+26	./textures/Intro/Ending1.jpg	255	0	255
+27	./textures/Intro/Ending2.jpg	255	0	255
+28	./textures/Intro/Ending3.png	63	72	204
+29	./textures/Intro/Ending_Color.png	63	72	204
+34	./textures/Intro/Logo.jpg	255	0	255
 [SPRITES]
 ###INTRO SCENE
 #intro 1

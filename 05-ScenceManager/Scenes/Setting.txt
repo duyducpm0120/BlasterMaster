@@ -1,0 +1,16 @@
+[SETTINGS]
+start	1
+#scene list
+[SCENES]
+1	Scenes/scene1.txt
+2	Scenes/scene2.txt
+3	Scenes/scene3.txt
+4	Scenes/scene4.txt
+5	Scenes/scene5.txt
+6	Scenes/scene6.txt
+7	Scenes/scene7.txt
+8	Scenes/scene8.txt
+9	Scenes/sceneOHSubLevel.txt
+10	Scenes/sceneOH.txt
+11	Scenes/sceneSelectWeapons.txt
+12	Scenes/Intro_Scene.txt
