@@ -240,3 +240,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+05-ScenceManager/05-ScenceManager.vcxproj.filters

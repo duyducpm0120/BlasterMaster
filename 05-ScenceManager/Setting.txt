@@ -1,5 +1,5 @@
 [SETTINGS]
-start	1
+start	8
 #scene list
 [SCENES]
 1	scene1.txt
