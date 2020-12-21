@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<datasound>
+	<sound path="Resource/Sound/Intro/Opening.wav"	name = "Opening" />
+	<sound path="Resource/Sound/Intro/CarSplash.wav"	name = "CarSplash" />
+	<sound path="Resource/Sound/Intro/CarBackground.wav"	name = "CarBackground" />
+</datasound>

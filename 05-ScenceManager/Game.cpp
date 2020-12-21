@@ -3,8 +3,9 @@
 
 #include "Game.h"
 #include "Utils.h"
-
+#include "IntroScene.h"
 #include "PlayScence.h"
+#include "Sound.h"
 #define MAX_RESOURCES_LINE	1024
 
 #define RESOURCES_SECTION_UNKNOWN			-1
@@ -568,15 +569,25 @@ void CGame::SwitchScene(int scene_id)
 	DebugOut(L"[INFO] Switching to scene %d\n", scene_id);
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
+	if (scene_id == 12) {
+		s = new IntroScene(21);
+	}
+	else {
+		if (s->IsLoaded() == false)
+			s->Load();
+	}
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
-	if(s->IsLoaded() == false)
-		s->Load();
+	
 	if (current_scene == 10) {
 		SetCamPos(0, 1296);		
 		dynamic_cast<CPlayScene*>(scenes[current_scene])->isCamSetInit = false;
 	}
 	if (current_scene == 11) {
 		SetCamPos(0,0);
+	}
+	if (current_scene >= 1 && current_scene <= 8)
+	{
+		Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_UNDERWORLD);
 	}
 }
 void CGame::SwitchToSelectWeaponScene()

@@ -13,6 +13,7 @@
 100	textures\boss.png	255	0	255
 101	textures\bossclaw.png	255	0	255
 102	textures\Choose.png	255	255	255
+103	textures\Thunder.png	23	168	74
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
 2	textures\Area22.png	5	5	5
@@ -384,7 +385,10 @@
 
 #CHOOSE
 700001	12	3	47	19	102
-
+#THUNDER
+710001	6	3	12	56	103
+710002	25	3	33	56	103
+710003	44	3	56	56	103
 
 [ANIMATIONS]
 # ==== BRICK =========
@@ -621,6 +625,8 @@
 6308	590015	40	590016	40
 #-------CHOOSE--------
 7001	700001	100
+#THUNDER
+7101	710001	40	710002	40	710003	40
 [ANIMATION_SETS]
 # MARIO
 1	400	401	402	403	500	501	502	503	599
@@ -712,3 +718,5 @@
 63	6301	6302	6303	6304	6305	6306	6307	6308
 #CHOOSE
 70	7001
+#THUNDER
+71	7101

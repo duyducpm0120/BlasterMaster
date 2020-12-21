@@ -232,7 +232,7 @@ void CStupidHead::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	DebugOut(L"Istouch brick: %d \n", isTouchBrick);
+	//DebugOut(L"Istouch brick: %d \n", isTouchBrick);
 }
 void CStupidHead::Render()
 {

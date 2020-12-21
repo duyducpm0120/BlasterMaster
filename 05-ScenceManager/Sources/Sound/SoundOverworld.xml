@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<datasound>
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (5).wav"	name = "PlayerBulletHitBrick" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (7).wav"	name = "PlayerFireUnderWorld" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (8).wav"	name = "PlayerFireOverWorld" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (9).wav"	name = "BossFire" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (10).wav"	name = "PlayerJump" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (16).wav"	name = "EnemyBulletBang" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (19).wav"	name = "PlayerInjured" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (21).wav"	name = "PickingItems" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (22).wav"	name = "TeleporterTransform" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (27).wav"	name = "Enemydie" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (36).wav"	name = "BossIntro" />
+	<sound path="Resource/Sound/rawSound/GameOver.wav"	name = "GameOver" />
+	<sound path="Resource/Sound/rawSound/LifeLost.wav"	name = "LifeLost" />
+</datasound>

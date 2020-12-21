@@ -144,6 +144,7 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="OHSophia.cpp" />
@@ -156,9 +157,15 @@
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="Skull.cpp" />
     <ClCompile Include="Sophia.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StupidHead.cpp" />
     <ClCompile Include="Tank.cpp" />
+    <ClCompile Include="Thunder.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="tinystr.cpp" />
+    <ClCompile Include="tinyxml.cpp" />
+    <ClCompile Include="tinyxmlerror.cpp" />
+    <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -190,6 +197,7 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="OHSophia.h" />
@@ -202,9 +210,13 @@
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="Skull.h" />
     <ClInclude Include="Sophia.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="StupidHead.h" />
     <ClInclude Include="Tank.h" />
+    <ClInclude Include="Thunder.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="tinystr.h" />
+    <ClInclude Include="tinyxml.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

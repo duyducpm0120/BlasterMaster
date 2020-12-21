@@ -14,6 +14,7 @@ protected:
 	bool isLoaded;
 
 public: 
+	CScene() {};
 	CScene(int id, LPCWSTR filePath);
 	bool IsLoaded() { return isLoaded; };
 	CKeyEventHandler * GetKeyEventHandler() { return key_handler; }
