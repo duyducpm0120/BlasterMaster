@@ -143,7 +143,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					(e->obj)->visible = false;
 					break;
 				}
-				case ITEM_TYPE_POWER:
+				case ITEM_TYPE_THUNDER:
 				{
 					if (damage < 8 && damage >0)
 						damage++;
@@ -171,6 +171,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						health -= e->obj->GetDamage();
 						vx -= 0.3f;
 						untouchableTime = 1;
+						e->obj->visible = false;
 					}
 
 					//vy -= 0.3f;

@@ -30,6 +30,7 @@ class CAnimation
 public:
 	CAnimation(int defaultTime = 100) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
+	void CAnimation::IntroRender(int direction, float x, float y, int alpha);
 	int GetFrame() { return currentFrame; }
 	int GetLastFrameIndex() { return frames.size() - 1; };
 	void Render(float x, float y, int alpha = 255);

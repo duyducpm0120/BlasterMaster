@@ -15,6 +15,7 @@
 #include "OHSophia.h"
 #include "OHSophiaBullet.h"
 #include "Choose.h"
+#include "Sound.h"
 using namespace std;
 
 void CPlayScenceKeyHandler::OnKeyUp(int KeyCode) {
@@ -200,6 +201,9 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_0:
 		CGame::GetInstance()->SwitchScene(10);
 		break;
+	case DIK_I:
+		CGame::GetInstance()->SwitchScene(12);
+		break;
 	}		// Switch scenes	 
 
 	if (game->GetCurrentSceneId() == 11) {
@@ -255,107 +259,10 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			break;
 
 		case DIK_Z:
-			int width3, height3;
-			player->GetDimension(width3, height3);
-			if (height3 == TANK_NORMAL_HEIGHT)
-			{
-				if (player->nx == -1)
-				{
-
-					CBullet* bullet = new CBullet(player->GetBulletLevel(), BULLET_STATE_FLYING_LEFT);
-					float x1, y1;
-					player->GetPosition(x1, y1);
-					bullet->SetPosition(x1 - BULLET_HORIZONTAL_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
-					bullet->SetStartPositon(x1 - BULLET_HORIZONTAL_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
-					LPANIMATION_SET ani_set = animation_sets->Get(6);
-					bullet->SetAnimationSet(ani_set);
-					objects->push_back(bullet);
-				}
-				else
-				{
-					CBullet* bullet = new CBullet(player->GetBulletLevel(), BULLET_STATE_FLYING_RIGHT);
-					float x1, y1;
-					player->GetPosition(x1, y1);
-					bullet->SetPosition(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
-					bullet->SetStartPositon(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
-					LPANIMATION_SET ani_set = animation_sets->Get(6);
-					bullet->SetAnimationSet(ani_set);
-					objects->push_back(bullet);
-				}
-			}
-			else {
-				CBullet* bullet = new CBullet(player->GetBulletLevel(), BULLET_STATE_FLYING_UP);
-				float x1, y1;
-				player->GetPosition(x1, y1);
-				bullet->SetPosition(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
-				bullet->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
-				LPANIMATION_SET ani_set = animation_sets->Get(6);
-				bullet->SetAnimationSet(ani_set);
-				objects->push_back(bullet);
-			}
-
+			dynamic_cast<CTank*>(player)->Shot();
 			break;
 		case DIK_V:
-			int width4, height4;
-			player->GetDimension(width4, height4);
-			if (player->GetEnableRocket()) {
-				if (height4 == TANK_NORMAL_HEIGHT)
-				{
-					if (player->nx == -1)
-					{
-
-						CRocket* rocket = new CRocket();
-						for (int i = 0; i < objects->size(); i++) {
-							if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 230) {
-								rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
-								rocket->SetTargetObject(objects->at(i));
-								float x1, y1;
-								player->GetPosition(x1, y1);
-								rocket->SetPosition(x1 - 15, (y1 - ROCKET_BBOX_HEIGHT) - 15);
-								LPANIMATION_SET ani_set = animation_sets->Get(8);
-								rocket->SetAnimationSet(ani_set);
-								objects->push_back(rocket);
-								break;
-							}
-						}
-					}
-					else
-					{
-						CRocket* rocket = new CRocket();
-						for (int i = 0; i < objects->size(); i++) {
-							if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 230) {
-								rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
-								rocket->SetTargetObject(objects->at(i));
-								float x1, y1;
-								player->GetPosition(x1, y1);
-								rocket->SetPosition(x1 + TANK_NORMAL_WIDTH + 5, (y1 - ROCKET_BBOX_HEIGHT) - 10);
-								LPANIMATION_SET ani_set = animation_sets->Get(8);
-								rocket->SetAnimationSet(ani_set);
-								objects->push_back(rocket);
-								break;
-							}
-						}
-
-					}
-				}
-				else {
-					CRocket* rocket = new CRocket();
-					for (int i = 0; i < objects->size(); i++) {
-						if (objects->at(i)->IsEnemy() && player->GetDistance(objects->at(i)) < 230) {
-							rocket->SetTargetObjects(((CPlayScene*)scence)->GetObjects());
-							rocket->SetTargetObject(objects->at(i));
-							float x1, y1;
-							player->GetPosition(x1, y1);
-							rocket->SetPosition(x1 + (TANK_UP_GUN_WIDHT - ROCKET_BBOX_WIDTH) / 2, y1 - ROCKET_BBOX_HEIGHT + 8);
-							//rocket->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
-							LPANIMATION_SET ani_set = animation_sets->Get(8);
-							rocket->SetAnimationSet(ani_set);
-							objects->push_back(rocket);
-							break;
-						}
-					}
-				}
-			}
+			dynamic_cast<CTank*>(player)->CallSecondWeapon();
 			break;
 		case DIK_SPACE:
 			if (player->vy <= 0.05f && player->vy >= 0) {

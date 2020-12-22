@@ -1,18 +1,10 @@
-[TEXTURES]
-25	./textures/Intro/Ending_Cutscene.png	255	0	255
-26	./textures/Intro/Ending1.jpg	255	0	255
-27	./textures/Intro/Ending2.jpg	255	0	255
-28	./textures/Intro/Ending3.png	63	72	204
-29	./textures/Intro/Cloud_Endding.png	63	72	204
-30	./textures/Intro/Ending4.png	73	80	198
-
 [SPRITES]
 #end
 13097	2	2	509	224	28
 #cloud
 13091	2	2	509	224	29
 #forest
-13090	2	106	509	226	30
+13090	2	106	509	226	31
 #mountain
 13096	35	239	59	262	28
 #frog

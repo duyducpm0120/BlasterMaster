@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 #define ITEM_TYPE_HEALTH	0
-#define ITEM_TYPE_POWER		1
+#define ITEM_TYPE_THUNDER		1
 #define	ITEM_TYPE_ENABLE_ROCKET	2
 
 #define ITEM_BBOX_WIDTH  16

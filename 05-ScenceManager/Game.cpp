@@ -204,6 +204,37 @@ void CGame::ProcessKeyboard()
 	}
 }
 
+void CGame::LoadSound()
+{
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (5).wav", "PlayerBulletHitBrick");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (7).wav", "PlayerFireUnderWorld");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (8).wav", "PlayerFireOverWorld");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (9).wav", "BossFire");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (10).wav", "PlayerJump");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (16).wav", "EnemyBulletBang");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (19).wav", "PlayerInjured");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (21).wav", "PickingItems");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (22).wav", "TeleporterTransform");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (27).wav", "Enemydie");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (36).wav", "BossIntro");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/GameOver.wav", "GameOver");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/LifeLost.wav", "LifeLost");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (10).wav", "Jump");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (15).wav", "MineBip");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (16).wav", "EnemyBulletBang");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (19).wav", "PlayerInjured");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (21).wav", "PickingItems");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (23).wav", "FireRocket");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (24).wav", "TransingWeaponScene");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (25).wav", "FireHomingMissles");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (27).wav", "Enemydie");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (30).wav", "SkullFire");
+	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/Opening.wav", "Opening");
+	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarSplash.wav", "CarSplash");
+	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarBackground.wav", "CarBackground");
+	Sound::GetInstance()->LoadSound("Sources/Sound/Ending.wav","Ending");
+}
+
 CGame::~CGame()
 {
 	if (spriteHandler != NULL) spriteHandler->Release();
@@ -381,9 +412,20 @@ void CGame::_ParseSection_SCENES(string line)
 	if (tokens.size() < 2) return;
 	int id = atoi(tokens[0].c_str());
 	LPCWSTR path = ToLPCWSTR(tokens[1]);
-
-	LPSCENE scene = new CPlayScene(id, path);
-	scenes[id] = scene;
+	if (id != 12 && id != 13) {
+		LPSCENE scene = new CPlayScene(id, path);
+		scenes[id] = scene;
+	}
+	else if(id == 12)
+	{
+		LPSCENE scene = new IntroScene(id, path);
+		scenes[id] = scene;
+	}
+	else if (id == 13)
+	{
+		LPSCENE scene = new IntroScene(id, path);
+		scenes[id] = scene;
+	}
 }
 
 void CGame::_ParseSection_TEXTURES(string line)
@@ -517,7 +559,11 @@ void CGame::LoadResources()
 	f.close();
 
 	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"resources\\bbox.png", D3DCOLOR_XRGB(0, 0, 0));
-
+	Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_UNDERWORLD);
+	Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_OVERWORLD);
+	Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_ENDING);
+	Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_INTRO);
+	Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_BOSS);
 	DebugOut(L"[INFO] Done loading game resources %s\n", RESOURCE_FILE_PATH);
 	
 }
@@ -564,34 +610,27 @@ void CGame::Load(LPCWSTR gameFile)
 	
 }
 
+
 void CGame::SwitchScene(int scene_id)
 {
 	DebugOut(L"[INFO] Switching to scene %d\n", scene_id);
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
-	if (scene_id == 12) {
-		s = new IntroScene(21);
-	}
-	else {
-		if (s->IsLoaded() == false)
-			s->Load();
-	}
+	if (s->IsLoaded() == false)
+		s->Load();
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
 	
 	if (current_scene == 10) {
 		SetCamPos(0, 1296);		
 		dynamic_cast<CPlayScene*>(scenes[current_scene])->isCamSetInit = false;
 	}
-	if (current_scene == 11) {
+	if (current_scene == 11 || current_scene == 12) {
 		SetCamPos(0,0);
 	}
 	if (current_scene >= 1 && current_scene <= 8)
 	{
-		Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_UNDERWORLD);
 		Sound::GetInstance()->LoadSound("Sources/Sound/Area2.wav", "map2");
-		Sound::GetInstance()->Play("map2", 1, 10000);
-		//Sound::GetInstance()->Stop("map2");	//nếu muốn dừng âm thanh thì dùng hàm stop
-		Sound::GetInstance()->Play("PlayerUnderworldFire", 0, 1);
+		//Sound::GetInstance()->Play("map2", 1, 10000);
 	}
 }
 void CGame::SwitchToSelectWeaponScene()
@@ -599,11 +638,45 @@ void CGame::SwitchToSelectWeaponScene()
 	if (current_scene != 11) {
 		HolderSceneId = current_scene;
 		SwitchScene(11);
-		DebugOut(L"Holder: %d \n", HolderSceneId);
 	}
 	else {
+		int x = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetChoose()->x;
+		if (x == 78)
+			dynamic_cast<CPlayScene*>(scenes[HolderSceneId])->GetPlayer()->SetSecondWeapon(WEAPONS_TYPE_TRIPLEROCKET);
+		else if(x==110)
+			dynamic_cast<CPlayScene*>(scenes[HolderSceneId])->GetPlayer()->SetSecondWeapon(WEAPONS_TYPE_THUNDER);
+		else if(x==142)
+			dynamic_cast<CPlayScene*>(scenes[HolderSceneId])->GetPlayer()->SetSecondWeapon(WEAPONS_TYPE_ROCKET);
 		SwitchScene(HolderSceneId);
-		DebugOut(L"Holder: %d \n", HolderSceneId);
 	}
+}
+
+void CGame::IntroDraw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
+{
+	float camX, camY;
+	CGame::GetInstance()->GetCamPosition(camX, camY);
+	D3DXVECTOR3 p(floor(x -camX), floor(y -camY), 0);
+	RECT r;
+	r.left = left;
+	r.top = top;
+	r.right = right;
+	r.bottom = bottom;
+
+	D3DXMATRIX oldMatrix;
+	D3DXMATRIX newMatrix;
+
+	D3DXVECTOR2 scaling;
+	//1.1852 1.0538
+	if (direction > 0)
+		scaling = D3DXVECTOR2(0.99032882, 1.12280702);
+	else
+		scaling = D3DXVECTOR2(-1, 1);
+
+	D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2((float)(right - left) / 2 - 130, p.y + (float)(bottom - top) / 2 - 150), 0, &scaling, NULL, 0, NULL);
+	spriteHandler->GetTransform(&oldMatrix);
+	spriteHandler->SetTransform(&newMatrix);
+	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+
+	spriteHandler->SetTransform(&oldMatrix);
 }
 

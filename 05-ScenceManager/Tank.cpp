@@ -11,11 +11,14 @@
 #include "Brick.h"
 #include "Bullet.h"
 #include "Sophia.h"
+#include "PlayScence.h"
+#include "Thunder.h"
 CTank:: CTank(float x, float y) 
 {
 	isPlayer = true;
 	bulletLevel = 1;
-	enableRocket = true;
+	enableRocket = false;
+	enableThunder = false;
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
 	isJumping = true;
@@ -114,16 +117,21 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						(e->obj)->visible = false;
 						break;
 					}
-					case ITEM_TYPE_POWER:
-					{
-						if(damage < 8 && damage >0)
-							damage++;
-						(e->obj)->visible = false;
+					case ITEM_TYPE_THUNDER:
+					{			
+						if (enableThunder == false) {
+							enableThunder = true;
+							dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->CallNewText(1, e->obj->x - 50, e->obj->y);
+						}
+						dynamic_cast<CItem*>(e->obj)->visible = false;
 						break;
 					}
 					case ITEM_TYPE_ENABLE_ROCKET:
 					{
-						enableRocket = true;
+						if (enableRocket == false) {
+							enableRocket = true;							
+							dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->CallNewText(0, e->obj->x - 50, e->obj->y);
+						}
 						dynamic_cast<CItem*>(e->obj)->visible = false;
 						break;
 					}
@@ -146,6 +154,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (untouchableTime == 0) {
 						health -= e->obj->GetDamage();
 						untouchableTime = 1;
+						e->obj->visible = false;
 					}
 
 					//vy -= 0.3f;
@@ -313,6 +322,7 @@ void CTank::GetDimension(int& width, int& height)
 	width = this->tank_width;
 	height = this->tank_height;
 }
+
 void CTank::Reset()
 {
 	SetState(TANK_STATE_IDLE_RIGHT);
@@ -327,4 +337,120 @@ void CTank::HandleUntouchableTime()
 	untouchableTime += 1;
 	if (untouchableTime == TANK_UNTOUCHABLE_TIME)
 		untouchableTime = 0;
+}
+void CTank::Shot()
+{
+	int width3, height3;
+	GetDimension(width3, height3);
+	if (height3 == TANK_NORMAL_HEIGHT)
+	{
+		if (nx == -1)
+		{
+
+			CBullet* bullet = new CBullet(GetBulletLevel(), BULLET_STATE_FLYING_LEFT);
+			float x1, y1;
+			GetPosition(x1, y1);
+			bullet->SetPosition(x1 - BULLET_HORIZONTAL_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+			bullet->SetStartPositon(x1 - BULLET_HORIZONTAL_BBOX_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+			LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(6);
+			bullet->SetAnimationSet(ani_set);
+			dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(bullet);
+		}
+		else
+		{
+			CBullet* bullet = new CBullet(GetBulletLevel(), BULLET_STATE_FLYING_RIGHT);
+			float x1, y1;
+			GetPosition(x1, y1);
+			bullet->SetPosition(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+			bullet->SetStartPositon(x1 + TANK_NORMAL_WIDTH, y1 + TANK_NORMAL_HEIGHT / 2 - 8);
+			LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(6);
+			bullet->SetAnimationSet(ani_set);
+			dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(bullet);
+		}
+	}
+	else {
+		CBullet* bullet = new CBullet(GetBulletLevel(), BULLET_STATE_FLYING_UP);
+		float x1, y1;
+		GetPosition(x1, y1);
+		bullet->SetPosition(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
+		bullet->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
+		LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(6);
+		bullet->SetAnimationSet(ani_set);
+		dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(bullet);
+	}
+}
+
+void CTank::CallSecondWeapon()
+{
+	vector< LPGAMEOBJECT> *objects = dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects();
+	int width4, height4;
+	GetDimension(width4, height4);
+	if (secondWeapon == WEAPONS_TYPE_ROCKET) {
+		if (GetEnableRocket()) {
+			if (height4 == TANK_NORMAL_HEIGHT)
+			{
+				if (nx == -1)
+				{
+
+					CRocket* rocket = new CRocket();
+					for (int i = 0; i < objects->size(); i++) {
+						if (objects->at(i)->IsEnemy() && GetDistance(objects->at(i)) < 230) {
+							rocket->SetTargetObjects(objects);
+							rocket->SetTargetObject(objects->at(i));
+							float x1, y1;
+							GetPosition(x1, y1);
+							rocket->SetPosition(x1 - 15, (y1 - ROCKET_BBOX_HEIGHT) - 15);
+							LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(8);
+							rocket->SetAnimationSet(ani_set);
+							objects->push_back(rocket);
+							break;
+						}
+					}
+				}
+				else
+				{
+					CRocket* rocket = new CRocket();
+					for (int i = 0; i < objects->size(); i++) {
+						if (objects->at(i)->IsEnemy() && GetDistance(objects->at(i)) < 230) {
+							rocket->SetTargetObjects(objects);
+							rocket->SetTargetObject(objects->at(i));
+							float x1, y1;
+							GetPosition(x1, y1);
+							rocket->SetPosition(x1 + TANK_NORMAL_WIDTH + 5, (y1 - ROCKET_BBOX_HEIGHT) - 10);
+							LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(8);
+							rocket->SetAnimationSet(ani_set);
+							objects->push_back(rocket);
+							break;
+						}
+					}
+
+				}
+			}
+			else {
+				CRocket* rocket = new CRocket();
+				for (int i = 0; i < objects->size(); i++) {
+					if (objects->at(i)->IsEnemy() && GetDistance(objects->at(i)) < 230) {
+						rocket->SetTargetObjects(objects);
+						rocket->SetTargetObject(objects->at(i));
+						float x1, y1;
+						GetPosition(x1, y1);
+						rocket->SetPosition(x1 + (TANK_UP_GUN_WIDHT - ROCKET_BBOX_WIDTH) / 2, y1 - ROCKET_BBOX_HEIGHT + 8);
+						//rocket->SetStartPositon(x1 + (TANK_UP_GUN_WIDHT - BULLET_VERTICAL_BBOX_WIDTH) / 2, y1 - BULLET_VERTICAL_BBOX_HEIGHT + 8);
+						LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(8);
+						rocket->SetAnimationSet(ani_set);
+						objects->push_back(rocket);
+						break;
+					}
+				}
+			}
+		}
+	}
+	else if (secondWeapon == WEAPONS_TYPE_THUNDER) {
+		if (enableThunder) {
+			CThunder* thunder = new CThunder();
+			thunder->SetPosition(this->x + tank_width / 2, this->y + tank_height); LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(71);
+			thunder->SetAnimationSet(ani_set);
+			dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(thunder);
+		}
+	}
 }

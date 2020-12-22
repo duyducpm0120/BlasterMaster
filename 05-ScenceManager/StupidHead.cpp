@@ -5,7 +5,7 @@ void CStupidHead::Fall()
 {
 	state = STUPIDHEAD_STATE_FALL;
 	vx = 0;
-	vy = 2*STUPIDHEAD_CLIMBING_SPEED;
+	vy = 4*STUPIDHEAD_CLIMBING_SPEED;
 	ani = STUPIDHEAD_ANI_CLIMBING_TOP_LEFT;
 
 }
@@ -30,12 +30,14 @@ void CStupidHead::HandleIsTouchBrick()
 				state = STUPIDHEAD_STATE_CLIMBING_TOP;
 				ChangeDirection();
 				this->y -= DEVIATIONS;
+				//this->x += DEVIATIONS;
 			}
 			else if (this->vy < 0) {
 				ani = STUPIDHEAD_ANI_CLIMBING_BOT_RIGHT;
 				state = STUPIDHEAD_STATE_CLIMBING_BOT;
 				ChangeDirectionInverse();
 				this->y += DEVIATIONS;
+				//this->x -= DEVIATIONS;
 			}
 		}
 		else if (state == STUPIDHEAD_STATE_CLIMBING_LEFT) {
@@ -45,12 +47,14 @@ void CStupidHead::HandleIsTouchBrick()
 				state = STUPIDHEAD_STATE_CLIMBING_TOP;
 				ChangeDirectionInverse();
 				this->y -=DEVIATIONS;
+				//this->x -= DEVIATIONS;
 			}
 			else if (vy < 0) {
 				ani = STUPIDHEAD_ANI_CLIMBING_BOT_LEFT;
 				state = STUPIDHEAD_STATE_CLIMBING_BOT;
 				ChangeDirection();
 				this->y += DEVIATIONS;
+				//this->x += DEVIATIONS;
 			}
 		}
 		else if (state == STUPIDHEAD_STATE_CLIMBING_TOP) {
@@ -60,6 +64,7 @@ void CStupidHead::HandleIsTouchBrick()
 				state = STUPIDHEAD_STATE_CLIMBING_LEFT;
 				ChangeDirectionInverse();
 				this->x -= DEVIATIONS;
+				//this->y -= DEVIATIONS;
 			}
 			else if (vx < 0) {
 
@@ -67,6 +72,7 @@ void CStupidHead::HandleIsTouchBrick()
 				state = STUPIDHEAD_STATE_CLIMBING_RIGHT;
 				ChangeDirection();
 				this->x += DEVIATIONS;
+				//this->y += DEVIATIONS;
 			}
 		}
 		else if (state == STUPIDHEAD_STATE_CLIMBING_BOT) {
@@ -76,6 +82,7 @@ void CStupidHead::HandleIsTouchBrick()
 				state = STUPIDHEAD_STATE_CLIMBING_LEFT;
 				ChangeDirection();
 				this->x -= DEVIATIONS;
+				//this->y += DEVIATIONS;
 			}
 			else if (vx < 0) {
 
@@ -83,6 +90,7 @@ void CStupidHead::HandleIsTouchBrick()
 				state = STUPIDHEAD_STATE_CLIMBING_RIGHT;
 				ChangeDirection();
 				this->x += DEVIATIONS;
+				//this->y -= DEVIATIONS;
 			}
 		}
 	}
@@ -114,6 +122,8 @@ void CStupidHead::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	//
 	// TO-DO: make sure STUPIDHEAD can interact with the world and to each of them too!
 	// 
+	if (health <= 0)
+		visible = false;
 	CGameObject::Update(dt,coObjects);
 	if (this->state != STUPIDHEAD_STATE_CLIMBING_BOT && target != NULL && abs(this->x - target->x) <= 3 && this->y < target->y)
 		Fall();
@@ -217,7 +227,7 @@ void CStupidHead::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			}
 			else if (state == STUPIDHEAD_STATE_FALL) {
 				vx = 0;
-				vy = vy / 2;
+				vy = vy / 4;
 				if (this->x > target->x) {
 					ChangeDirectionInverse();
 					ani = STUPIDHEAD_ANI_CLIMBING_BOT_LEFT;

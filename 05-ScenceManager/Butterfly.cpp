@@ -1,4 +1,7 @@
 #include "Butterfly.h"
+#include "Item.h"
+#include "Game.h"
+#include "PlayScence.h"
 CButterfly::CButterfly()
 {
 	damage = 1;
@@ -20,8 +23,15 @@ void CButterfly::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 	if (health <= 0)
+	{
 		this->visible = false;
-	//
+		CItem* item = new CItem(ITEM_TYPE_ENABLE_ROCKET);
+		item->SetPosition(x, y - 10);
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+		LPANIMATION_SET ani_set = animation_sets->Get(11);		
+		item->SetAnimationSet(ani_set);
+		dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(item);
+	}//
 	// TO-DO: make sure Golem can interact with the world and to each of them too!
 	// 
 	if(GetDistance(tank)<300)

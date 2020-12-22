@@ -1,8 +1,22 @@
 [TEXTURES]
 # id	file_path	transparent_color_r	g	b
-0	textures\mario.png	255	255	255
 -100	textures\bbox.png	5	5	5
-20	textures\misc.png	176	224	248
+22	textures\Intro\Roll_Out_Cutscene.png	255	0	255
+21	textures\Intro\Opening_Cutscene.png	255	0	255
+24	textures\Intro\Intro_Light.png	255	0	255
+23	textures\Intro\Intro_Dark.png	255	0	255
+25	textures\Intro\Ending_Cutscene.png	255	0	255
+26	textures\Intro\Ending1.jpg	255	0	255
+27	textures\Intro\Ending2.jpg	255	0	255
+28	textures\Intro\Ending3.png	63	72	204
+29	textures\Intro\Ending_Color.png	63	72	204
+34	textures\Intro\Logo.jpg	255	0	255
+25	textures\Intro\Ending_Cutscene.png	255	0	255
+26	textures\Intro\Ending1.jpg	255	0	255
+27	textures\Intro\Ending2.jpg	255	0	255
+28	textures\Intro\Ending3.png	63	72	204
+29	textures\Intro\Cloud_Endding.png	63	72	204
+31	textures\Intro\Ending_Color.png	73	80	198
 30	textures\tank.png	243	243	244
 40	textures\Enemies_BlasterMaster.png	243	243	244
 50	textures\bullet.png	199	200	50
@@ -14,6 +28,7 @@
 101	textures\bossclaw.png	255	0	255
 102	textures\Choose.png	255	255	255
 103	textures\Thunder.png	23	168	74
+104	textures\Text.png	255	255	255
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
 2	textures\Area22.png	5	5	5
@@ -27,7 +42,11 @@
 10	textures\OH.png	5	5	5
 11	textures\SelectWeapons.png	5	5	5
 [SPRITES]
-
+#TEXT
+#ROCKET UNLOCKED
+10001	24	15	155	25	104
+#THUNDER UNLOCKED
+10002	26	42	162	52	104
 #TANK
 
 #walk left
@@ -403,6 +422,10 @@
 710003	44	3	56	56	103
 
 [ANIMATIONS]
+#TEXT
+101	10001	100
+102	10002	100
+
 # ==== BRICK =========
 601	20001	100
 
@@ -647,8 +670,8 @@
 #THUNDER
 7101	710001	40	710002	40	710003	40
 [ANIMATION_SETS]
-# MARIO
-1	400	401	402	403	500	501	502	503	599
+# TEXT
+1	101	102
 # BRICK 
 2	601
 

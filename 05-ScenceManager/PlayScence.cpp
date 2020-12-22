@@ -30,7 +30,8 @@
 #include "StupidHead.h"
 #include "Choose.h"
 #include "Sound.h"
-
+#include "Text.h"
+#include "Thunder.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -100,8 +101,6 @@ void CPlayScene::_ParseSection_TEXTURES(string line)
 	int B = atoi(tokens[4].c_str());
 	
 	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B));
-	
-
 }
 
 void CPlayScene::_ParseSection_SPRITES(string line)
@@ -355,7 +354,7 @@ void CPlayScene::_ParseSection_TILE_MAP(string line)
 
 void CPlayScene::CallDestroyed(CGameObject* object)
 {
-	if (!dynamic_cast<CDestroyed*>(object)) {
+	if (!dynamic_cast<CDestroyed*>(object) && !dynamic_cast<CThunder*>(object)) {
 
 		if (dynamic_cast<CBullet*>(object)) {
 			CDestroyed* destroyed = new CDestroyed(1);
@@ -374,13 +373,13 @@ void CPlayScene::CallDestroyed(CGameObject* object)
 			objects.push_back(destroyed);
 		}
 		else if (!dynamic_cast<CItem*>(object)) {
-			if (object->IsEnemy() == true)
+			if (object->IsEnemy() == true && !dynamic_cast<CButterfly*>(object))
 			{
 				srand(time(NULL));
-				int n = rand() % 2;
-				if (n == 1)
+				int n = rand() % 3;
+				if (n == ITEM_TYPE_HEALTH)
 				{
-					int type = rand() % 3;
+					int type = n;
 					CItem* item = new CItem(type);
 					item->SetPosition(object->x, object->y - 10);
 					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
@@ -519,12 +518,11 @@ void CPlayScene::Update(DWORD dt)
 		if (player == NULL) return;
 		if (updateObject[i]->visible == true && updateObject[i]->isToUpdate)
 			updateObject[i]->Update(dt, &updateObject);
-
 	}
 	
 	
 
-	if (this->id != 10) {
+	if (this->id != 10 ) {
 		// Update camera to follow player
 		float cx, cy;
 		player->GetPosition(cx, cy);
@@ -576,6 +574,8 @@ void CPlayScene::Update(DWORD dt)
 		if(isCameraAutorun)
 			UpdateAutorunCamera();
 	}
+	if(text!=NULL)
+		text->Update(dt);
 }
 
 void CPlayScene::Render()
@@ -596,6 +596,8 @@ void CPlayScene::Render()
 		}
 	}
 	hud->Render(player);
+	if (text != NULL)
+		text->Render();
 }
 
 void CPlayScene::UpdateAutorunCamera()
@@ -634,6 +636,11 @@ void CPlayScene::UpdateAutorunCamera()
 	hud->Update(x + 5, y, player->GetHealth(), player->GetDamage());
 	if (x == CameraAutorunTargetX && y == CameraAutorunTargetY)
 		isCameraAutorun = false;
+}
+void CPlayScene::CallNewText(int type, float x, float y)
+{
+	this->text = new Text(type);
+	text->Setposition(x, y);
 }
 void CPlayScene::Unload()
 {

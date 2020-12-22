@@ -14,7 +14,7 @@
 #include "Sophia.h"
 #include "OHSophia.h"
 #include "Choose.h"
-
+#include "Text.h"
 class CPlayScene: public CScene
 {
 protected: 
@@ -40,7 +40,7 @@ protected:
 	void _ParseSection_TILE_MAP(string line);
 
 	void CallDestroyed(CGameObject* object);
-	
+	Text* text;
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
@@ -65,6 +65,7 @@ public:
 	vector<LPGAMEOBJECT>* GetUpdateObjects() { return &updateObject; }
 	void UpdateAutorunCamera();
 	CChoose* GetChoose(){ return choose; };
+	void CallNewText(int type, float x, float y);
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:

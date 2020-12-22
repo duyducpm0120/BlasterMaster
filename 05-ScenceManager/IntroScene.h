@@ -11,7 +11,7 @@
 #include "Animations.h"
 #include <iostream>
 #include <fstream>
-//#include "Sound.h"
+#include "Sound.h"
 using namespace std;
 
 
@@ -42,8 +42,6 @@ using namespace std;
 class IntroScene : public CScene
 {
 private:
-	
-	LPCWSTR texturesFilePath;
 	float posX, posY;
 	int time = 0;
 	float moutainY=0;
@@ -55,7 +53,7 @@ private:
 	int soundSension=0;
 public:
 	IntroScene();
-	IntroScene(int idStage);
+	IntroScene(int id, LPCWSTR filePath);
 	~IntroScene();
 	void Load();
 	void LoadBaseTextures();
@@ -73,7 +71,6 @@ protected:
 	//Camera* gameCamera;
 #pragma endregion
 
-	int idStage;
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);

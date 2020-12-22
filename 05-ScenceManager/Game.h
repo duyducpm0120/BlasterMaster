@@ -68,6 +68,8 @@ public:
 	void GetCamPosition(float& x, float& y) { x = cam_x; y = cam_y; };
 	void SwitchToSelectWeaponScene();
 
+	void CGame::IntroDraw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
+
 public:
 	void InitKeyboard();
 	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
@@ -76,6 +78,7 @@ public:
 	HWND GetHWND() { return hWnd; };
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
+	void LoadSound();
 
 	void Load(LPCWSTR gameFile);
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }

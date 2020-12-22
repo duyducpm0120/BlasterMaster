@@ -103,7 +103,8 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (e->obj->IsEnemy()) {
 				if (untouchableTime == 0) {
 					health -= e->obj->GetDamage();
-					untouchableTime = 1;					
+					untouchableTime = 1;		
+					e->obj->visible = false;
 				}
 				if (dynamic_cast<CEnemyBullet*>(e->obj))
 					e->obj->visible = false;
@@ -121,7 +122,7 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					(e->obj)->visible = false;
 					break;
 				}
-				case ITEM_TYPE_POWER:
+				case ITEM_TYPE_THUNDER:
 				{
 					if (damage < 8 && damage >0)
 						damage++;

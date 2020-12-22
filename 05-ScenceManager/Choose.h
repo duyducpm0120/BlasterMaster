@@ -7,10 +7,10 @@
 class CChoose : public CGameObject
 {
 private:
-
+	int count;
 public:
 	CChoose();
 	virtual void Render();
-	virtual void Update();
+	void Update(DWORD dt);
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

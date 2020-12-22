@@ -12,7 +12,7 @@ void CItem::Render()
 	case ITEM_TYPE_HEALTH:
 		ani = ITEM_ANI_HEALTH;
 		break;
-	case ITEM_TYPE_POWER:
+	case ITEM_TYPE_THUNDER:
 		ani = ITEM_ANI_POWER;
 		break;
 	case ITEM_TYPE_ENABLE_ROCKET:

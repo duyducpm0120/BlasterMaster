@@ -1,15 +1,21 @@
 ﻿#pragma once
+#include <iostream>
+#include <fstream>
 #include "IntroScene.h"
 #include "Utils.h"
-
-#define ID_INTRO			21
-#define ID_INTROENDING			22
+#include "Sound.h"
+#include "Textures.h"
+#include "Sprites.h"
+#define ID_INTRO			12
+#define ID_INTROENDING			13
 
 #define SCENE_SECTION_UNKNOWN -1
 #define SCENE_SECTION_TEXTURES 2
 #define SCENE_SECTION_SPRITES 3
 #define SCENE_SECTION_ANIMATIONS 4
 #define SCENE_SECTION_ANIMATION_SETS	5
+#define SCENE_SECTION_OBJECTS	6
+#define SCENE_SECTION_TILE_MAP 7
 #define MAX_SCENE_LINE 1024
 
 
@@ -17,60 +23,58 @@ IntroScene::IntroScene()
 {
 }
 
-IntroScene::IntroScene(int _idStage) : CScene()
+IntroScene::IntroScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 {
-	idStage = _idStage;
-	key_handler = new IntroScenceKeyHandler(this);
-	CGame::GetInstance()->SetKeyHandler(this->GetKeyEventHandler());
+	isLoaded = false;
 	Load();
-	switch (idStage)
+	switch (id)
 	{
 	case ID_INTRO: {
-		//new IntroScene(ID_INTRO) ->intro
-		//new IntroScene(ID_INTROENDIING) ->ending
-		intro_ani_set = CAnimationSets::GetInstance()->Get(Intro_Scene);
-		//Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_INTRO);
+		this->intro_ani_set = CAnimationSets::GetInstance()->Get(Intro_Scene);
+		DebugOut(L" \n \n Get ani_set of intro scene succesfully!\n \n \n ");
+		Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_INTRO);
 		break;
 	}
 	case ID_INTROENDING: {
 		
-		intro_ani_set = CAnimationSets::GetInstance()->Get(Ending_Scene);
-		//Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_ENDING);
+		this->intro_ani_set = CAnimationSets::GetInstance()->Get(Ending_Scene);
+		DebugOut(L" \n \n Get ani_set of intro scene succesfully!\n \n \n ");
+		Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_ENDING);
 
 		break;
 	}
 	default:
 		break;
 	}
+	key_handler = new IntroScenceKeyHandler(this);
 }
 void IntroScene::Load()
 {
-	switch (idStage)
-	{
-	case ID_INTRO: {
-		texturesFilePath = ToLPCWSTR("Intro_Scene.txt");
-		//intro_ani_set = CAnimationSets::GetInstance()->Get(Intro_Scene);
-		//Sound::GetInstance()->LoadSound("Resource\\Sound\\Intro.wav","BackgroundMusic");
-		break;
-	}
-	case ID_INTROENDING: {
-		texturesFilePath = ToLPCWSTR("Ending.txt"); 
-		//intro_ani_set = CAnimationSets::GetInstance()->Get(701);
-		break;
-	}
+	isLoaded = true;
+	//switch (id)
+	//{
+	//case ID_INTRO: {
+	//	sceneFilePath = ToLPCWSTR("Scenes/Intro_Scene.txt");
+	//	Sound::GetInstance()->LoadSound("Sources\Sound\Intro.wav","BackgroundMusic");
+	//	break;
+	//}
+	//case ID_INTROENDING: {
+	//	sceneFilePath= ToLPCWSTR("Scenes/Ending.txt"); 
+	//	break;
+	//}
 
-	default:
-		break;
-	}
+	//default:
+	//	break;
+	//}
 	LoadBaseTextures();
 	CGame ::GetInstance()->SetCamPos(0.0f, 0.0f);	//initial camera
 }
 void IntroScene::LoadBaseTextures()
 {
-	DebugOut(L"[INFO] Start loading TEXTURES resources from : %s \n", texturesFilePath);
+	DebugOut(L"[INFO] Start loading TEXTURES resources from : %s \n", sceneFilePath);
 
 	ifstream f;
-	f.open(texturesFilePath);
+	f.open(sceneFilePath);
 	
 	int section = SCENE_SECTION_UNKNOWN;
 
@@ -119,7 +123,7 @@ void IntroScene::LoadBaseTextures()
 	}
 	f.close();
 
-	DebugOut(L"[INFO] Done loading TEXTURES resources %s\n", texturesFilePath);
+	DebugOut(L"[INFO] Done loading TEXTURES resources %s\n",sceneFilePath);
 }
 
 
@@ -186,7 +190,6 @@ void IntroScene::_ParseSection_ANIMATIONS(string line)
 {
 	
 	vector<string> tokens = split(line);
-	DebugOut(L"[Info] animation added: ");
 	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
 	
 	LPANIMATION ani = new CAnimation();
@@ -220,6 +223,7 @@ void IntroScene::_ParseSection_ANIMATION_SETS(string line)
 
 		LPANIMATION ani = animations->Get(ani_id);
 		s->push_back(ani);
+		DebugOut(L"Ani_set push back ani id: %d\n", ani_id);
 
 	}
 
@@ -266,12 +270,6 @@ void IntroScene::_ParseSection_SCENEFILEPATH(string line)
 IntroScene::~IntroScene()
 {
 }
-
-//void PlayScene::SwitchScene(int scene_id)
-//{
-//	DebugOut(L"dung cong");
-//}
-
 void IntroScene::Update(DWORD dt)
 {
 	/*switch (setAnimation)
@@ -321,10 +319,10 @@ void IntroScene::Update(DWORD dt)
 	}
 	
 	
-	switch (idStage)
+	switch (id)
 	{
 	case ID_INTRO:
-		CGame::GetInstance()->SetCamPos(0, 0);
+		CGame::GetInstance()->SetCamPos(0,25);
 		break;
 	case ID_INTROENDING:
 		if (setEndding == 0 && this->moutainY < 30)
@@ -341,30 +339,34 @@ void IntroScene::Update(DWORD dt)
 	}
 #pragma endregion
 
-
+	float x1, y1;
+	CGame::GetInstance()->GetCamPosition(x1, y1);
+	//DebugOut(L"Camera X: %f \n",x1);
+	//DebugOut(L"Camera Y: %f \n", y1);
 }
+
 
 void IntroScene::Render()
 {
-
-	if (this->idStage == ID_INTRO) {
+	int alpha = 255;
+	if (this->id == ID_INTRO) {
 
 		switch (setAnimation)
 		{
 		case Intro_Animation_Logo: 
-			intro_ani_set->at(Intro_Animation_Logo)->Render(1, 0, 0);
+			intro_ani_set->at(Intro_Animation_Logo)->IntroRender(1, 0, 0,alpha);
 			if (intro_ani_set->at(Intro_Animation_Logo)->GetFrame() == intro_ani_set->at(Intro_Animation_Logo)->GetLastFrameIndex()) { 
 				setAnimation = Intro_Animation_Frog; 
 			} 
 			break;
 		case Intro_Animation_Frog: 
-			intro_ani_set->at(Intro_Animation_Frog)->Render(1, 0, 0);
+			intro_ani_set->at(Intro_Animation_Frog)->IntroRender(1, 0, 0, alpha);
 			if (intro_ani_set->at(Intro_Animation_Frog)->GetFrame() == intro_ani_set->at(Intro_Animation_Frog)->GetLastFrameIndex()) {
 				setAnimation = Intro_Animation_Car; 
 			} 
 			break;
 		case Intro_Animation_Car:
-			intro_ani_set->at(Intro_Animation_Car)->Render(1, 0, 0);
+			intro_ani_set->at(Intro_Animation_Car)->IntroRender(1, 0, 0, alpha);
 			if (intro_ani_set->at(Intro_Animation_Car)->GetFrame() == intro_ani_set->at(Intro_Animation_Car)->GetLastFrameIndex()) { 
 				setAnimation = Intro_Done;
 			} 
@@ -373,37 +375,34 @@ void IntroScene::Render()
 			break;
 		}
 	}
-	else if (this->idStage == ID_INTROENDING) {
+	else if (this->id == ID_INTROENDING) {
 		
 		//intro_ani_set->at(Endding_Background1)->IntroRender(1, 0, 0);
 		switch (setEndding)
 		{
 		case 0:
-			intro_ani_set->at(Endding_Cloud)->Render(1, 0, 0);
-			intro_ani_set->at(Endding_Mountain)->Render(1, 123, 120 + this->moutainY);
-			intro_ani_set->at(Endding_Forest)->Render(1, 0, 105);
+			intro_ani_set->at(Endding_Cloud)->IntroRender(1, 0, 0, alpha);
+			intro_ani_set->at(Endding_Mountain)->IntroRender(1, 123, 120 + this->moutainY, alpha);
+			intro_ani_set->at(Endding_Forest)->IntroRender(1, 0,116, alpha);
 			break;
 		case 1:
-			intro_ani_set->at(Endding_Background1)->Render(1, 0, 0);
-			intro_ani_set->at(Endding_Frog)->Render(1, 384, 107);
-			intro_ani_set->at(Endding_Hair)->Render(1, 369, 91);
+			intro_ani_set->at(Endding_Background1)->IntroRender(1, 0, 0, alpha);
+			intro_ani_set->at(Endding_Frog)->IntroRender(1, 430, 107, alpha);
+			intro_ani_set->at(Endding_Hair)->IntroRender(1, 410, 88, alpha);
 			break;
 		case 2:
-			intro_ani_set->at(Endding_Background2)->Render(1, 250, 0);
+			intro_ani_set->at(Endding_Background2)->IntroRender(1, 250, 0, alpha);
 			if(this->textY<272+326)
-				intro_ani_set->at(Endding_Text1)->Render(1, 360, 272 - this->textY);
+				intro_ani_set->at(Endding_Text1)->IntroRender(1, 360, 272 - this->textY, alpha);
 			else
-				intro_ani_set->at(Endding_Text2)->Render(1, 360, 0);
+				intro_ani_set->at(Endding_Text2)->IntroRender(1, 360, 0, alpha);
 			break;
 		default:
 			break;
-		}
-		
-
-
-		
+		}	
 	}
 }
+
 void IntroScene::Unload()
 {
 	//Sound::GetInstance()->UnLoadSound("Opening");

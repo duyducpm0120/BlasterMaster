@@ -83,6 +83,7 @@ class CTank : public CPlayer
 	int tank_height;
 	bool isJumping;
 	bool enableRocket;
+	bool enableThunder;
 	int bulletLevel;
 public:
 	bool GetEnableRocket() { return  enableRocket; };
@@ -97,6 +98,8 @@ public:
 	bool IsJumping() { return isJumping; };
 	void SetDimension(int width, int height);
 	void GetDimension(int &width, int &height);
+	void Shot();
+	void CallSecondWeapon();
 	void Reset();
 	void HandleUntouchableTime();
 

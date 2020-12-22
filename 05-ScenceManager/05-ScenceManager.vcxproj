@@ -162,6 +162,7 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StupidHead.cpp" />
     <ClCompile Include="Tank.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Thunder.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="tinystr.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="StupidHead.h" />
     <ClInclude Include="Tank.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Thunder.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="tinystr.h" />

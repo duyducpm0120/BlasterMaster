@@ -69,7 +69,9 @@
 
 #define PLAYER_UNTOUCHABLE_TIME 3000
 
-
+#define WEAPONS_TYPE_ROCKET	0
+#define	WEAPONS_TYPE_THUNDER	1
+#define	WEAPONS_TYPE_TRIPLEROCKET	2
 
 #pragma endregion
 
@@ -89,6 +91,7 @@ class CPlayer : public CGameObject
 	int bulletLevel;
 protected:
 	int untouchableTime;
+	int secondWeapon;
 public:
 	virtual bool GetEnableRocket() { return  enableRocket; };
 	CPlayer(float x = 0.0f, float y = 0.0f);
@@ -106,4 +109,5 @@ public:
 
 	void SetUntouchableTime(int time) { untouchableTime = time; };
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void SetSecondWeapon(int weapon) { this->secondWeapon = weapon; };
 };
