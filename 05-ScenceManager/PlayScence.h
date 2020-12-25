@@ -19,10 +19,8 @@ class CPlayScene: public CScene
 {
 protected: 
 	CPlayer *player;			// A play scene has to have player, right? 
-
 	CTank* tank;
-	CSophia* sophia;
-	COHSophia* OHSophia;
+
 	vector<LPGAMEOBJECT> objects;
 	HUD* hud;
 	CChoose* choose;
@@ -42,16 +40,15 @@ protected:
 	void CallDestroyed(CGameObject* object);
 	Text* text;
 	int BossAppearCount = 0;
-	
+	int EndingCount = 0;
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
-	CTank* GetTank() { return tank; };
 	virtual void Load();
 	virtual void Load(vector<LPGAMEOBJECT> objects);
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-
+	CTank* GetTank() { return this->tank; };
 	CPlayer * GetPlayer() { return player; } 
 	int GetPlayerHealth() { return *playerHealth; };
 	int GetPlayerPower() { return *playerPower; };
@@ -68,6 +65,8 @@ public:
 	CChoose* GetChoose(){ return choose; };
 	void CallNewText(int type, float x, float y);
 	void ReadyForBossAppear();
+	void ReadyForEnding();
+	void SetEndingCount() { EndingCount = 1; };
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:

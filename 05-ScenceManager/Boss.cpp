@@ -36,8 +36,10 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 
-	if (health <= 0)
+	if (health <= 0) {
 		this->visible = false;
+		dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->SetEndingCount();
+	}
 	//
 	// TO-DO: make sure Boss can interact with the world and to each of them too!
 	// 

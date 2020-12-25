@@ -612,8 +612,16 @@ void CGame::SwitchScene(int scene_id)
 {
 	DebugOut(L"[INFO] Switching to scene %d\n", scene_id);
 	if (scene_id != 11 && scene_id != 12 && scene_id != 13 && current_scene != 11 && current_scene != 12 && current_scene != 13 && !(scene_id == 5 && current_scene == 9) && !(scene_id == 8 && current_scene == 10)) {
-		if(dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer())
+		if (dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer())
+		{
 			player = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer();
+		}
+
+	}
+	if (scene_id == 5 && current_scene == 9) {
+		player = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer();
+		dynamic_cast<CPlayScene*>(scenes[scene_id])->GetPlayer()->health = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer()->GetHealth();
+		dynamic_cast<CPlayScene*>(scenes[scene_id])->GetPlayer()->damage = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer()->GetDamage();
 	}
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];

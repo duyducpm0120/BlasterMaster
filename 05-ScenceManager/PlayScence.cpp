@@ -91,6 +91,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_CHOOSE	70
 #define MAX_SCENE_LINE 1024
 #define BOSS_APPEAR_TIME	200
+#define ENDING_COUNT_TIME	600
 
 void CPlayScene::_ParseSection_TEXTURES(string line)
 {
@@ -207,9 +208,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		obj = new CTank(x, y);
 		player = (CTank*)obj;
-		tank = dynamic_cast<CTank*> (obj);
-		player->health = *this->playerHealth;
-		player->damage = *this->playerPower;
+		this->tank = dynamic_cast<CTank*>( player);
 		int health, power;
 		bool enableRocket, enableThunder;
 		if (CGame::GetInstance()->GetPlayer()) {
@@ -228,10 +227,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		obj = new COHSophia(x, y);
 		player = (COHSophia*)obj;
-		OHSophia = dynamic_cast<COHSophia*> (obj);
-		player->health = *this->playerHealth;
-		player->damage = *this->playerPower;
-
+		player->health = CGame::GetInstance()->GetPlayer()->GetHealth();
+		player->damage = CGame::GetInstance()->GetPlayer()->GetDamage();
+		CGame::GetInstance()->SetPlayer(player);
 		DebugOut(L"[INFO] Player object created!\n");
 		hud = new HUD(dynamic_cast<COHSophia*> (player)->GetHealth(), player->GetDamage());
 		break;
@@ -240,6 +238,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		player = (CSophia*)obj;
 		player->health = *this->playerHealth;
 		player->damage = *this->playerPower;
+		CGame::GetInstance()->SetPlayer(player);
 		hud = new HUD(player->GetHealth(), player->GetDamage());
 		break;
 	case OBJECT_TYPE_GOLEM: obj = new CGolem();
@@ -529,6 +528,7 @@ void CPlayScene::Update(DWORD dt)
 
 			}
 		}
+		CGame::GetInstance()->SetPlayer(this->player);
 	}
 	CGame* game = CGame::GetInstance();
 	grid->Clear();
@@ -610,7 +610,8 @@ void CPlayScene::Update(DWORD dt)
 		}
 
 		game->SetCamPos(cx, cy);
-		hud->Update(cx + 5, cy, player->GetHealth(), player->GetDamage());
+		if(CGame::GetInstance()->GetPlayer())
+			hud->Update(cx + 5, cy, CGame::GetInstance()->GetPlayer()->GetHealth(), CGame::GetInstance()->GetPlayer()->GetDamage());
 	}
 	else if(id ==10) {
 		if (isCamSetInit == false) {
@@ -619,6 +620,11 @@ void CPlayScene::Update(DWORD dt)
 		}
 		if(isCameraAutorun)
 			UpdateAutorunCamera();
+		float x, y;
+		CGame* game = CGame::GetInstance();
+		game->GetCamPosition(x, y);
+		hud->Update(x + 5, y, CGame::GetInstance()->GetPlayer()->GetHealth(), CGame::GetInstance()->GetPlayer()->GetDamage());
+		ReadyForEnding();
 	}
 	if(text!=NULL)
 		text->Update(dt);
@@ -644,7 +650,8 @@ void CPlayScene::Render()
 			//objects[i]->RenderBoundingBox();
 		}
 	}
-	hud->Render(player);
+	if(CGame::GetInstance()->GetPlayer())
+		hud->Render(CGame::GetInstance()->GetPlayer());
 	if (text != NULL)
 		text->Render();
 }
@@ -681,8 +688,7 @@ void CPlayScene::UpdateAutorunCamera()
 	else {
 		y = y;
 	}
-	game->SetCamPos(x, y);	
-	hud->Update(x + 5, y, player->GetHealth(), player->GetDamage());
+	game->SetCamPos(x, y);		
 	if (x == CameraAutorunTargetX && y == CameraAutorunTargetY)
 		isCameraAutorun = false;
 }
@@ -735,6 +741,14 @@ void CPlayScene::ReadyForBossAppear()
 		CGame::GetInstance()->SetCamPos(32, 0);
 		player->SetPosition(148,192);
 	}
+}
+
+void CPlayScene::ReadyForEnding()
+{
+	if (EndingCount != 0)
+		EndingCount++;
+	if (EndingCount == ENDING_COUNT_TIME)
+		CGame::GetInstance()->SwitchScene(13);
 }
 
 

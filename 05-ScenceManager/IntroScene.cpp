@@ -312,7 +312,7 @@ void IntroScene::Update(DWORD dt)
 	case ID_INTROENDING:
 		if (setEndding == 0 && this->moutainY < 30)
 		{
-			CGame::GetInstance()->SetCamPos(this->posX, -15 + 1 * dt);
+			CGame::GetInstance()->SetCamPos(this->posX, -10 + 1 * dt);
 		}
 		else
 		{
