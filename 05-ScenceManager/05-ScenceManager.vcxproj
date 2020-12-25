@@ -141,6 +141,7 @@
     <ClCompile Include="Eye.cpp" />
     <ClCompile Include="Face.cpp" />
     <ClCompile Include="Flame.cpp" />
+    <ClCompile Include="Flyingclaw.cpp" />
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="HealthBar.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Eye.h" />
     <ClInclude Include="Face.h" />
     <ClInclude Include="Flame.h" />
+    <ClInclude Include="Flyingclaw.h" />
     <ClInclude Include="Golem.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="HealthBar.h" />

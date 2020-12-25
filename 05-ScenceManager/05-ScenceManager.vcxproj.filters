@@ -161,6 +161,9 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Spartial Partitioning</Filter>
     </ClCompile>
+    <ClCompile Include="Flyingclaw.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -318,6 +321,9 @@
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Spartial Partitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="Flyingclaw.h">
+      <Filter>Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

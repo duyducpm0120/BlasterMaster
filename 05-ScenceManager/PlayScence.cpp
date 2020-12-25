@@ -26,8 +26,11 @@
 #include "Quadcannon.h"
 #include "Blink.h"
 #include "Eye.h"
+#include "Ball.h"
+#include "Jumper.h"
 #include "BossArm.h"
 #include "StupidHead.h"
+#include "Flyingclaw.h"
 #include "Choose.h"
 #include "Sound.h"
 #include "Text.h"
@@ -78,9 +81,12 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_ROBOT 50
 #define OBJECT_TYPE_SKULL 52
 #define OBJECT_TYPE_FACE 53
+#define OBJECT_TYPE_JUMPER 55
 #define OBJECT_TYPE_QUADCANNON 56
 #define OBJECT_TYPE_BLINK 57
 #define OBJECT_TYPE_EYE 58
+#define OBJECT_TYPE_BALL 60
+#define OBJECT_TYPE_FLYINGCLAW 62
 #define OBJECT_TYPE_STUPIDHEAD	63
 #define OBJECT_TYPE_CHOOSE	70
 #define MAX_SCENE_LINE 1024
@@ -304,6 +310,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_EYE: obj = new CEye();
 		dynamic_cast<CEye*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_FLYINGCLAW: obj = new CFlyingclaw();
+		dynamic_cast<CFlyingclaw*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_JUMPER: obj = new CJumper();
+		dynamic_cast<CJumper*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_BALL: obj = new CBall();
+		dynamic_cast<CBall*>(obj)->SetStartPosition(x, y);
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);

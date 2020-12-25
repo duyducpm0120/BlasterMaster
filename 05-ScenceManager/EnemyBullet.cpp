@@ -39,8 +39,8 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		}
 		else {
-			x += dx;
-			y += dy;
+			x += (dx/2);
+			y += (dy/2);
 		}
 
 	}
@@ -53,8 +53,8 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 		{
-			x += dx;
-			y += dy;
+			x += (dx/2);
+			y += (dy/2);
 		}
 	}
 	else if (state == BULLET_STATE_FLYING_UP)
@@ -65,8 +65,8 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 		{
-			x += dx;
-			y += dy;
+			x += (dx/2);
+			y += (dy/2);
 		}
 		
 	}
@@ -74,8 +74,8 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		if (this->CaclDistance() >= 100) this->visible = false;
 		else {
-			x += dx;
-			y += dy;
+			x += (dx/2);
+			y += (dy/2);
 		}
 			
 		
@@ -89,8 +89,8 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 		{
-			x += dx;
-			y += dy;
+			x += (dx/2);
+			y += (dy/2);
 		}
 	}
 
