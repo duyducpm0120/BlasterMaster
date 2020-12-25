@@ -318,3 +318,7 @@ void COHSophia::HandleUntouchableTime()
 	if (untouchableTime == OHSOPHIA_UNTOUCHABLE_TIME)
 		untouchableTime = 0;
 }
+
+void COHSophia::CallSecondWeapon()
+{
+}

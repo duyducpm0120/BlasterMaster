@@ -6,11 +6,12 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
 #include "Scence.h"
+#include "Player.h"
+#include "Tank.h"
 
 using namespace std;
 
@@ -52,6 +53,7 @@ class CGame
 	int playerHealth = 7;
 	int playerPower = 2;
 
+	CPlayer* player;
 
 	//New Stuff
 public:
@@ -67,8 +69,15 @@ public:
 	void LoadResources();
 	void GetCamPosition(float& x, float& y) { x = cam_x; y = cam_y; };
 	void SwitchToSelectWeaponScene();
-
-	void CGame::IntroDraw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
+	void SetPlayer(CPlayer* player) { this->player = player; };
+	CPlayer* GetPlayer() { return player; };
+	void IntroDraw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
+	void GetPlayerProperties(int& health, int& power, bool& enableRocket, bool& enableThunder) {
+		health = player->health;
+		power = player->damage;
+		enableRocket = dynamic_cast<CTank*>(player)->GetEnableRocket();
+		enableThunder = dynamic_cast<CTank*>(player)->GetEnableThunder();
+	};
 
 public:
 	void InitKeyboard();

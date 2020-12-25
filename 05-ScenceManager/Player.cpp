@@ -10,7 +10,6 @@
 CPlayer::CPlayer(float x, float y) : CGameObject()
 {
 	bulletLevel = 1;
-	enableRocket = true;
 	isJumping = false;
 	health = PLAYER_START_HEALTH;
 	damage = PLAYER_START_DAMAGE;

@@ -87,13 +87,11 @@ class CPlayer : public CGameObject
 	int PLAYER_width;
 	int PLAYER_height;
 	bool isJumping;
-	bool enableRocket;
 	int bulletLevel;
 protected:
 	int untouchableTime;
 	int secondWeapon;
 public:
-	virtual bool GetEnableRocket() { return  enableRocket; };
 	CPlayer(float x = 0.0f, float y = 0.0f);
 	virtual int GetHealth() { return this->health; }
 	virtual int GetDamage() { return this->damage; }
@@ -106,8 +104,8 @@ public:
 	virtual void SetDimension(int width, int height);
 	virtual void GetDimension(int& width, int& height);
 	void Reset();
-
 	void SetUntouchableTime(int time) { untouchableTime = time; };
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void SetSecondWeapon(int weapon) { this->secondWeapon = weapon; };
+	virtual void CallSecondWeapon() = 0;
 };

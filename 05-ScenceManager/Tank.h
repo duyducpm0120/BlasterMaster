@@ -89,7 +89,6 @@ class CTank : public CPlayer
 	int ani;
 	int NumOfRocketFired = 0;
 public:
-	bool GetEnableRocket() { return  enableRocket; };
 	CTank(float x = 0.0f, float y = 0.0f);
 	int GetHealth() { return this->health; }
 	int GetDamage() { return this->damage; }
@@ -107,4 +106,12 @@ public:
 	void HandleUntouchableTime();
 	void HandleNumOfRocketFired() { NumOfRocketFired--; };
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	bool GetEnableRocket() { return enableRocket; };
+	bool GetEnableThunder() { return enableThunder; };
+	void SetPlayerProperties(int health, int power, bool enableRocket, bool enableThunder) {
+		this->health = health;
+		this->damage = power;
+		this->enableRocket = enableRocket;
+		this->enableThunder = enableThunder;
+	};
 };

@@ -75,6 +75,7 @@ public:
 	void GetDimension(int& width, int& height);
 	void Reset();
 	void HandleUntouchableTime();
+	void CallSecondWeapon();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

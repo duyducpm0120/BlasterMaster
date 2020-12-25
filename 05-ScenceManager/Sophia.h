@@ -93,4 +93,5 @@ public:
 	void GetClimbingPosition(float& x, float& y);
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void CallSecondWeapon();
 };

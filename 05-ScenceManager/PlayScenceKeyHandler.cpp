@@ -271,6 +271,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 					player->SetState(TANK_STATE_JUMP_IDLE_LEFT);
 				else
 					player->SetState(TANK_STATE_JUMP_IDLE_RIGHT);
+				Sound::GetInstance()->Play("PlayerJump", 0, 1);
 			}
 			break;
 		case DIK_A:

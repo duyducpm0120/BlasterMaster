@@ -204,7 +204,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		tank = dynamic_cast<CTank*> (obj);
 		player->health = *this->playerHealth;
 		player->damage = *this->playerPower;
-
+		int health, power;
+		bool enableRocket, enableThunder;
+		if (CGame::GetInstance()->GetPlayer()) {
+			CGame::GetInstance()->GetPlayerProperties(health, power, enableRocket, enableThunder);
+			dynamic_cast<CTank*>(player)->SetPlayerProperties(health, power, enableRocket, enableThunder);			
+		}
+		CGame::GetInstance()->SetPlayer(player);
 		DebugOut(L"[INFO] Player object created!\n");
 		hud = new HUD(dynamic_cast<CTank*> (player)->GetHealth(), player->GetDamage());
 		break;
@@ -391,21 +397,27 @@ void CPlayScene::CallDestroyed(CGameObject* object)
 			}
 			else if (object->IsEnemy() == true && dynamic_cast<CButterfly*>(object)) {
 			
-				CItem* item = new CItem(ITEM_TYPE_ENABLE_ROCKET);
-				item->SetPosition(object->x, object->y - 10);
-				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-				LPANIMATION_SET ani_set = animation_sets->Get(11);
-				item->SetAnimationSet(ani_set);
-				dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(item);
+				if (CGame::GetInstance()->GetPlayer() && !dynamic_cast<CTank*> (CGame::GetInstance()->GetPlayer())->GetEnableRocket())
+				{
+					CItem* item = new CItem(ITEM_TYPE_ENABLE_ROCKET);
+					item->SetPosition(object->x, object->y - 10);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(11);
+					item->SetAnimationSet(ani_set);
+					dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(item);
+				}
 			}
 			else if (object->IsEnemy() == true && dynamic_cast<CStupidHead*>(object)) {
 
-				CItem* item = new CItem(ITEM_TYPE_THUNDER);
-				item->SetPosition(object->x, object->y - 10);
-				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-				LPANIMATION_SET ani_set = animation_sets->Get(11);
-				item->SetAnimationSet(ani_set);
-				dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(item);
+				if (CGame::GetInstance()->GetPlayer()&& !dynamic_cast<CTank*> (CGame::GetInstance()->GetPlayer())->GetEnableThunder())
+				{
+					CItem* item = new CItem(ITEM_TYPE_THUNDER);
+					item->SetPosition(object->x, object->y - 10);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(11);
+					item->SetAnimationSet(ani_set);
+					dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(item);
+				}
 			}
 			CDestroyed* destroyed = new CDestroyed(2);
 			destroyed->SetPosition(object->x, object->y);

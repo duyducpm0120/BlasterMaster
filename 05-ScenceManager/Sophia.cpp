@@ -290,6 +290,9 @@ void CSophia::GetBoundingBox(float& left, float& top, float& right, float& botto
 	right = x + sophia_width;
 	bottom = y + sophia_height;
 }
+void CSophia::CallSecondWeapon()
+{
+}
 void CSophia::SetDimension(int width, int height)
 {
 	this->sophia_width = width;
