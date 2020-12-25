@@ -373,7 +373,7 @@ void CPlayScene::CallDestroyed(CGameObject* object)
 			objects.push_back(destroyed);
 		}
 		else if (!dynamic_cast<CItem*>(object)) {
-			if (object->IsEnemy() == true && !dynamic_cast<CButterfly*>(object))
+			if (object->IsEnemy() == true && !dynamic_cast<CButterfly*>(object) && !dynamic_cast<CStupidHead*>(object))
 			{
 				srand(time(NULL));
 				int n = rand() % 3;
@@ -389,12 +389,31 @@ void CPlayScene::CallDestroyed(CGameObject* object)
 				}
 
 			}
+			else if (object->IsEnemy() == true && dynamic_cast<CButterfly*>(object)) {
+			
+				CItem* item = new CItem(ITEM_TYPE_ENABLE_ROCKET);
+				item->SetPosition(object->x, object->y - 10);
+				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+				LPANIMATION_SET ani_set = animation_sets->Get(11);
+				item->SetAnimationSet(ani_set);
+				dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(item);
+			}
+			else if (object->IsEnemy() == true && dynamic_cast<CStupidHead*>(object)) {
+
+				CItem* item = new CItem(ITEM_TYPE_THUNDER);
+				item->SetPosition(object->x, object->y - 10);
+				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+				LPANIMATION_SET ani_set = animation_sets->Get(11);
+				item->SetAnimationSet(ani_set);
+				dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(item);
+			}
 			CDestroyed* destroyed = new CDestroyed(2);
 			destroyed->SetPosition(object->x, object->y);
 			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
 			destroyed->SetAnimationSet(ani_set);
 			objects.push_back(destroyed);
+			Sound::GetInstance()->Play("Enemydie", 0, 1);
 		}
 
 	}

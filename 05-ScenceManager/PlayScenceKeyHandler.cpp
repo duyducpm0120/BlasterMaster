@@ -162,37 +162,30 @@ void CPlayScenceKeyHandler::KeyState(BYTE* states)
 
 void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
-	CTank* tank = new CTank();
-	CSophia* sophia = new CSophia();
-	CPlayer* player = ((CPlayScene*)scence)->GetPlayer();
-	vector<LPGAMEOBJECT>* objects = ((CPlayScene*)scence)->GetObjects();
-	vector<LPGAMEOBJECT>* updateObjects = ((CPlayScene*)scence)->GetUpdateObjects();
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	CGame* game = CGame::GetInstance();
 	switch (KeyCode)
 	{
-	case DIK_1:		
+	case DIK_1:
 		CGame::GetInstance()->SwitchScene(1);
 		break;
-	case DIK_2:		
+	case DIK_2:
 		CGame::GetInstance()->SwitchScene(2);
 		break;
-	case DIK_3:		
+	case DIK_3:
 		CGame::GetInstance()->SwitchScene(3);
 		break;
-	case DIK_4:		
+	case DIK_4:
 		CGame::GetInstance()->SwitchScene(4);
 		break;
-	case DIK_5:		
+	case DIK_5:
 		CGame::GetInstance()->SwitchScene(5);
 		break;
-	case DIK_6:	
+	case DIK_6:
 		CGame::GetInstance()->SwitchScene(6);
 		break;
-	case DIK_7:		
+	case DIK_7:
 		CGame::GetInstance()->SwitchScene(7);
 		break;
-	case DIK_8:		
+	case DIK_8:
 		CGame::GetInstance()->SwitchScene(8);
 		break;
 	case DIK_9:
@@ -205,6 +198,14 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		CGame::GetInstance()->SwitchScene(12);
 		break;
 	}		// Switch scenes	 
+	CTank* tank = new CTank();
+	CSophia* sophia = new CSophia();
+	CPlayer* player = ((CPlayScene*)scence)->GetPlayer();
+	vector<LPGAMEOBJECT>* objects = ((CPlayScene*)scence)->GetObjects();
+	vector<LPGAMEOBJECT>* updateObjects = ((CPlayScene*)scence)->GetUpdateObjects();
+	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	CGame* game = CGame::GetInstance();
+
 
 	if (game->GetCurrentSceneId() == 11) {
 		CChoose* choose = dynamic_cast<CPlayScene*> (game->GetCurrentScene())->GetChoose();
@@ -257,8 +258,8 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				objects->push_back(sophia);
 			}
 			break;
-
 		case DIK_Z:
+			Sound::GetInstance()->Play("PlayerFireUnderWorld", 0, 1);
 			dynamic_cast<CTank*>(player)->Shot();
 			break;
 		case DIK_V:

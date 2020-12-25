@@ -13,6 +13,8 @@
 #include "Sophia.h"
 #include "PlayScence.h"
 #include "Thunder.h"
+#include "Sound.h"
+#include "EnemyBullet.h"
 CTank:: CTank(float x, float y) 
 {
 	isPlayer = true;
@@ -21,6 +23,7 @@ CTank:: CTank(float x, float y)
 	enableThunder = false;
 	untouchable = 0;
 	SetState(TANK_STATE_IDLE_RIGHT);
+	ani = TANK_ANI_IDLE_RIGHT;
 	isJumping = true;
 	tank_width = TANK_NORMAL_WIDTH;
 	tank_height = TANK_NORMAL_HEIGHT;
@@ -63,6 +66,17 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else {
 				isJumping = false;
 			}
+		}
+		else if (dynamic_cast<CEnemyBullet*>(e->obj)) {
+			if (untouchableTime == 0) {
+				health -= e->obj->GetDamage();
+				untouchableTime = 1;
+				e->obj->visible = false;
+			}
+
+			//vy -= 0.3f;
+			if (health <= 0)
+				visible = false;
 		}
 		if (!dynamic_cast<CBrick*>(e->obj)) {
 
@@ -136,23 +150,37 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						break;
 					}
 				}
+				Sound::GetInstance()->Play("PickingItems", 0, 1);
 			}
 			else if (dynamic_cast<CFlame*>(e->obj)) {
 				if (untouchableTime == 0) {
 					health--;
-					untouchableTime = 1;
+					Sound::GetInstance()->Play("PlayerInjured", 0, 1);
+					untouchableTime = 1;				
 				}
 				if (health <= 0)
-					visible = false;
+					visible = false;			
 			}
 			else if (dynamic_cast<CSophia*>(e->obj)) {
 					x += - nx * 0.4f;
 			}	
+			else if (dynamic_cast<CEnemyBullet*>(e->obj)) {
+				if (untouchableTime == 0) {
+					health -= e->obj->GetDamage();
+					untouchableTime = 1;
+					e->obj->visible = false;
+				}
+
+				//vy -= 0.3f;
+				if (health <= 0)
+					visible = false;
+			}
 			else {
 			
 				if (e->obj->IsEnemy()) {
 					if (untouchableTime == 0) {
 						health -= e->obj->GetDamage();
+						Sound::GetInstance()->Play("PlayerInjured", 0, 1);
 						untouchableTime = 1;
 						e->obj->visible = false;
 					}
@@ -174,7 +202,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CTank::Render()
 {
 	
-	int ani;
 	switch (state)
 	{
 	/*case TANK_STATE_DIE:
@@ -264,15 +291,16 @@ void CTank::SetState(int state)
 		vy = -TANK_JUMP_SPEED_Y;
 		break;
 	case TANK_STATE_IDLE_RIGHT:
+		//StopFrameId = animation_set->at(ani)->GetFrame();
 		vx = 0;
 		nx = 1;
 		break;
 	case TANK_STATE_IDLE_LEFT:
+		//StopFrameId = animation_set->at(ani)->GetFrame();
 		vx = 0;
 		nx = -1;
 		break;
 	case TANK_STATE_DIE:
-		//vy = -TANK_DIE_DEFLECT_SPEED;
 		y -= 23;
 		break;
 	case TANK_STATE_JUMP_LEFT:
@@ -386,7 +414,7 @@ void CTank::CallSecondWeapon()
 	int width4, height4;
 	GetDimension(width4, height4);
 	if (secondWeapon == WEAPONS_TYPE_ROCKET) {
-		if (GetEnableRocket()) {
+		if (GetEnableRocket() && NumOfRocketFired < 2) {
 			if (height4 == TANK_NORMAL_HEIGHT)
 			{
 				if (nx == -1)
@@ -403,9 +431,12 @@ void CTank::CallSecondWeapon()
 							LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(8);
 							rocket->SetAnimationSet(ani_set);
 							objects->push_back(rocket);
+							Sound::GetInstance()->Play("FireRocket", 0, 1);
+							NumOfRocketFired++;
 							break;
 						}
 					}
+					
 				}
 				else
 				{
@@ -420,10 +451,11 @@ void CTank::CallSecondWeapon()
 							LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(8);
 							rocket->SetAnimationSet(ani_set);
 							objects->push_back(rocket);
+							Sound::GetInstance()->Play("FireRocket", 0, 1);
+							NumOfRocketFired++;
 							break;
 						}
 					}
-
 				}
 			}
 			else {
@@ -439,11 +471,14 @@ void CTank::CallSecondWeapon()
 						LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(8);
 						rocket->SetAnimationSet(ani_set);
 						objects->push_back(rocket);
+						Sound::GetInstance()->Play("FireRocket", 0, 1);
+						NumOfRocketFired++;
 						break;
 					}
 				}
 			}
-		}
+			
+		}		
 	}
 	else if (secondWeapon == WEAPONS_TYPE_THUNDER) {
 		if (enableThunder) {

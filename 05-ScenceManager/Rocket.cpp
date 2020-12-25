@@ -4,6 +4,8 @@
 #include "Game.h"
 #include "Butterfly.h"
 #include "Destroyed.h"
+#include "EnemyBullet.h"
+#include "PlayScence.h"
 CRocket::CRocket()
 {
 	damage =9999;
@@ -17,10 +19,11 @@ void CRocket::findTarget()
 	CGameObject* target = this->targetObject;
 	int i = 0, check = 0;
 	for (; i < objects->size(); i++) {
-		if (objects->at(i)->IsEnemy() == true && objects->at(i)->visible == true) {
+		if (objects->at(i)->IsEnemy() == true && objects->at(i)->visible == true && !dynamic_cast<CEnemyBullet*>(objects->at(i)) && objects->at(i)->isCatchByRocket == false) {
 			if (GetDistance(objects->at(i)) < minDistance)
 			{
 				target = objects->at(i);
+				objects->at(i)->isCatchByRocket = true;
 				break;
 			}
 			check++;
@@ -61,11 +64,14 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (check == 0)
 	{
 		this->visible = false;
+		dynamic_cast<CTank*> (dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetPlayer())->HandleNumOfRocketFired();
 		return;
 	}
 
-	if (this->targetObject->visible == false)
+	if (this->targetObject->visible == false) {
 		this->visible = false;
+		dynamic_cast<CTank*> (dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetPlayer())->HandleNumOfRocketFired();
+	}
 	
 	findTarget();
 	CatchTargetObject();
@@ -86,6 +92,7 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if ((e->obj)->IsEnemy()) {
 			e->obj->TakeDamage(this->damage);				//Destroy every enemy
 			this->visible = false;
+			dynamic_cast<CTank*> (dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetPlayer())->HandleNumOfRocketFired();
 		}
 	}
 
@@ -111,6 +118,7 @@ void CRocket::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (e->obj->IsEnemy()) {
 			e->obj->TakeDamage(this->damage);			//Destroy every enemy
 			this->visible = false;
+			dynamic_cast<CTank*> (dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetPlayer())->HandleNumOfRocketFired();
 		}
 
 	}

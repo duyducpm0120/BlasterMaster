@@ -16,13 +16,12 @@ void Text::Update(DWORD dt)
 
 void Text::Render()
 {	
-	if (count <= 100) {
+	if (count <= TEXT_EXIST_TIME) {
 		if(count%10 < 5)
 			ani_set->at(type)->Render(this->x, this->y,255);
 		else
 			ani_set->at(type)->Render(this->x, this->y,50);
-	}
-		
+	}		
 	else
 		Text::~Text();
 }

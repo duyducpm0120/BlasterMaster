@@ -13,7 +13,7 @@
 #define ITEM_ANI_POWER		1
 #define	ITEM_ANI_ENABLE_ROCKET	2
 
-#define ITEM_GRAVITY	0.1f
+#define ITEM_GRAVITY	0.0f
 
 class CItem : public CGameObject
 {

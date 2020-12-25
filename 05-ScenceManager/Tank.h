@@ -66,7 +66,7 @@
 #define TANK_UP_GUN_HEIGHT	34
 
 #define TANK_UNTOUCHABLE_TIME 100
-
+#define NUM_ROCKET_CAN_FIRE 2
 
 #pragma endregion
 
@@ -85,6 +85,9 @@ class CTank : public CPlayer
 	bool enableRocket;
 	bool enableThunder;
 	int bulletLevel;
+	int StopFrameId;
+	int ani;
+	int NumOfRocketFired = 0;
 public:
 	bool GetEnableRocket() { return  enableRocket; };
 	CTank(float x = 0.0f, float y = 0.0f);
@@ -102,6 +105,6 @@ public:
 	void CallSecondWeapon();
 	void Reset();
 	void HandleUntouchableTime();
-
+	void HandleNumOfRocketFired() { NumOfRocketFired--; };
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

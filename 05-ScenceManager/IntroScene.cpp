@@ -51,21 +51,6 @@ IntroScene::IntroScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 void IntroScene::Load()
 {
 	isLoaded = true;
-	//switch (id)
-	//{
-	//case ID_INTRO: {
-	//	sceneFilePath = ToLPCWSTR("Scenes/Intro_Scene.txt");
-	//	Sound::GetInstance()->LoadSound("Sources\Sound\Intro.wav","BackgroundMusic");
-	//	break;
-	//}
-	//case ID_INTROENDING: {
-	//	sceneFilePath= ToLPCWSTR("Scenes/Ending.txt"); 
-	//	break;
-	//}
-
-	//default:
-	//	break;
-	//}
 	LoadBaseTextures();
 	CGame ::GetInstance()->SetCamPos(0.0f, 0.0f);	//initial camera
 }
@@ -272,7 +257,7 @@ IntroScene::~IntroScene()
 }
 void IntroScene::Update(DWORD dt)
 {
-	/*switch (setAnimation)
+	switch (setAnimation)
 	{
 	case Intro_Animation_Frog:
 	{
@@ -289,7 +274,7 @@ void IntroScene::Update(DWORD dt)
 	}
 	default:
 		break;
-	}*/
+	}
 	
 
 	if (setAnimation == Intro_Done) {
@@ -405,9 +390,6 @@ void IntroScene::Render()
 
 void IntroScene::Unload()
 {
-	//Sound::GetInstance()->UnLoadSound("Opening");
-	//Sound::GetInstance()->UnLoadSound("CarSplash");
-	//Sound::GetInstance()->UnLoadSound("CarBackground");
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }

@@ -28,6 +28,7 @@
 101	textures\bossclaw.png	255	0	255
 102	textures\Choose.png	255	255	255
 103	textures\Thunder.png	23	168	74
+#103	textures\Thunder.png	251	242	54
 104	textures\Text.png	255	255	255
 #map_id	file_path	r	g	b	
 1	textures\Area21.png	5	5	5
@@ -420,6 +421,10 @@
 710001	6	3	12	56	103
 710002	25	3	33	56	103
 710003	44	3	56	56	103
+
+#710001	5	5	21	70	103
+#710002	26	5	42	70	103
+#710003	47	3	63	70	103
 
 [ANIMATIONS]
 #TEXT

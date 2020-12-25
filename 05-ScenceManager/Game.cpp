@@ -219,15 +219,12 @@ void CGame::LoadSound()
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (36).wav", "BossIntro");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/GameOver.wav", "GameOver");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/LifeLost.wav", "LifeLost");
-	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (10).wav", "Jump");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (15).wav", "MineBip");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (16).wav", "EnemyBulletBang");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (19).wav", "PlayerInjured");
-	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (21).wav", "PickingItems");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (23).wav", "FireRocket");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (24).wav", "TransingWeaponScene");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (25).wav", "FireHomingMissles");
-	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (27).wav", "Enemydie");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (30).wav", "SkullFire");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/Opening.wav", "Opening");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarSplash.wav", "CarSplash");
@@ -605,7 +602,7 @@ void CGame::Load(LPCWSTR gameFile)
 	f.close();
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n",gameFile);
-
+	LoadSound();
 	SwitchScene(current_scene);
 	
 }

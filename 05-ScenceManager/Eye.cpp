@@ -13,7 +13,7 @@ void CEye::Shoot()
 	((CPlayScene*)scence)->GetPlayer()->GetPosition(px, py);
 	CEnemyBullet* bullet1 = new CEnemyBullet(BULLET_STATE_UNDEF);
 	Vec2 speed = Vec2(px - x, py - y);
-	speed = speed.Normalize() * BULLET_SPEED;
+	speed = speed.Normalize() * (BULLET_SPEED/2);
 	bullet1->SetSpeed(speed.x, speed.y);
 	bullet1->SetPosition(this->x, this->y);
 	bullet1->SetStartPositon(this->x, this->y);

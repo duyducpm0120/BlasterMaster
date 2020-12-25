@@ -9,6 +9,8 @@
 #define TEXT_ANI_ROCKETUNLOCKED	0
 #define TEXT_ANI_THUNDERUNLOCKED	1
 
+#define TEXT_EXIST_TIME	50
+
 class Text
 {
 	float x, y;

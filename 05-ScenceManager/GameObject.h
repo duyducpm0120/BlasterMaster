@@ -67,6 +67,7 @@ public:
 	bool isPlayer;
 	int health;
 	int damage;
+	bool isCatchByRocket;
 
 	DWORD dt; 
 

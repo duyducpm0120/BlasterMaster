@@ -101,7 +101,7 @@ CStupidHead::CStupidHead()
 	ny = 0;
 	isEnemy = true;
 	damage = 1;
-	health = 10000;
+	health = 10;
 	nx = -1;
 	state = STUPIDHEAD_STATE_CLIMBING_TOP;
 	vx = STUPIDHEAD_CLIMBING_SPEED;

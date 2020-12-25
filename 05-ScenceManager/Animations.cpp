@@ -64,6 +64,9 @@ void CAnimation::Render(float x, float y, int alpha)
 
 	frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
 }
+void CAnimation::RenderStopFrames(float x, float y,int alpha, int stopFrameId){
+	frames[stopFrameId]->GetSprite()->Draw(x, y, alpha);
+}
 
 CAnimations * CAnimations::__instance = NULL;
 

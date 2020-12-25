@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Sprites.h"
+#include "EnemyBullet.h"
 
 CGameObject::CGameObject()
 {
@@ -16,6 +17,7 @@ CGameObject::CGameObject()
 	nx = 1;	
 	isPlayer = false;
 	isEnemy = false;
+	isCatchByRocket = false;
 }
 
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -73,7 +75,7 @@ void CGameObject::CalcPotentialCollisions(
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		if (!(this->isPlayer== true && coObjects->at(i)->isPlayer == true)) {
+		if (!(this->isPlayer== true && coObjects->at(i)->isPlayer == true) && !(dynamic_cast<CEnemyBullet*>(this)&&dynamic_cast<CBullet*>(coObjects->at(i)))) {
 			LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 			if (e->t > 0 && e->t <= 1.0f)
 				coEvents.push_back(e);
@@ -141,7 +143,7 @@ float CGameObject::GetDistance(CGameObject* obj)
 {
 	float l1, t1, r1, b1, l2, t2, r2, b2;
 	float x1, y1, x2, y2;
-	GetBoundingBox(l1, t1, r1, b1);
+	GetBoundingBox(l1, t1, r1, b1); 
 	obj->GetBoundingBox(l2, t2, r2, b2);
 	x1 = l1 + (r1 - l1) / 2;
 	y1 = t1 + (b1 - t1) / 2;

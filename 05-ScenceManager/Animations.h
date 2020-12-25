@@ -34,6 +34,7 @@ public:
 	int GetFrame() { return currentFrame; }
 	int GetLastFrameIndex() { return frames.size() - 1; };
 	void Render(float x, float y, int alpha = 255);
+	void RenderStopFrames(float x, float y,int alpha,  int stopFrameId);
 };
 
 typedef CAnimation *LPANIMATION;
