@@ -611,7 +611,7 @@ void CGame::Load(LPCWSTR gameFile)
 void CGame::SwitchScene(int scene_id)
 {
 	DebugOut(L"[INFO] Switching to scene %d\n", scene_id);
-	if (scene_id != 11 && scene_id != 12 && scene_id != 13) {
+	if (scene_id != 11 && scene_id != 12 && scene_id != 13 && current_scene != 11 && current_scene != 12 && current_scene != 13 && !(scene_id == 5 && current_scene == 9) && !(scene_id == 8 && current_scene == 10)) {
 		if(dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer())
 			player = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer();
 	}
