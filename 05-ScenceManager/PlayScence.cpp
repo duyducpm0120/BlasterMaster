@@ -624,7 +624,7 @@ void CPlayScene::Update(DWORD dt)
 		text->Update(dt);
 
 	if (id == 10) {
-		if (player->y <= 224)
+		if (this->player->y <= 224 && this->player->x > 870)
 			ReadyForBossAppear();
 	}
 }
@@ -730,8 +730,10 @@ void CPlayScene::ReadyForBossAppear()
 			CGame::GetInstance()->SetTileMapAlpha(255);
 	}
 	else {
-		CGame::GetInstance()->SetTileMapAlpha(255);
+		CGame::GetInstance()->SetTileMapAlpha(0);
 		BossAppearCount = 0;
+		CGame::GetInstance()->SetCamPos(32, 0);
+		player->SetPosition(148,192);
 	}
 }
 
