@@ -3,6 +3,7 @@
 #define BULLET_STATE_FLYING_DOWN 400
 #define BULLET_STATE_UNDEF 500
 #define BULLET_STATE_BOSS 500
+#define BULLET_STATE_ROLLING 600
 class CEnemyBullet:public CBullet
 {
 	float CaclDistance();

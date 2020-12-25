@@ -70,16 +70,23 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		
 	}
-	else if (state == BULLET_STATE_UNDEF|| state==BULLET_STATE_BOSS)
+	else if (state == BULLET_STATE_UNDEF || state == BULLET_STATE_BOSS)
 	{
 		if (this->CaclDistance() >= 100) this->visible = false;
 		else {
 			x += (dx/2);
 			y += (dy/2);
 		}
-			
-		
 	}
+	else if (state == BULLET_STATE_ROLLING)
+	{
+		if (this->CaclDistance() >= 200) this->visible = false;
+		else {
+			y += dy;
+			x += dx;
+		}
+	}
+	
 
 	else //Flying Down
 	{
@@ -108,6 +115,14 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			e->obj->TakeDamage(this->damage);				
 			this->visible = false;
 		}*/
+		 if (dynamic_cast<CBrick*>(e->obj)) {
+		if (state == BULLET_STATE_ROLLING && e->ny == 1) {
+			vy = 0;
+			vx = -0.05 * (-1) * (dt % 3);
+		}
+		else
+			this->visible = false;
+		}
 	}
 
 
@@ -137,6 +152,11 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			this->visible = false;*/
 		}
 		else if (dynamic_cast<CBrick*>(e->obj)) {
+			if (state == BULLET_STATE_ROLLING && e->ny==-1) {
+				vy = 0;
+				vx = -0.05 * (-1)*(dt%2);
+			}
+			else
 			this->visible = false;
 		}
 	}
