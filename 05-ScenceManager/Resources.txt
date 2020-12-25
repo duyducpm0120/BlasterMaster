@@ -320,11 +320,14 @@
 
 #SKULL
 #Walking left
-520001	62	527	80	548	40
-520002	42	530	60	548	40
-#Walking right
-520003	174	527	192	548	40
-520004	194	530	212	548	40
+#Walking left mouth closed
+520001	42	530	60	548	40
+#Walking left mouth opened
+520002	62	527	80	548	40
+#Walking right mouth closed
+520003	194	530	212	548	40
+#Walking right mouth opened
+520004	174	527	192	548	40
 
 #FACE
 #Walking up
@@ -614,10 +617,14 @@
 5108	510015	40	510016	40
 
 #---SKULL---
-#walking left 
-5201	520001	40	520002	40
-#walking left right
-5202	520003	40	520004	40
+#walking left closed
+5201	520001	40
+#walking left opened
+5202	520002	40
+#walking right closed
+5203	520003	40
+#walking righ opened
+5204	520004	40
 
 #---FACE---
 #Walking up
@@ -740,7 +747,7 @@
 51	5101	5102	5103	5104	5105	5106	5107	5108
 
 #SKULL
-52	5201	5202
+52	5201	5202	5203	5204
 
 #FACE
 53	5301	5302

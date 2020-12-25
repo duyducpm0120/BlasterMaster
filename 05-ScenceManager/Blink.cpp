@@ -14,7 +14,7 @@ void CBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	if (health <=0)visible = false;
 	BlinkCounter += dt;
-	if (BlinkCounter >= 1000)
+	if (BlinkCounter >= 500)
 	{
 		srand(rand()%100);
 		int n = (rand() % 3);
