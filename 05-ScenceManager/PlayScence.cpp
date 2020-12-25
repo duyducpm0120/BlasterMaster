@@ -26,8 +26,11 @@
 #include "Quadcannon.h"
 #include "Blink.h"
 #include "Eye.h"
+#include "Ball.h"
+#include "Jumper.h"
 #include "BossArm.h"
 #include "StupidHead.h"
+#include "Flyingclaw.h"
 #include "Choose.h"
 #include "Sound.h"
 #include "Text.h"
@@ -78,13 +81,16 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_ROBOT 50
 #define OBJECT_TYPE_SKULL 52
 #define OBJECT_TYPE_FACE 53
+#define OBJECT_TYPE_JUMPER 55
 #define OBJECT_TYPE_QUADCANNON 56
 #define OBJECT_TYPE_BLINK 57
 #define OBJECT_TYPE_EYE 58
+#define OBJECT_TYPE_BALL 60
+#define OBJECT_TYPE_FLYINGCLAW 62
 #define OBJECT_TYPE_STUPIDHEAD	63
 #define OBJECT_TYPE_CHOOSE	70
 #define MAX_SCENE_LINE 1024
-
+#define BOSS_APPEAR_TIME	200
 
 void CPlayScene::_ParseSection_TEXTURES(string line)
 {
@@ -304,6 +310,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_EYE: obj = new CEye();
 		dynamic_cast<CEye*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_FLYINGCLAW: obj = new CFlyingclaw();
+		dynamic_cast<CFlyingclaw*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_JUMPER: obj = new CJumper();
+		dynamic_cast<CJumper*>(obj)->SetStartPosition(x, y);
+		break;
+	case OBJECT_TYPE_BALL: obj = new CBall();
+		dynamic_cast<CBall*>(obj)->SetStartPosition(x, y);
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
@@ -607,12 +622,15 @@ void CPlayScene::Update(DWORD dt)
 	}
 	if(text!=NULL)
 		text->Update(dt);
+
+	if (id == 10) {
+		if (player->y <= 224)
+			ReadyForBossAppear();
+	}
 }
 
 void CPlayScene::Render()
 {
-
-
 	//Render Tiles
 	for (int i = 0; i < tiledMap.size(); i++)
 		tiledMap[i]->Render();
@@ -702,6 +720,19 @@ void CPlayScene::SetPlayer(CPlayer* player)
 {
 	this->player = player;
 }
-
+void CPlayScene::ReadyForBossAppear()
+{
+	BossAppearCount++;
+	if (BossAppearCount <= BOSS_APPEAR_TIME) {
+		if (BossAppearCount % 10 < 5)
+			CGame::GetInstance()->SetTileMapAlpha(100);
+		else
+			CGame::GetInstance()->SetTileMapAlpha(255);
+	}
+	else {
+		CGame::GetInstance()->SetTileMapAlpha(255);
+		BossAppearCount = 0;
+	}
+}
 
 

@@ -107,5 +107,5 @@ public:
 	void SetUntouchableTime(int time) { untouchableTime = time; };
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void SetSecondWeapon(int weapon) { this->secondWeapon = weapon; };
-	virtual void CallSecondWeapon() = 0;
+	virtual void CallSecondWeapon() {};
 };

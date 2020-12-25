@@ -10,7 +10,7 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		case OHSOPHIABULLET_TYPE_STRAIGHT: {
 			if (state == OHSOPHIABULLET_STATE_FLYING_LEFT) {
 				vy = 0;
-				vx = -OHSOPHIABULLET_SPEED;
+				vx = -OHSOPHIABULLET_SPEED*2/3;
 				if (x < startPositionX - OHSOPHIABULLET_FLYING_SPACE)
 				{
 					visible = false;
@@ -23,7 +23,7 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_RIGHT) {
 				vy = 0;
-				vx = OHSOPHIABULLET_SPEED;
+				vx = OHSOPHIABULLET_SPEED * 2 / 3;
 				if (x > startPositionX + OHSOPHIABULLET_FLYING_SPACE)
 				{
 					visible = false;
@@ -36,7 +36,7 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_UP) {
 				vx = 0;
-				vy = -OHSOPHIABULLET_SPEED;
+				vy = -OHSOPHIABULLET_SPEED * 2 / 3;
 				if (y < startPositionY - OHSOPHIABULLET_FLYING_SPACE)
 				{
 					visible = false;
@@ -49,7 +49,7 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_DOWN) {
 				vx = 0;
-				vy = OHSOPHIABULLET_SPEED;
+				vy = OHSOPHIABULLET_SPEED * 2 / 3;
 				if (y > startPositionY + OHSOPHIABULLET_FLYING_SPACE)
 				{
 					visible = false;

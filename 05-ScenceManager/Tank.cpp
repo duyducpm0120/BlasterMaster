@@ -78,6 +78,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (health <= 0)
 				visible = false;
 		}
+		
 		if (!dynamic_cast<CBrick*>(e->obj)) {
 
 				isJumping = true;
