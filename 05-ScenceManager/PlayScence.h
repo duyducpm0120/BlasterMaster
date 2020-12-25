@@ -41,6 +41,7 @@ protected:
 
 	void CallDestroyed(CGameObject* object);
 	Text* text;
+	int BossAppearCount = 0;
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
@@ -66,6 +67,7 @@ public:
 	void UpdateAutorunCamera();
 	CChoose* GetChoose(){ return choose; };
 	void CallNewText(int type, float x, float y);
+	void ReadyForBossAppear();
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:

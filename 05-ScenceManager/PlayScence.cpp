@@ -84,7 +84,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_STUPIDHEAD	63
 #define OBJECT_TYPE_CHOOSE	70
 #define MAX_SCENE_LINE 1024
-
+#define BOSS_APPEAR_TIME	200
 
 void CPlayScene::_ParseSection_TEXTURES(string line)
 {
@@ -607,12 +607,15 @@ void CPlayScene::Update(DWORD dt)
 	}
 	if(text!=NULL)
 		text->Update(dt);
+
+	if (id == 10) {
+		if (player->y <= 224)
+			ReadyForBossAppear();
+	}
 }
 
 void CPlayScene::Render()
 {
-
-
 	//Render Tiles
 	for (int i = 0; i < tiledMap.size(); i++)
 		tiledMap[i]->Render();
@@ -702,6 +705,19 @@ void CPlayScene::SetPlayer(CPlayer* player)
 {
 	this->player = player;
 }
-
+void CPlayScene::ReadyForBossAppear()
+{
+	BossAppearCount++;
+	if (BossAppearCount <= BOSS_APPEAR_TIME) {
+		if (BossAppearCount % 10 < 5)
+			CGame::GetInstance()->SetTileMapAlpha(100);
+		else
+			CGame::GetInstance()->SetTileMapAlpha(255);
+	}
+	else {
+		CGame::GetInstance()->SetTileMapAlpha(255);
+		BossAppearCount = 0;
+	}
+}
 
 

@@ -53,6 +53,8 @@ class CGame
 	int playerHealth = 7;
 	int playerPower = 2;
 
+	int TileMapAlpha = 255;
+
 	CPlayer* player;
 
 	//New Stuff
@@ -78,6 +80,8 @@ public:
 		enableRocket = dynamic_cast<CTank*>(player)->GetEnableRocket();
 		enableThunder = dynamic_cast<CTank*>(player)->GetEnableThunder();
 	};
+	int GetTileMapAlpha() { return TileMapAlpha; };
+	void SetTileMapAlpha(int alpha) { this->TileMapAlpha = alpha; };
 
 public:
 	void InitKeyboard();
