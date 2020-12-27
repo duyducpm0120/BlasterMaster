@@ -16,6 +16,8 @@ HUD::~HUD()
 void HUD::Update(float x, float y, int currentPlayerHealth, int currentGunHealth)
 {
 	CGame* game = CGame::GetInstance();
+	if (game->GetCurrentSceneId() == 12 || game->GetCurrentSceneId() == 13)
+		return;
 	if (dynamic_cast<CPlayScene*>(game->GetCurrentScene())->GetPlayer() == NULL)
 		return;
 	this->x = x;
@@ -30,6 +32,8 @@ void HUD::Update(float x, float y, int currentPlayerHealth, int currentGunHealth
 void HUD::Render(CPlayer* playerInfo)
 {
 	CGame* game = CGame::GetInstance();
+	if (game->GetCurrentSceneId() == 12 || game->GetCurrentSceneId() == 13)
+		return;
 	if (dynamic_cast<CPlayScene*>(game->GetCurrentScene())->GetPlayer() == NULL)
 		return;
 	UIanimationSet->at(HEALTH_TYPE_GUN_NULL)->Render(x, y + ARTICULAR_GUNPOWER_HEALTHBAR_Y,255);

@@ -15,6 +15,7 @@
 #include "OHSophia.h"
 #include "Choose.h"
 #include "Text.h"
+#include "Firework.h"
 class CPlayScene: public CScene
 {
 protected: 
@@ -39,6 +40,8 @@ protected:
 
 	void CallDestroyed(CGameObject* object);
 	Text* text;
+	vector <Firework*> fireworks;
+
 	int BossAppearCount = 0;
 	int EndingCount = 0;
 public: 
@@ -67,6 +70,7 @@ public:
 	void ReadyForBossAppear();
 	void ReadyForEnding();
 	void SetEndingCount() { EndingCount = 1; };
+	void AddFirework(Firework* firework) { fireworks.push_back(firework); };
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:

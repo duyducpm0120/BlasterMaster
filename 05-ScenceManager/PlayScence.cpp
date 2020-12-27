@@ -35,6 +35,7 @@
 #include "Sound.h"
 #include "Text.h"
 #include "Thunder.h"
+
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -91,7 +92,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_CHOOSE	70
 #define MAX_SCENE_LINE 1024
 #define BOSS_APPEAR_TIME	200
-#define ENDING_COUNT_TIME	600
+#define ENDING_COUNT_TIME	200
 
 void CPlayScene::_ParseSection_TEXTURES(string line)
 {
@@ -511,7 +512,7 @@ void CPlayScene::Load(vector<LPGAMEOBJECT> objects)
 
 void CPlayScene::Update(DWORD dt)
 {
-	
+
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	if (player != NULL) {
@@ -532,6 +533,7 @@ void CPlayScene::Update(DWORD dt)
 	}
 	CGame* game = CGame::GetInstance();
 	grid->Clear();
+
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
@@ -624,15 +626,22 @@ void CPlayScene::Update(DWORD dt)
 		CGame* game = CGame::GetInstance();
 		game->GetCamPosition(x, y);
 		hud->Update(x + 5, y, CGame::GetInstance()->GetPlayer()->GetHealth(), CGame::GetInstance()->GetPlayer()->GetDamage());
-		ReadyForEnding();
 	}
 	if(text!=NULL)
 		text->Update(dt);
+	if (fireworks.size() != 0) {
+		for (int i = 0; i < fireworks.size(); i++) {
+			fireworks.at(i)->Update(dt);
+		}
+	}
 
 	if (id == 10) {
 		if (this->player->y <= 224 && this->player->x > 870)
 			ReadyForBossAppear();
 	}
+	if(EndingCount !=0)
+		ReadyForEnding();
+
 }
 
 void CPlayScene::Render()
@@ -654,6 +663,10 @@ void CPlayScene::Render()
 		hud->Render(CGame::GetInstance()->GetPlayer());
 	if (text != NULL)
 		text->Render();
+	if (fireworks.size() != 0) {
+		for (int i = 0; i < fireworks.size(); i++)
+			fireworks.at(i)->Render();
+	}
 }
 
 void CPlayScene::UpdateAutorunCamera()
@@ -745,8 +758,7 @@ void CPlayScene::ReadyForBossAppear()
 
 void CPlayScene::ReadyForEnding()
 {
-	if (EndingCount != 0)
-		EndingCount++;
+	EndingCount++;
 	if (EndingCount == ENDING_COUNT_TIME)
 		CGame::GetInstance()->SwitchScene(13);
 }

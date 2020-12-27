@@ -1,6 +1,7 @@
 #include "Bullet.h"
 #include "Destroyed.h"
 #include "PlayScence.h"
+#include "Boss.h"
 
 void CBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -76,6 +77,8 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if ((e->obj)->IsEnemy()) {
 			e->obj->TakeDamage(this->damage);				//Destroy every enemy
 			this->visible = false;
+			if (dynamic_cast <CBoss*>(e->obj))
+				dynamic_cast <CBoss*>(e->obj)->SetState(BOSS_STATE_INJURED);
 		}
 		else if (dynamic_cast<CBrick*>(e->obj)) {
 			this->visible = false;
@@ -106,6 +109,8 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (e->obj->IsEnemy()) {
 				e->obj->TakeDamage(this->damage);				//Destroy every enemy
 				this->visible = false;
+				if (dynamic_cast <CBoss*>(e->obj))
+					dynamic_cast <CBoss*>(e->obj)->SetState(BOSS_STATE_INJURED);
 			}
 			else if (dynamic_cast<CBrick*>(e->obj)) {
 				this->visible = false;

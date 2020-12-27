@@ -6,6 +6,7 @@
 #include "IntroScene.h"
 #include "PlayScence.h"
 #include "Sound.h"
+#include "Boss.h"
 #define MAX_RESOURCES_LINE	1024
 
 #define RESOURCES_SECTION_UNKNOWN			-1
@@ -15,7 +16,8 @@
 #define RESOURCE_SECTION_ANIMATION_SETS	5
 
 CGame * CGame::__instance = NULL;
-
+int CBoss::ani = 0;
+int CBoss::alpha = 255;
 /*
 	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for 
 	rendering 2D images
@@ -203,7 +205,6 @@ void CGame::ProcessKeyboard()
 			keyHandler->OnKeyUp(KeyCode);
 	}
 }
-
 void CGame::LoadSound()
 {
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (5).wav", "PlayerBulletHitBrick");
@@ -615,6 +616,7 @@ void CGame::SwitchScene(int scene_id)
 		if (dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer())
 		{
 			player = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer();
+			DebugOut(L"Get player done \n");
 		}
 
 	}
@@ -622,6 +624,7 @@ void CGame::SwitchScene(int scene_id)
 		player = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer();
 		dynamic_cast<CPlayScene*>(scenes[scene_id])->GetPlayer()->health = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer()->GetHealth();
 		dynamic_cast<CPlayScene*>(scenes[scene_id])->GetPlayer()->damage = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer()->GetDamage();
+		DebugOut(L"Get player done \n");
 	}
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];

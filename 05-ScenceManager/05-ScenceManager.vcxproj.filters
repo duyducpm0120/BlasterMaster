@@ -164,6 +164,7 @@
     <ClCompile Include="Flyingclaw.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Firework.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -325,6 +326,7 @@
     <ClInclude Include="Flyingclaw.h">
       <Filter>Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Firework.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemies">

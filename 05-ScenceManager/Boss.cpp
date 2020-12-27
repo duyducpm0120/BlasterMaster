@@ -4,18 +4,21 @@
 #include "PlayScence.h"
 #include "EnemyBullet.h"
 #include "Vec2.h"
+#include "Firework.h"
+#include <iostream>
+#include <random>
 CBoss::CBoss() :
 	BigClawLeft(18),
 	BigClawRight(19)
 	
 {
-	
+	/*ani = 0;
+	alpha = 255;*/
 	damage = 1;
 	health = 30;
 	nx = -1;
-	SetState(Boss_STATE_WALKING_LEFT);
-	vx = -Boss_WALKING_SPEED;
-	vy = Boss_WALKING_SPEED;
+	SetState(BOSS_STATE_WALKING);
+	injured_state_time = 0;
 	Init();
 }
 
@@ -24,25 +27,33 @@ void CBoss::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	isEnemy = true;
 	left = x;
 	top = y;
-	right = x + Boss_BBOX_WIDTH;
+	right = x + BOSS_BBOX_WIDTH;
 
-	if (state == Boss_STATE_DIE)
-		bottom = y + Boss_BBOX_HEIGHT_DIE;
+	if (state == BOSS_STATE_DIE)
+		bottom = y + BOSS_BBOX_HEIGHT_DIE;
 	else
-		bottom = y + Boss_BBOX_HEIGHT;
+		bottom = y + BOSS_BBOX_HEIGHT;
 }
 
 void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+
+	
 	CGameObject::Update(dt, coObjects);
 
 	if (health <= 0) {
-		this->visible = false;
-		dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->SetEndingCount();
+		SetState(BOSS_STATE_DIE);			//Handle Die state
 	}
-	//
-	// TO-DO: make sure Boss can interact with the world and to each of them too!
-	// 
+
+	if (state == BOSS_STATE_DIE) {
+		HandleDieState();
+		return;
+	}
+
+	if (injured_state_time != 0) {
+		HandleInjuredState();				//Handle Injured state
+		//return;
+	}
 
 	x += dx;
 	y += dy;
@@ -50,23 +61,19 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (vx < 0 && x < (startX - 100)) {
 		x = startX - 100;
-		SetState(Boss_STATE_WALKING_RIGHT);
-		nx = 1;
-		vx = Boss_WALKING_SPEED;
+		vx = BOSS_WALKING_SPEED;
 	}
 	if (vx > 0 && x > startX) {
 		x = startX; vx = -vx;
-		nx = -1;
-		vx = -Boss_WALKING_SPEED;
-		SetState(Boss_STATE_WALKING_LEFT);
+		vx = -BOSS_WALKING_SPEED;
 	}
 	if (vy < 0 && y < (startY - 25)) {
 		y = startY - 25;
-		vy = Boss_WALKING_SPEED;
+		vy = BOSS_WALKING_SPEED;
 	}
 	if (vy > 0 && y > startY) {
 		y = startY;
-		vy = -Boss_WALKING_SPEED;
+		vy = -BOSS_WALKING_SPEED;
 	}
 	
 	updateTarget1();
@@ -148,7 +155,7 @@ void CBoss::Render()
 {
 	
 
-	animation_set->at(0)->Render(x,y);
+	animation_set->at(ani)->Render(x,y,alpha);
 
 	/*if (state == Boss_STATE_DIE) {
 		return;
@@ -174,17 +181,19 @@ void CBoss::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case Boss_STATE_DIE:
-		//y += Boss_BBOX_HEIGHT - Boss_BBOX_HEIGHT_DIE + 1;
-		//vx = 0;
-		//vy = 0;
+	case BOSS_STATE_DIE:
+		ani = BOSS_ANI_DIE;
 		break;
-	case Boss_STATE_WALKING_LEFT:
-
-		break;
-	case Boss_STATE_WALKING_RIGHT:
+	case BOSS_STATE_WALKING:
+		ani = BOSS_ANI_WALKING;
 		nx = 1;
-		vx = Boss_WALKING_SPEED;
+		vx = -BOSS_WALKING_SPEED;
+		vy = BOSS_WALKING_SPEED;
+		break;
+	case BOSS_STATE_INJURED:
+		ani = BOSS_ANI_INJURED;
+		injured_state_time = 1;
+		break;
 	}
 }
 
@@ -205,6 +214,50 @@ void CBoss::getRightClawPos(float& x, float& y)
 	x = this->BigClawRight.x;
 	y = this->BigClawRight.y;
 }
+
+void CBoss::HandleInjuredState()
+{
+	injured_state_time++;
+	if (injured_state_time <= INJURED_STATE_TIME) {
+		ani = BOSS_ANI_INJURED;
+	}
+	else
+	{
+		injured_state_time = 0;
+		ani = BOSS_ANI_WALKING;
+		SetState(BOSS_STATE_WALKING);
+	}
+}
+
+void CBoss::HandleDieState()
+{
+
+	if (numOfFirework <= NUM_OF_FIREWORK_APPEAR)
+	{
+		Firework* firework = new Firework();	
+
+
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_int_distribution<> dis(-50, 50);
+		float randomSpace1 = dis(gen);
+		float randomSpace2 = dis(gen);			//Set random position for Firework
+		DebugOut(L"Random space: %f \n", randomSpace1);
+		DebugOut(L"Random space: %f \n", randomSpace2);
+		float posX, posY;	
+		posX = x + randomSpace1;
+		posY = y + randomSpace2;		
+		firework->Setposition(posX,posY);
+		dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->AddFirework(firework);
+		numOfFirework++;
+	}
+	alpha--;
+	if (alpha == 0) {
+		this->visible = false;
+		//dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->SetEndingCount(); //Call EndingScene
+	}
+}
+
 
 void CBoss::updateTarget1()
 {
@@ -413,7 +466,12 @@ void CBoss::BossClawSection::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBoss::BossClawSection::Render()
 {
-	animation_set->at(0)->Render(x, y);
+	int claw_ani;
+	if (ani == 2)
+		claw_ani = 0;
+	else
+		claw_ani = ani;
+	animation_set->at(claw_ani)->Render(x, y, alpha);
 
 }
 

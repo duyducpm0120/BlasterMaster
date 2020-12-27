@@ -1,5 +1,6 @@
 #include "OHSophiaBullet.h"
 #include "Brick.h"
+#include "Boss.h"
 
 void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -172,6 +173,8 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if ((e->obj)->IsEnemy()) {
 			e->obj->TakeDamage(this->damage);				//Destroy every enemy
 			this->visible = false;
+			if (dynamic_cast <CBoss*>(e->obj))
+				dynamic_cast <CBoss*>(e->obj)->SetState(BOSS_STATE_INJURED);
 
 		}
 		else if (dynamic_cast<CBrick*>(e->obj)) {
@@ -204,6 +207,8 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (e->obj->IsEnemy()) {
 			e->obj->TakeDamage(this->damage);				//Destroy every enemy
 			this->visible = false;
+			if (dynamic_cast <CBoss*>(e->obj))
+				dynamic_cast <CBoss*>(e->obj)->SetState(BOSS_STATE_INJURED);
 		}
 		else if (dynamic_cast<CBrick*>(e->obj)) {
 			this->visible = false;

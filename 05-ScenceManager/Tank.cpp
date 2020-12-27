@@ -197,7 +197,6 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];	
 	HandleUntouchableTime();
-	DebugOut(L"enathunder: %d \n", enableThunder);
 }
 
 void CTank::Render()
