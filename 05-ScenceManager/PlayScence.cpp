@@ -89,6 +89,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_BALL 60
 #define OBJECT_TYPE_FLYINGCLAW 62
 #define OBJECT_TYPE_STUPIDHEAD	63
+#define OBJECT_TYPE_ITEM	64
 #define OBJECT_TYPE_CHOOSE	70
 #define MAX_SCENE_LINE 1024
 #define BOSS_APPEAR_TIME	200
@@ -277,6 +278,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CAutoRunPortal(x, y, r, b, targetx,targety);
 	}
 	break;
+	case OBJECT_TYPE_ITEM:
+	{	int t = atoi(tokens[4].c_str());
+		obj = new CItem(t); 
+	}
+		break;
 	case OBJECT_TYPE_WORM: obj = new CWorm();
 		dynamic_cast<CWorm*>(obj)->SetStartPosition(x, y);
 		break;

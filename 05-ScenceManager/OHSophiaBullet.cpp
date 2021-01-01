@@ -66,7 +66,7 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		case OHSOPHIABULLET_TYPE_ROUNDED: {
 			if (state == OHSOPHIABULLET_STATE_FLYING_LEFT) {
 				angle += ALPHA* direct * dt ;
-				radius_increase += 0.1;
+				radius_increase += 0.2;
 				if (direct == 1) {
 					x = point1.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
 					y = point1.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);
@@ -80,7 +80,7 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_RIGHT) {
 				angle += ALPHA * direct * dt;
-				radius_increase+=0.1;
+				radius_increase+=0.2;
 				if (direct == -1) {
 					x = point1.x + (OHSOPHIA_RADIUS_SPACE + radius_increase) * cos(angle);
 					y = point1.y + (OHSOPHIA_RADIUS_SPACE + radius_increase) * sin(angle);
@@ -94,7 +94,7 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_UP) {
 				angle += ALPHA * direct * dt;
-				radius_increase += 0.1;
+				radius_increase += 0.2;
 				if (direct == -1) {
 					x = point4.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
 					y = point4.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);
@@ -107,7 +107,7 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (state == OHSOPHIABULLET_STATE_FLYING_DOWN) {
 				angle += ALPHA * direct * dt;
-				radius_increase += 0.1;
+				radius_increase += 0.2;
 				if (direct == -1) {
 					x = point2.x + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * cos(angle);
 					y = point2.y + (OHSOPHIA_RADIUS_SPACE + radius_increase ) * sin(angle);

@@ -669,14 +669,12 @@ void CGame::SwitchToSelectWeaponScene()
 	}
 }
 
-void CGame::SwitchToBlankScene(int nextSceneId)
+void CGame::SwitchToScene(int nextSceneId)
 {
 	dynamic_cast<BlankScene*>(scenes[14])->SetNextSceneId(nextSceneId);
 	dynamic_cast<BlankScene*>(scenes[14])->SetLastSceneId(current_scene);
 	current_scene = 14;
 	SetCamPos(0, 0);
-	
-
 }
 
 void CGame::IntroDraw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)

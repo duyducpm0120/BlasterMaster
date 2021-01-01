@@ -279,7 +279,7 @@ void IntroScene::Update(DWORD dt)
 
 	if (setAnimation == Intro_Done) {
 		Unload();
-		CGame::GetInstance()->SwitchToBlankScene(1);
+		CGame::GetInstance()->SwitchToScene(1);
 	}
 	
 #pragma region camera

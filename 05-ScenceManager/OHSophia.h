@@ -60,6 +60,7 @@ class COHSophia : public CPlayer
 	bool isJumping;
 	bool enableRocket;
 	int bulletLevel;
+	bool bulletFullPower;
 public:
 	bool GetEnableRocket() { return  enableRocket; };
 	COHSophia(float x = 0.0f, float y = 0.0f);
@@ -76,6 +77,6 @@ public:
 	void Reset();
 	void HandleUntouchableTime();
 	void CallSecondWeapon();
-
+	void Shot();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };
