@@ -12,6 +12,7 @@
 #include "Scence.h"
 #include "Player.h"
 #include "Tank.h"
+#include "BlankScene.h"
 
 using namespace std;
 
@@ -66,11 +67,8 @@ public:
 	int* GetHealth() { return &playerHealth; };
 	int* GetPower() { return &playerPower; };
 
-	void SetPlayerHealth(int health) { playerHealth = health; };
-	void SetPlayerPower(int power) { playerPower = power; };
 	void LoadResources();
 	void GetCamPosition(float& x, float& y) { x = cam_x; y = cam_y; };
-	void SwitchToSelectWeaponScene();
 	void SetPlayer(CPlayer* player) { this->player = player; };
 	CPlayer* GetPlayer() { return player; };
 	void IntroDraw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
@@ -82,6 +80,7 @@ public:
 	};
 	int GetTileMapAlpha() { return TileMapAlpha; };
 	void SetTileMapAlpha(int alpha) { this->TileMapAlpha = alpha; };
+	void SetCurrentSceneId(int id) { current_scene = id; }
 
 public:
 	void InitKeyboard();
@@ -96,6 +95,8 @@ public:
 	void Load(LPCWSTR gameFile);
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void SwitchScene(int scene_id);
+	void SwitchToSelectWeaponScene();
+	void SwitchToBlankScene(int nextSceneId);
 
 	int GetScreenWidth() { return screen_width; }
 	int GetScreenHeight() { return screen_height; }

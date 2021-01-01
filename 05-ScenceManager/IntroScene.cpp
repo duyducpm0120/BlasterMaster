@@ -279,7 +279,7 @@ void IntroScene::Update(DWORD dt)
 
 	if (setAnimation == Intro_Done) {
 		Unload();
-		CGame::GetInstance()->SwitchScene(1);
+		CGame::GetInstance()->SwitchToBlankScene(1);
 	}
 	
 #pragma region camera
@@ -376,11 +376,11 @@ void IntroScene::Render()
 			intro_ani_set->at(Endding_Hair)->IntroRender(1, 410, 88, alpha);
 			break;
 		case 2:
-			intro_ani_set->at(Endding_Background2)->IntroRender(1, 250, 0, alpha);
+			intro_ani_set->at(Endding_Background2)->IntroRender(1, 200, 0, alpha);
 			if(this->textY<272+326)
 				intro_ani_set->at(Endding_Text1)->IntroRender(1, 360, 272 - this->textY, alpha);
 			else
-				intro_ani_set->at(Endding_Text2)->IntroRender(1, 360, 0, alpha);
+				intro_ani_set->at(Endding_Text2)->IntroRender(1, 300, -20, alpha);
 			break;
 		default:
 			break;

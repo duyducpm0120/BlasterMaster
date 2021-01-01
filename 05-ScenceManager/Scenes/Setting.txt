@@ -15,3 +15,4 @@ start	1
 11	Scenes/sceneSelectWeapons.txt
 12	Scenes/Intro_Scene.txt
 13 	Scenes/Ending.txt
+14	Scenes/scene_Blank.txt

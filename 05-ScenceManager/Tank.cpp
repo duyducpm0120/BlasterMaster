@@ -113,7 +113,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
 				CGame* game = CGame::GetInstance();
-				game->SwitchScene(p->GetSceneId());
+				game->SwitchToBlankScene(p->GetSceneId());
 			}
 			else if (dynamic_cast<CBrick*>(e->obj)) {
 				if (e->ny != -1)

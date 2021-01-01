@@ -7,6 +7,7 @@
 #include "PlayScence.h"
 #include "Sound.h"
 #include "Boss.h"
+#include "BlankScene.h"
 #define MAX_RESOURCES_LINE	1024
 
 #define RESOURCES_SECTION_UNKNOWN			-1
@@ -410,7 +411,7 @@ void CGame::_ParseSection_SCENES(string line)
 	if (tokens.size() < 2) return;
 	int id = atoi(tokens[0].c_str());
 	LPCWSTR path = ToLPCWSTR(tokens[1]);
-	if (id != 12 && id != 13) {
+	if (id != 12 && id != 13 && id!=14) {
 		LPSCENE scene = new CPlayScene(id, path);
 		scenes[id] = scene;
 	}
@@ -422,6 +423,11 @@ void CGame::_ParseSection_SCENES(string line)
 	else if (id == 13)
 	{
 		LPSCENE scene = new IntroScene(id, path);
+		scenes[id] = scene;
+	}
+	else if (id == 14)
+	{
+		LPSCENE scene = new BlankScene(id, path);
 		scenes[id] = scene;
 	}
 }
@@ -612,7 +618,7 @@ void CGame::Load(LPCWSTR gameFile)
 void CGame::SwitchScene(int scene_id)
 {
 	DebugOut(L"[INFO] Switching to scene %d\n", scene_id);
-	if (scene_id != 11 && scene_id != 12 && scene_id != 13 && current_scene != 11 && current_scene != 12 && current_scene != 13 && !(scene_id == 5 && current_scene == 9) && !(scene_id == 8 && current_scene == 10)) {
+	if (scene_id != 11 && scene_id != 12 && scene_id != 13 && scene_id != 14 && current_scene != 11 && current_scene != 12 && current_scene != 13 && !(scene_id == 5 && current_scene == 9) && !(scene_id == 8 && current_scene == 10)) {
 		if (dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer())
 		{
 			player = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer();
@@ -661,6 +667,16 @@ void CGame::SwitchToSelectWeaponScene()
 			dynamic_cast<CPlayScene*>(scenes[HolderSceneId])->GetPlayer()->SetSecondWeapon(WEAPONS_TYPE_ROCKET);
 		SwitchScene(HolderSceneId);
 	}
+}
+
+void CGame::SwitchToBlankScene(int nextSceneId)
+{
+	dynamic_cast<BlankScene*>(scenes[14])->SetNextSceneId(nextSceneId);
+	dynamic_cast<BlankScene*>(scenes[14])->SetLastSceneId(current_scene);
+	current_scene = 14;
+	SetCamPos(0, 0);
+	
+
 }
 
 void CGame::IntroDraw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)

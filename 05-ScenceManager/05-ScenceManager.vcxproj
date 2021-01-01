@@ -129,6 +129,7 @@
     <ClCompile Include="AutoRunPortal.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Bee.cpp" />
+    <ClCompile Include="BlankScene.cpp" />
     <ClCompile Include="Blink.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossArm.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="AutoRunPortal.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Bee.h" />
+    <ClInclude Include="BlankScene.h" />
     <ClInclude Include="Blink.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="BossArm.h" />

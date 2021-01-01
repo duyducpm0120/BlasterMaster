@@ -394,7 +394,7 @@ void CPlayScene::CallDestroyed(CGameObject* object)
 			objects.push_back(destroyed);
 		}
 		else if (!dynamic_cast<CItem*>(object)) {
-			if (object->IsEnemy() == true && !dynamic_cast<CButterfly*>(object) && !dynamic_cast<CStupidHead*>(object))
+			if (object->IsEnemy() == true && !dynamic_cast<CButterfly*>(object) && !dynamic_cast<CStupidHead*>(object) && !dynamic_cast<BossArm*>(object) && !dynamic_cast<CBoss*>(object))
 			{
 				srand(time(NULL));
 				int n = rand() % 3;

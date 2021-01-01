@@ -15,7 +15,7 @@ CBoss::CBoss() :
 	/*ani = 0;
 	alpha = 255;*/
 	damage = 1;
-	health = 30;
+	health = 300;
 	nx = -1;
 	SetState(BOSS_STATE_WALKING);
 	injured_state_time = 0;
@@ -254,7 +254,8 @@ void CBoss::HandleDieState()
 	alpha--;
 	if (alpha == 0) {
 		this->visible = false;
-		//dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->SetEndingCount(); //Call EndingScene
+		dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->ClearFireworks();
+		dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->SetEndingCount(); //Call EndingScene
 	}
 }
 

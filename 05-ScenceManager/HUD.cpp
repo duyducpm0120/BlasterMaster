@@ -16,7 +16,7 @@ HUD::~HUD()
 void HUD::Update(float x, float y, int currentPlayerHealth, int currentGunHealth)
 {
 	CGame* game = CGame::GetInstance();
-	if (game->GetCurrentSceneId() == 12 || game->GetCurrentSceneId() == 13)
+	if (game->GetCurrentSceneId() == 12 || game->GetCurrentSceneId() == 13 || game->GetCurrentSceneId() == 14)
 		return;
 	if (dynamic_cast<CPlayScene*>(game->GetCurrentScene())->GetPlayer() == NULL)
 		return;
@@ -32,7 +32,7 @@ void HUD::Update(float x, float y, int currentPlayerHealth, int currentGunHealth
 void HUD::Render(CPlayer* playerInfo)
 {
 	CGame* game = CGame::GetInstance();
-	if (game->GetCurrentSceneId() == 12 || game->GetCurrentSceneId() == 13)
+	if (game->GetCurrentSceneId() == 12 || game->GetCurrentSceneId() == 13 || game->GetCurrentSceneId() == 14)
 		return;
 	if (dynamic_cast<CPlayScene*>(game->GetCurrentScene())->GetPlayer() == NULL)
 		return;

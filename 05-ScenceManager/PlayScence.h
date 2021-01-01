@@ -52,7 +52,7 @@ public:
 	virtual void Render();
 	virtual void Unload();
 	CTank* GetTank() { return this->tank; };
-	CPlayer * GetPlayer() { return player; } 
+	CPlayer * GetPlayer() { return player; }
 	int GetPlayerHealth() { return *playerHealth; };
 	int GetPlayerPower() { return *playerPower; };
 	bool IsCameraAutorun() { return isCameraAutorun; };
@@ -71,6 +71,7 @@ public:
 	void ReadyForEnding();
 	void SetEndingCount() { EndingCount = 1; };
 	void AddFirework(Firework* firework) { fireworks.push_back(firework); };
+	void ClearFireworks() { fireworks.clear(); };
 	//friend class CPlayScenceKeyHandler;
 
 	//New stuff:

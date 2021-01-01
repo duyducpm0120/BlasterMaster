@@ -165,6 +165,7 @@
       <Filter>Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Firework.cpp" />
+    <ClCompile Include="BlankScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -327,6 +328,7 @@
       <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Firework.h" />
+    <ClInclude Include="BlankScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemies">
