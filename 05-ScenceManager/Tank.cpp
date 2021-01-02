@@ -486,6 +486,7 @@ void CTank::CallSecondWeapon()
 			thunder->SetPosition(this->x + tank_width / 2, this->y + tank_height); LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(71);
 			thunder->SetAnimationSet(ani_set);
 			dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(thunder);
+			Sound::GetInstance()->Play("Thunder", 0, 1);
 		}
 	}
 }

@@ -233,10 +233,18 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	}
 
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	if (KeyCode == DIK_A) {
+		if (player->visible == false) {
+			player->visible = true;
+			player->health = 3;
+			objects->push_back(player);
+			DebugOut(L"Pushback player again.");
+		}
+	}
 
 	if (dynamic_cast<CTank*>(player)) {				 // if player is tank
 		switch (KeyCode)
-		{		
+		{	
 		case DIK_W:
 			if (dynamic_cast<CTank*> (player))
 			{
@@ -274,12 +282,6 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 					player->SetState(TANK_STATE_JUMP_IDLE_RIGHT);
 				Sound::GetInstance()->Play("PlayerJump", 0, 1);
 			}
-			break;
-		case DIK_A:
-			player->SetState(TANK_STATE_IDLE_RIGHT);
-			player->visible = true;
-			player->SetPosition(100.0f, 0.0f);
-			player->SetSpeed(0, 0);
 			break;
 		case DIK_UP:
 			int width2, height2;
@@ -342,157 +344,6 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		case DIK_Z:
 			dynamic_cast<COHSophia*>(player)->Shot();
 			break;
-		case DIK_X:
-			if (player->state == OHSOPHIA_STATE_WALKING_LEFT || player->state == OHSOPHIA_STATE_IDLE_LEFT)
-			{
-				COHSophiaBullet* bullet;
-				for (int i = 0; i < 3; i++) {
-
-					if (i == 0) {
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_LEFT, OHSOPHIABULLET_TYPE_STRAIGHT, 1);
-					}
-					else if (i == 1)
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_LEFT, OHSOPHIABULLET_TYPE_ROUNDED, 1);
-					else
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_LEFT, OHSOPHIABULLET_TYPE_ROUNDED, -1);
-					float x1, y1;
-					player->GetPosition(x1, y1);
-					bullet->SetPosition(x1 - OHSOPHIABULLET_BBOX_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
-					bullet->SetStartPositon(x1 - OHSOPHIABULLET_BBOX_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
-					bullet->SetAnchorPoint();
-					LPANIMATION_SET ani_set = animation_sets->Get(21);
-					bullet->SetAnimationSet(ani_set);
-					objects->push_back(bullet);
-				}
-			}
-			else if (player->state == OHSOPHIA_STATE_WALKING_RIGHT || player->state == OHSOPHIA_STATE_IDLE_RIGHT)
-			{
-				COHSophiaBullet* bullet;
-				for (int i = 0; i < 3; i++) {
-
-					if (i == 0) {
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_RIGHT, OHSOPHIABULLET_TYPE_STRAIGHT, 1);
-					}
-					else if (i == 1)
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_RIGHT, OHSOPHIABULLET_TYPE_ROUNDED, 1);
-					else
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_RIGHT, OHSOPHIABULLET_TYPE_ROUNDED, -1);
-					float x1, y1;
-					player->GetPosition(x1, y1);
-					bullet->SetPosition(x1 + OHSOPHIA_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
-					bullet->SetStartPositon(x1 + OHSOPHIA_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
-					bullet->SetAnchorPoint();
-					LPANIMATION_SET ani_set = animation_sets->Get(21);
-					bullet->SetAnimationSet(ani_set);
-					objects->push_back(bullet);
-				}
-			}
-			else if (player->state == OHSOPHIA_STATE_WALKING_UP || player->state == OHSOPHIA_STATE_IDLE_UP) {
-
-				COHSophiaBullet* bullet;
-				for (int i = 0; i < 3; i++) {
-
-					if (i == 0) {
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_UP, OHSOPHIABULLET_TYPE_STRAIGHT, 1);
-					}
-					else if (i == 1)
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_UP, OHSOPHIABULLET_TYPE_ROUNDED, 1);
-					else
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_UP, OHSOPHIABULLET_TYPE_ROUNDED, -1);
-					float x1, y1;
-					player->GetPosition(x1, y1);
-					bullet->SetPosition(x1 + OHSOPHIA_WIDTH / 4, y1);
-					bullet->SetStartPositon(x1 + OHSOPHIA_WIDTH / 4, y1);
-					bullet->SetAnchorPoint();
-					LPANIMATION_SET ani_set = animation_sets->Get(21);
-					bullet->SetAnimationSet(ani_set);
-					objects->push_back(bullet);
-				}
-			}
-			else if (player->state == OHSOPHIA_STATE_WALKING_DOWN || player->state == OHSOPHIA_STATE_IDLE_DOWN) {
-				COHSophiaBullet* bullet;
-				for (int i = 0; i < 3; i++) {
-
-					if (i == 0) {
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_DOWN, OHSOPHIABULLET_TYPE_STRAIGHT, 1);
-					}
-					else if (i == 1)
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_DOWN, OHSOPHIABULLET_TYPE_ROUNDED, 1);
-					else
-						bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_DOWN, OHSOPHIABULLET_TYPE_ROUNDED, -1);
-					float x1, y1;
-					player->GetPosition(x1, y1);
-					bullet->SetPosition(x1 + OHSOPHIA_WIDTH / 4, y1 + OHSOPHIA_HEIGHT);
-					bullet->SetStartPositon(x1 + OHSOPHIA_WIDTH / 4, y1 + OHSOPHIA_HEIGHT);
-					bullet->SetAnchorPoint();
-					LPANIMATION_SET ani_set = animation_sets->Get(21);
-					bullet->SetAnimationSet(ani_set);
-					objects->push_back(bullet);
-				}
-
-			}
-			break;
-		case DIK_C:
-			if (player->state == OHSOPHIA_STATE_WALKING_LEFT || player->state == OHSOPHIA_STATE_IDLE_LEFT)
-			{
-				COHSophiaBullet* bullet;
-
-				bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_LEFT, OHSOPHIABULLET_TYPE_SIN, 1);
-				float x1, y1;
-				player->GetPosition(x1, y1);
-				bullet->SetPosition(x1 - OHSOPHIABULLET_BBOX_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
-				bullet->SetStartPositon(x1 - OHSOPHIABULLET_BBOX_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
-				bullet->SetAnchorPoint();
-				LPANIMATION_SET ani_set = animation_sets->Get(21);
-				bullet->SetAnimationSet(ani_set);
-				objects->push_back(bullet);
-
-			}
-			else if (player->state == OHSOPHIA_STATE_WALKING_RIGHT || player->state == OHSOPHIA_STATE_IDLE_RIGHT)
-			{
-				COHSophiaBullet* bullet;
-				bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_RIGHT, OHSOPHIABULLET_TYPE_SIN, 1);
-				float x1, y1;
-				player->GetPosition(x1, y1);
-				bullet->SetPosition(x1 + OHSOPHIA_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
-				bullet->SetStartPositon(x1 + OHSOPHIA_WIDTH, y1 + OHSOPHIA_HEIGHT / 2 - 2);
-				bullet->SetAnchorPoint();
-				LPANIMATION_SET ani_set = animation_sets->Get(21);
-				bullet->SetAnimationSet(ani_set);
-				objects->push_back(bullet);
-
-			}
-			else if (player->state == OHSOPHIA_STATE_WALKING_UP || player->state == OHSOPHIA_STATE_IDLE_UP) {
-
-				COHSophiaBullet* bullet;
-
-				bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_UP, OHSOPHIABULLET_TYPE_SIN, 1);
-				float x1, y1;
-				player->GetPosition(x1, y1);
-				bullet->SetPosition(x1 + OHSOPHIA_WIDTH / 4, y1);
-				bullet->SetStartPositon(x1 + OHSOPHIA_WIDTH / 4, y1);
-				bullet->SetAnchorPoint();
-				LPANIMATION_SET ani_set = animation_sets->Get(21);
-				bullet->SetAnimationSet(ani_set);
-				objects->push_back(bullet);
-
-			}
-			else if (player->state == OHSOPHIA_STATE_WALKING_DOWN || player->state == OHSOPHIA_STATE_IDLE_DOWN) {
-				COHSophiaBullet* bullet;
-
-				bullet = new COHSophiaBullet(player->GetBulletLevel(), OHSOPHIABULLET_STATE_FLYING_DOWN, OHSOPHIABULLET_TYPE_SIN, 1);
-				float x1, y1;
-				player->GetPosition(x1, y1);
-				bullet->SetPosition(x1 + OHSOPHIA_WIDTH / 4, y1 + OHSOPHIA_HEIGHT);
-				bullet->SetStartPositon(x1 + OHSOPHIA_WIDTH / 4, y1 + OHSOPHIA_HEIGHT);
-				bullet->SetAnchorPoint();
-				LPANIMATION_SET ani_set = animation_sets->Get(21);
-				bullet->SetAnimationSet(ani_set);
-				objects->push_back(bullet);
-			}
-			break;
-
 		}
-		
 	}
 }

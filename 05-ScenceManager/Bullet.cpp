@@ -2,6 +2,7 @@
 #include "Destroyed.h"
 #include "PlayScence.h"
 #include "Boss.h"
+#include "Sound.h"
 
 void CBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -82,6 +83,7 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else if (dynamic_cast<CBrick*>(e->obj)) {
 			this->visible = false;
+			Sound::GetInstance()->Play("PlayerBulletHitBrick", 0, 1);
 		}
 	}
 
@@ -114,6 +116,7 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CBrick*>(e->obj)) {
 				this->visible = false;
+				Sound::GetInstance()->Play("PlayerBulletHitBrick", 0, 1);
 			}
 		}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];

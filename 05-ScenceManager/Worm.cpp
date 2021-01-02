@@ -1,4 +1,5 @@
 #include "Worm.h"
+#include "Brick.h"
 CWorm::CWorm()
 {
 	damage = 1;
@@ -29,12 +30,10 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//
 	// TO-DO: make sure WORM can interact with the world and to each of them too!
 	// 
+	vy += 0.001 * dt;
 
-	x += dx;
-	y += dy;
-
-	if (vx < 0 && x < (startX-100) ){
-		x = startX - 100; vx = -vx;
+	if (vx < 0 && x < (startX- WORM_MOVING_SPACE) ){
+		x = startX - WORM_MOVING_SPACE; vx = -vx;
 		SetState(WORM_STATE_WALKING_RIGHT);
 	}
 
@@ -42,12 +41,42 @@ void CWorm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x = startX; vx = -vx;
 		SetState(WORM_STATE_WALKING_LEFT);
 	}
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+	vector<LPCOLLISIONEVENT> coCollisoningEvents;
+
+
+	coEvents.clear();
+	// turn off collision when die 
+	CalcPotentialCollisions(coObjects, coEvents);
+	CalcColliding(coObjects, coCollisoningEvents);
+
+	// No collision occured, proceed normally
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+
+		float rdx = 0;
+		float rdy = 0;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
+		//if (nx != 0) vx = 0;
+		if (ny != 0) vy = 0;
+	}
 }
 
 void CWorm::Render()
 {
 	int ani;
-	if (state == WORM_STATE_WALKING_LEFT)
+	if (vx < 0)
 		ani = WORM_ANI_WALKING_LEFT;
 	else
 		ani = WORM_ANI_WALKING_RIGHT;

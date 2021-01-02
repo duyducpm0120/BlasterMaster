@@ -32,7 +32,7 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt);
 	if (state == BULLET_STATE_FLYING_LEFT) {
 		SetSpeed(-BULLET_SPEED, 0.0f);
-		if (x < startPositionX - BULLET_FLYING_SPACE)
+		if (x < startPositionX - ENEMY_BULLET_FLYING_SPACE)
 		{
 			visible = false;
 			return;
@@ -46,7 +46,7 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else if (state == BULLET_STATE_FLYING_RIGHT) {
 		SetSpeed(BULLET_SPEED, 0.0f);
-		if (x > startPositionX + BULLET_FLYING_SPACE) {
+		if (x > startPositionX + ENEMY_BULLET_FLYING_SPACE) {
 			visible = false;
 			return;
 
@@ -60,7 +60,7 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else if (state == BULLET_STATE_FLYING_UP)
 	{
 		SetSpeed(0.0f, -BULLET_SPEED);
-		if (y < (startPositionY - BULLET_FLYING_SPACE)) {
+		if (y < (startPositionY - ENEMY_BULLET_FLYING_SPACE)) {
 			visible = false;
 		}
 		else
@@ -72,7 +72,7 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else if (state == BULLET_STATE_UNDEF || state == BULLET_STATE_BOSS)
 	{
-		if (this->CaclDistance() >= 100) this->visible = false;
+		if (this->CaclDistance() >= 200) this->visible = false;
 		else {
 			x += (dx/2);
 			y += (dy/2);
@@ -91,7 +91,7 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else //Flying Down
 	{
 		SetSpeed(0.0f, BULLET_SPEED);
-		if (y > (startPositionY + BULLET_FLYING_SPACE)) {
+		if (y > (startPositionY + ENEMY_BULLET_FLYING_SPACE)) {
 			visible = false;
 		}
 		else

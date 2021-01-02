@@ -14,6 +14,7 @@
 #define WORM_ANI_WALKING_LEFT 0
 #define WORM_ANI_WALKING_RIGHT 1
 #define WORM_ANI_DIE	2
+#define WORM_MOVING_SPACE	200
 
 class CWorm : public CGameObject
 {

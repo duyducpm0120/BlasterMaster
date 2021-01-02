@@ -43,8 +43,6 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 {
 	isCameraAutorun = false;
 	CGame *game = CGame::GetInstance();
-	this->playerHealth = game->GetHealth();
-	this->playerPower = game->GetPower();
 	key_handler = new CPlayScenceKeyHandler(this);
 }
 
@@ -522,8 +520,6 @@ void CPlayScene::Update(DWORD dt)
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	if (player != NULL) {
-		*playerHealth = player->GetHealth();
-		*playerPower = player->GetDamage();
 		if (dynamic_cast<CTank*>(player)) {
 			for (int i = 0; i < objects.size(); i++) {
 				if (dynamic_cast<CSophia*>(objects.at(i)))
@@ -722,7 +718,10 @@ void CPlayScene::Unload()
 		delete objects[i];
 
 	objects.clear();
-	player = NULL;
+	for (int i = 0; i < tiledMap.size(); i++)
+		delete tiledMap[i];
+	tiledMap.clear();
+	//player = NULL;
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }

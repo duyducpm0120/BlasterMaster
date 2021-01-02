@@ -74,15 +74,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="IntroScene.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScence.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScenceKeyHandler.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Textures.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -112,9 +103,6 @@
     </ClCompile>
     <ClCompile Include="Rocket.cpp">
       <Filter>Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="Scence.cpp">
-      <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Tank.cpp">
       <Filter>Player</Filter>
@@ -155,17 +143,33 @@
     <ClCompile Include="Sound.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Text</Filter>
-    </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Spartial Partitioning</Filter>
     </ClCompile>
     <ClCompile Include="Flyingclaw.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Firework.cpp" />
-    <ClCompile Include="BlankScene.cpp" />
+    <ClCompile Include="Firework.cpp">
+      <Filter>UnObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BlankScene.cpp">
+      <Filter>Framework\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Framework\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScence.cpp">
+      <Filter>Framework\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScenceKeyHandler.cpp">
+      <Filter>Framework\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scence.cpp">
+      <Filter>Framework\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>UnObject\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -240,16 +244,7 @@
     <ClInclude Include="Game.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="IntroScene.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="KeyEventHandler.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScence.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScenceKeyHandler.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Textures.h">
@@ -281,9 +276,6 @@
     </ClInclude>
     <ClInclude Include="Rocket.h">
       <Filter>Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="Scence.h">
-      <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Tank.h">
       <Filter>Player</Filter>
@@ -319,7 +311,7 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Text.h">
-      <Filter>Text</Filter>
+      <Filter>UnObject\Text</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Spartial Partitioning</Filter>
@@ -327,8 +319,24 @@
     <ClInclude Include="Flyingclaw.h">
       <Filter>Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Firework.h" />
-    <ClInclude Include="BlankScene.h" />
+    <ClInclude Include="Firework.h">
+      <Filter>UnObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BlankScene.h">
+      <Filter>Framework\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Framework\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScence.h">
+      <Filter>Framework\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScenceKeyHandler.h">
+      <Filter>Framework\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scence.h">
+      <Filter>Framework\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemies">
@@ -352,8 +360,14 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{c267fb51-e124-4c15-a8b5-d1ead88d13a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Text">
+    <Filter Include="UnObject">
+      <UniqueIdentifier>{d31bedd3-6351-48ff-aa2f-ee483f578b66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnObject\Text">
       <UniqueIdentifier>{a0fa9a04-e47e-4e58-b5da-48122de0dfad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Scenes">
+      <UniqueIdentifier>{1f5cfb5e-36cc-49c0-9931-39c914117e48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

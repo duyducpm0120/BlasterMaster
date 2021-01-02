@@ -232,6 +232,8 @@ void CGame::LoadSound()
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarSplash.wav", "CarSplash");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarBackground.wav", "CarBackground");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Ending.wav","Ending");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound//Blaster Master SFX (13).wav", "Thunder");
+
 }
 
 CGame::~CGame()

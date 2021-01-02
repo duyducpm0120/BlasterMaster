@@ -51,8 +51,6 @@ class CGame
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
 
-	int playerHealth = 7;
-	int playerPower = 2;
 
 	int TileMapAlpha = 255;
 
@@ -64,8 +62,8 @@ public:
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
 	void _ParseSection_ANIMATION_SETS(string line);
-	int* GetHealth() { return &playerHealth; };
-	int* GetPower() { return &playerPower; };
+	int GetPlayerHealth() { return player->health; };
+	int GetPlayerPower() { return player->damage; };
 
 	void LoadResources();
 	void GetCamPosition(float& x, float& y) { x = cam_x; y = cam_y; };
