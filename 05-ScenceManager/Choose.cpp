@@ -10,8 +10,8 @@ void CChoose::Render()
 {
 		if (count % 10 < 5)
 			animation_set->at(0)->Render(this->x, this->y, 255);
-		/*else
-			animation_set->at(0)->Render(this->x, this->y, 15);*/
+		else
+			animation_set->at(0)->Render(this->x, this->y, 0);
 }
 
 void CChoose::Update(DWORD dt)

@@ -15,6 +15,7 @@
 #include "PlayScence.h"
 #include "EnemyBullet.h"
 #include "OHSophiaBullet.h"
+#include "Sound.h"
 COHSophia::COHSophia(float x, float y)
 {
 	isPlayer = true;
@@ -335,7 +336,7 @@ void COHSophia::CallSecondWeapon()
 
 void COHSophia::Shot()
 {
-	
+	Sound::GetInstance()->Play("PlayerFireOverworld", 0, 1);
 	vector<LPGAMEOBJECT>* objects = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->GetObjects();
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	if (GetBulletLevel() == 1 && bulletFullPower == 0) {

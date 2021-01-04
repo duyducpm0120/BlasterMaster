@@ -38,9 +38,6 @@
     <ClCompile Include="Destroyed.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBullet.cpp">
-      <Filter>Weapons</Filter>
-    </ClCompile>
     <ClCompile Include="Eye.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
@@ -169,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="Text.cpp">
       <Filter>UnObject\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBullet.cpp">
+      <Filter>Weapons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

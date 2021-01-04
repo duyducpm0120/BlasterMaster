@@ -40,7 +40,6 @@ IntroScene::IntroScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 		this->intro_ani_set = CAnimationSets::GetInstance()->Get(Ending_Scene);
 		DebugOut(L" \n \n Get ani_set of intro scene succesfully!\n \n \n ");
 		Sound::GetInstance()->LoadSoundResource(SOUND_RESOURCE_ENDING);
-
 		break;
 	}
 	default:
@@ -125,8 +124,10 @@ void IntroScenceKeyHandler::KeyState(BYTE* states)
 void IntroScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	IntroScene* introScene = dynamic_cast<IntroScene*>(scence);
-	if (CGame::GetInstance()->IsKeyDown(DIK_RETURN) && (introScene->GetAnimation() == Intro_Animation_Logo || introScene->GetAnimation() == Intro_Animation_Frog))
-		introScene->SetAnimation(Intro_Animation_Car);
+	if (dynamic_cast<IntroScene*>(CGame::GetInstance()->GetCurrentScene())->id == ID_INTRO) {
+		if (CGame::GetInstance()->IsKeyDown(DIK_RETURN) && (introScene->GetAnimation() == Intro_Animation_Logo || introScene->GetAnimation() == Intro_Animation_Frog))
+			introScene->SetAnimation(Intro_Animation_Car);
+	}
 }
 
 void IntroScenceKeyHandler::OnKeyUp(int KeyCode)
@@ -284,7 +285,9 @@ void IntroScene::Update(DWORD dt)
 	
 #pragma region camera
 	if (this->moutainY > 40)setEndding = 1;
-	if (this->time == 60)setEndding = 2;
+	if (this->time == 60) setEndding = 2;
+	if(id == ID_INTROENDING)
+		Sound::GetInstance()->Play("Mountain", 1, 10000);
 
 	switch (setEndding)
 	{
@@ -294,8 +297,13 @@ void IntroScene::Update(DWORD dt)
 	case 1:
 		if (this->posX < 230)this->posX += 1;
 		else time++;
+		if (id == ID_INTROENDING) {
+			Sound::GetInstance()->Stop("Mountain");
+			Sound::GetInstance()->Play("Ending", 1, 100000);
+		}
 		break;
 	case 2:
+		Sound::GetInstance()->Stop("Mountain");
 		if(this->textY< 272+326)
 			this->textY += 0.5;
 		break;

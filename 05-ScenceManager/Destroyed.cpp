@@ -16,6 +16,14 @@ CDestroyed::CDestroyed(int type) :CGameObject()
 		width = DESTROYED_TANK_BBOX_WIDTH;
 		height = DESTROYED_TANK_BBOX_HEIGHT;
 		break;
+	case DESTROYED_TYPE_OHSOPHIA:
+		width = DESTROYED_OHSOPHIA_BBOX_WIDTH;
+		height = DESTROYED_OHSOPHIA_BBOX_HEIGHT;
+		break;
+	case DESTROYED_TYPE_SOPHIA:
+		width = DESTROYED_SOPHIA_BBOX_WIDTH;
+		height = DESTROYED_SOPHIA_BBOX_HEIGHT;
+		break;
 	}
 }
 
@@ -33,11 +41,27 @@ void CDestroyed::Render()
 	case DESTROYED_TYPE_TANK:
 		ani = DESTROYED_ANI_TANK;
 		break;
+	case DESTROYED_TYPE_SOPHIA:
+		ani = DESTROYED_ANI_SOPHIA;
+		break;
+	case DESTROYED_TYPE_OHSOPHIA:
+		ani = DESTROYED_ANI_OHSOPHIA;
+		break;
 	}
 	animation_set->at(ani)->Render(x, y);
 	count++;
-	if(count == 5)
-		visible = false;
+	if (type != DESTROYED_TYPE_SOPHIA && type != DESTROYED_TYPE_OHSOPHIA) {
+		if (count == 5)
+			visible = false;
+	}
+	else if (type == DESTROYED_TYPE_SOPHIA){
+		if (count == 50)
+			visible = false;
+	}
+	else if (type == DESTROYED_TYPE_OHSOPHIA) {
+		if(animation_set->at(4)->GetFrame()==3)
+			visible = false;
+	}
 	//RenderBoundingBox();
 }
 

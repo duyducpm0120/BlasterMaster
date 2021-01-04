@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <datasound>
 	<sound path="Sources/Sound/Ending.wav"	name = "Ending" />
+	<sound path="Sources/Sound/Ending/Mountain.wav"	name = "Mountain" />
 </datasound>

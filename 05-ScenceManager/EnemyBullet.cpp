@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "PlayScence.h"
 #include "Vec2.h"
+#include "Sound.h"
 float CEnemyBullet::CaclDistance()
 {
 	Vec2 pos = Vec2(x, y);
@@ -112,16 +113,17 @@ void CEnemyBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (int i = 0; i < coCollisoningEvents.size(); i++) {
 		LPCOLLISIONEVENT e = coCollisoningEvents[i];
 		/*if (dynamic_cast<CPlayer*>(e->obj)) {
-			e->obj->TakeDamage(this->damage);				
+			e->obj->TakeDamage(this->damage);
 			this->visible = false;
 		}*/
-		 if (dynamic_cast<CBrick*>(e->obj)) {
-		if (state == BULLET_STATE_ROLLING && e->ny == 1) {
-			vy = 0;
-			vx = -0.05 * (-1) * (dt % 3);
-		}
-		else
-			this->visible = false;
+		if (dynamic_cast<CBrick*>(e->obj)) {
+			if (state == BULLET_STATE_ROLLING && e->ny == 1) {
+				vy = 0;
+				vx = -0.05 * (-1) * (dt % 3);
+			}
+			else {
+				this->visible = false;
+			}
 		}
 	}
 

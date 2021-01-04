@@ -382,20 +382,41 @@ void CPlayScene::CallDestroyed(CGameObject* object)
 	if (!dynamic_cast<CDestroyed*>(object) && !dynamic_cast<CThunder*>(object)) {
 
 		if (dynamic_cast<CBullet*>(object)) {
-			CDestroyed* destroyed = new CDestroyed(1);
+			CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_BULLET);
 			destroyed->SetPosition(object->x, object->y);
 			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 1
 			destroyed->SetAnimationSet(ani_set);
 			objects.push_back(destroyed);
+			Sound::GetInstance()->Play("PlayerBulletHitBrick", 0, 1);
 		}
 		else if (dynamic_cast<CTank*>(object)) {
-			CDestroyed* destroyed = new CDestroyed(3);
+			CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_TANK);
 			destroyed->SetPosition(object->x - 19, object->y - 30);
 			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
 			destroyed->SetAnimationSet(ani_set);
 			objects.push_back(destroyed);
+			Sound::GetInstance()->Play("TankDie", 0, 1);
+			Sound::GetInstance()->Play("LifeLost", 0, 1);
+		}
+		else if (dynamic_cast<CSophia*>(object)) {
+			CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_SOPHIA);
+			destroyed->SetPosition(object->x, object->y);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+			Sound::GetInstance()->Play("LifeLost", 0, 1);
+		}
+		else if (dynamic_cast<COHSophia*>(object)) {
+			CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_OHSOPHIA);
+			destroyed->SetPosition(object->x, object->y);
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 3
+			destroyed->SetAnimationSet(ani_set);
+			objects.push_back(destroyed);
+			Sound::GetInstance()->Play("LifeLost", 0, 1);
 		}
 		else if (!dynamic_cast<CItem*>(object)) {
 			if (object->IsEnemy() == true && !dynamic_cast<CButterfly*>(object) && !dynamic_cast<CStupidHead*>(object) && !dynamic_cast<BossArm*>(object) && !dynamic_cast<CBoss*>(object))
@@ -438,7 +459,7 @@ void CPlayScene::CallDestroyed(CGameObject* object)
 					dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->GetObjects()->push_back(item);
 				}
 			}
-			CDestroyed* destroyed = new CDestroyed(2);
+			CDestroyed* destroyed = new CDestroyed(DESTROYED_TYPE_OBJECT);
 			destroyed->SetPosition(object->x, object->y);
 			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 			LPANIMATION_SET ani_set = animation_sets->Get(9);		//call a Destroyed type 2
@@ -746,7 +767,12 @@ void CPlayScene::SetPlayer(CPlayer* player)
 }
 void CPlayScene::ReadyForBossAppear()
 {
+	
 	BossAppearCount++;
+	if (BossAppearCount == 1) {
+		Sound::GetInstance()->Stop("Area2");
+		Sound::GetInstance()->Play("BossIntro", 1, 100000);
+	}
 	if (BossAppearCount <= BOSS_APPEAR_TIME) {
 		if (BossAppearCount % 10 < 5)
 			CGame::GetInstance()->SetTileMapAlpha(100);
@@ -754,6 +780,8 @@ void CPlayScene::ReadyForBossAppear()
 			CGame::GetInstance()->SetTileMapAlpha(255);
 	}
 	else {
+		Sound::GetInstance()->Stop("BossIntro");
+		Sound::GetInstance()->Play("Boss", 1, 100000);
 		CGame::GetInstance()->SetTileMapAlpha(0);
 		BossAppearCount = 0;
 		CGame::GetInstance()->SetCamPos(32, 0);
@@ -764,8 +792,10 @@ void CPlayScene::ReadyForBossAppear()
 void CPlayScene::ReadyForEnding()
 {
 	EndingCount++;
-	if (EndingCount == ENDING_COUNT_TIME)
+	if (EndingCount == ENDING_COUNT_TIME) {
 		CGame::GetInstance()->SwitchScene(13);
+		Sound::GetInstance()->Stop("Area2");
+	}
 }
 
 

@@ -13,7 +13,7 @@ CAutoRunPortal::CAutoRunPortal(float l, float t, float r, float b,  float target
 
 void CAutoRunPortal::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CAutoRunPortal::GetBoundingBox(float& l, float& t, float& r, float& b)

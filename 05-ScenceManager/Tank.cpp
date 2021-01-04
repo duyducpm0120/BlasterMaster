@@ -111,9 +111,11 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];		
 			if (dynamic_cast<CPortal*>(e->obj))
 			{
-				CPortal* p = dynamic_cast<CPortal*>(e->obj);
-				CGame* game = CGame::GetInstance();
-				game->SwitchToScene(p->GetSceneId());
+				if (dynamic_cast<CPortal*>(e->obj)->GetSceneId() != 9 && dynamic_cast<CPortal*>(e->obj)->GetSceneId() != 10) {
+					CPortal* p = dynamic_cast<CPortal*>(e->obj);
+					CGame* game = CGame::GetInstance();
+					game->SwitchToScene(p->GetSceneId());
+				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj)) {
 				if (e->ny != -1)

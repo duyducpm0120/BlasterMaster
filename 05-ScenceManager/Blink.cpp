@@ -1,6 +1,7 @@
 #include "Blink.h"
 #include <time.h> 
 #include "Utils.h"
+#include "Sound.h"
 void CBlink::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
@@ -33,13 +34,14 @@ void CBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		BlinkCounter = 0;
 	}
-	
+	if (BlinkCounter == 1)
+		Sound::GetInstance()->Play("Blink", 0, 1);
 	if (BlinkIncsCounter >= 4)
 	{
 		BlinkBack();
 		BlinkIncsCounter = 0;
+		Sound::GetInstance()->Play("Blink", 0, 1);
 	}
-	
 }
 
 void CBlink::Render()

@@ -7,6 +7,7 @@
 #include "Firework.h"
 #include <iostream>
 #include <random>
+#include "Sound.h"
 CBoss::CBoss() :
 	BigClawLeft(18),
 	BigClawRight(19)
@@ -15,7 +16,7 @@ CBoss::CBoss() :
 	/*ani = 0;
 	alpha = 255;*/
 	damage = 1;
-	health = 300;
+	health = 600;
 	nx = -1;
 	SetState(BOSS_STATE_WALKING);
 	injured_state_time = 0;
@@ -231,19 +232,18 @@ void CBoss::HandleInjuredState()
 
 void CBoss::HandleDieState()
 {
-
+	if (numOfFirework == 2) {
+		Sound::GetInstance()->Stop("Boss");
+		Sound::GetInstance()->Play("BossDie", 1, 1000);
+	}
 	if (numOfFirework <= NUM_OF_FIREWORK_APPEAR)
 	{
 		Firework* firework = new Firework();	
-
-
 		std::random_device rd;
 		std::mt19937 gen(rd());
 		std::uniform_int_distribution<> dis(-50, 50);
 		float randomSpace1 = dis(gen);
 		float randomSpace2 = dis(gen);			//Set random position for Firework
-		DebugOut(L"Random space: %f \n", randomSpace1);
-		DebugOut(L"Random space: %f \n", randomSpace2);
 		float posX, posY;	
 		posX = x + randomSpace1;
 		posY = y + randomSpace2;		
@@ -256,6 +256,7 @@ void CBoss::HandleDieState()
 		this->visible = false;
 		dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->ClearFireworks();
 		dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->SetEndingCount(); //Call EndingScene
+		Sound::GetInstance()->Stop("BossDie");
 	}
 }
 
@@ -375,6 +376,7 @@ void CBoss::Shoot()
 	bullet1->SetStartPositon(this->x+20, this->y+20);
 
 	objects->push_back(bullet1);
+	Sound::GetInstance()->Play("BossFire", 0, 1);
 }
 
 void CBoss::BossClawSection::setStartPoint(Vec2 sp)

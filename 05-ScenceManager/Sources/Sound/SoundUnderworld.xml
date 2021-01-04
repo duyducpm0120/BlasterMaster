@@ -9,12 +9,14 @@
 	<sound path="Sources/Sound/rawSound/Blaster Master SFX (16).wav"	name = "EnemyBulletBang" />
 	<sound path="Sources/Sound/rawSound/Blaster Master SFX (19).wav"	name = "PlayerInjured" />
 	<sound path="Sources/Sound/rawSound/Blaster Master SFX (21).wav"	name = "PickingItems" />
-	<sound path="Sources/Sound/rawSound/Blaster Master SFX (23).wav"	name = "FireRocket" />
+	<sound path="Sources/Sound/rawSound/Blaster Master SFX (33).wav"	name = "FireRocket" />
 	<sound path="Sources/Sound/rawSound/Blaster Master SFX (24).wav"	name = "TransingWeaponScene" />
 	<sound path="Sources/Sound/rawSound/Blaster Master SFX (25).wav"	name = "FireHomingMissles" />
 	<sound path="Sources/Sound/rawSound/Blaster Master SFX (27).wav"	name = "Enemydie" />
 	<sound path="Sources/Sound/rawSound/Blaster Master SFX (30).wav"	name = "SkullFire" />
 	<sound path="Sources/Sound/rawSound/Blaster Master SFX (13).wav"	name = "Thunder" />
+	<sound path="Sources/Sound/rawSound/Blaster Master SFX (29).wav"	name = "TankDie" />
+
 	<sound path="Sources/Sound/rawSound/GameOver.wav"	name = "GameOver" />
 	<sound path="Sources/Sound/rawSound/LifeLost.wav"	name = "LifeLost" />
 </datasound>

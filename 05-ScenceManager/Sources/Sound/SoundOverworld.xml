@@ -11,6 +11,8 @@
 	<sound path="Resource/Sound/rawSound/Blaster Master SFX (22).wav"	name = "TeleporterTransform" />
 	<sound path="Resource/Sound/rawSound/Blaster Master SFX (27).wav"	name = "Enemydie" />
 	<sound path="Resource/Sound/rawSound/Blaster Master SFX (36).wav"	name = "BossIntro" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (35).wav"	name = "BossDie" />
+	<sound path="Resource/Sound/rawSound/Blaster Master SFX (22).wav"	name = "Blink" />
 	<sound path="Resource/Sound/rawSound/GameOver.wav"	name = "GameOver" />
 	<sound path="Resource/Sound/rawSound/LifeLost.wav"	name = "LifeLost" />
 </datasound>

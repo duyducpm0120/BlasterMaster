@@ -228,12 +228,17 @@ void CGame::LoadSound()
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (24).wav", "TransingWeaponScene");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (25).wav", "FireHomingMissles");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (30).wav", "SkullFire");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (35).wav", "BossDie");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (29).wav", "TankDie");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (22).wav", "Blink");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/Opening.wav", "Opening");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarSplash.wav", "CarSplash");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarBackground.wav", "CarBackground");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Ending.wav","Ending");
+	Sound::GetInstance()->LoadSound("Sources/Sound/Boss.wav", "Boss");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound//Blaster Master SFX (13).wav", "Thunder");
-
+	Sound::GetInstance()->LoadSound("Sources/Sound/Area2.wav", "Area2");
+	Sound::GetInstance()->LoadSound("Sources/Sound/Ending/Mountain.wav", "Mountain");
 }
 
 CGame::~CGame()
@@ -634,6 +639,10 @@ void CGame::SwitchScene(int scene_id)
 		dynamic_cast<CPlayScene*>(scenes[scene_id])->GetPlayer()->damage = dynamic_cast<CPlayScene*>(scenes[current_scene])->GetPlayer()->GetDamage();
 		DebugOut(L"Get player done \n");
 	}
+	if (current_scene == 12 && scene_id == 1) {
+		Sound::GetInstance()->Stop("CarBackground");
+		Sound::GetInstance()->Play("Area2", 1, 100000);
+	}
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
 	if (s->IsLoaded() == false)
@@ -646,11 +655,6 @@ void CGame::SwitchScene(int scene_id)
 	}
 	if (current_scene == 11 || current_scene == 12) {
 		SetCamPos(0,0);
-	}
-	if (current_scene >= 1 && current_scene <= 8)
-	{
-		Sound::GetInstance()->LoadSound("Sources/Sound/Area2.wav", "map2");
-		//Sound::GetInstance()->Play("map2", 1, 10000);
 	}
 }
 void CGame::SwitchToSelectWeaponScene()
@@ -669,6 +673,7 @@ void CGame::SwitchToSelectWeaponScene()
 			dynamic_cast<CPlayScene*>(scenes[HolderSceneId])->GetPlayer()->SetSecondWeapon(WEAPONS_TYPE_ROCKET);
 		SwitchScene(HolderSceneId);
 	}
+	Sound::GetInstance()->Play("TransingWeaponScene", 0, 1);
 }
 
 void CGame::SwitchToScene(int nextSceneId)
