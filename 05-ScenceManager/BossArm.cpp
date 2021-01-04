@@ -30,7 +30,6 @@ void BossArm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void BossArm::Render()
 {
-	RenderBoundingBox();
 }
 
 BossArm::BossArm(CBoss* boss, int _type)
