@@ -36,8 +36,8 @@ void CJumper::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	y += dy;
 
 
-	if (vx < 0 && x < (startX - 140)) {
-		x = startX - 140;
+	if (vx < 0 && x < (startX - 100)) {
+		x = startX - 100;
 		SetState(JUMPER_STATE_JUMPING_RIGHT);
 		nx = 1;
 		vx = JUMPER_JUMPING_SPEED;

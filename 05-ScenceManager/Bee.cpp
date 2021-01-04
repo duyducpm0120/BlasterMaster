@@ -36,8 +36,8 @@ void CBee::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	y += dy;
 
 
-	if (vx < 0 && x < (startX - 200)) {
-		x= startX - 200;
+	if (vx < 0 && x < (startX - 100)) {
+		x= startX - 100;
 		SetState(BEE_STATE_WALKING_RIGHT);
 		nx = 1;
 		vx = BEE_WALKING_SPEED;
@@ -48,8 +48,8 @@ void CBee::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = -BEE_WALKING_SPEED;
 		SetState(BEE_STATE_WALKING_LEFT);
 	}
-	if (vy < 0 && y < (startY - 50)) {
-		y = startY - 50;
+	if (vy < 0 && y < (startY - 40)) {
+		y = startY - 40;
 		vy = BEE_WALKING_SPEED;
 	}
 	if (vy > 0 && y > startY) {
