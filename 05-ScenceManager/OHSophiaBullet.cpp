@@ -176,6 +176,8 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			this->visible = false;
 			if (dynamic_cast <CBoss*>(e->obj))
 				dynamic_cast <CBoss*>(e->obj)->SetState(BOSS_STATE_INJURED);
+			if (dynamic_cast<CBoss*>(e->obj))
+				Sound::GetInstance()->Play("BulletTouchBoss", 0, 1);
 
 		}
 		else if (dynamic_cast<CBrick*>(e->obj)) {

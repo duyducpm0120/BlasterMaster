@@ -258,6 +258,8 @@ IntroScene::~IntroScene()
 }
 void IntroScene::Update(DWORD dt)
 {
+	DebugOut(L"dt: %d \n", dt);
+
 	switch (setAnimation)
 	{
 	case Intro_Animation_Frog:
@@ -285,7 +287,7 @@ void IntroScene::Update(DWORD dt)
 	
 #pragma region camera
 	if (this->moutainY > 40)setEndding = 1;
-	if (this->time == 60) setEndding = 2;
+	if (this->time == 400) setEndding = 2;
 	if(id == ID_INTROENDING)
 		Sound::GetInstance()->Play("Mountain", 1, 10000);
 
@@ -295,7 +297,7 @@ void IntroScene::Update(DWORD dt)
 		this->moutainY += 0.1;
 		break;
 	case 1:
-		if (this->posX < 230)this->posX += 1;
+		if (this->posX < 230)this->posX += 0.4;
 		else time++;
 		if (id == ID_INTROENDING) {
 			Sound::GetInstance()->Stop("Mountain");
@@ -305,7 +307,7 @@ void IntroScene::Update(DWORD dt)
 	case 2:
 		Sound::GetInstance()->Stop("Mountain");
 		if(this->textY< 272+326)
-			this->textY += 0.5;
+			this->textY += 0.2;
 		break;
 	default:
 		break;
@@ -320,11 +322,11 @@ void IntroScene::Update(DWORD dt)
 	case ID_INTROENDING:
 		if (setEndding == 0 && this->moutainY < 30)
 		{
-			CGame::GetInstance()->SetCamPos(this->posX, -10 + 1 * dt);
+			CGame::GetInstance()->SetCamPos(this->posX, (dt == 15  ? dt : 20) - 10 );
 		}
 		else
 		{
-			CGame::GetInstance()->SetCamPos(this->posX,0);
+			CGame::GetInstance()->SetCamPos(this->posX,10);
 		}
 		break;
 	default:

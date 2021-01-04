@@ -233,6 +233,7 @@ void CGame::LoadSound()
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (22).wav", "Blink");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (26).wav", "SwitchScene");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound//Blaster Master SFX (17).wav", "Thunder");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound//Blaster Master SFX (4).wav", "BulletTouchBoss");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/Opening.wav", "Opening");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarSplash.wav", "CarSplash");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarBackground.wav", "CarBackground");

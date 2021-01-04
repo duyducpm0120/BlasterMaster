@@ -9,6 +9,7 @@
 #include "Flame.h"
 #include "Tank.h"
 #include "Ladder.h"
+#include "Brick.h"
 CSophia::CSophia(float x, float y)
 {
 	isPlayer = true;
@@ -72,7 +73,11 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (y < e->obj->y)
 				climbingPositionY = e->obj->y;
 			else if (y > e->obj->y)
-				climbingPositionY = e->obj->y + 192;
+				climbingPositionY = y;
+		}
+		else if (dynamic_cast<CBrick*>(e->obj)) {
+			if (vy >= 0.35)
+				visible = false;
 		}
 		if (dynamic_cast<CPortal*>(e->obj))
 		{
@@ -105,7 +110,7 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		
-		x += min_tx * dx + nx * 0.4f;
+		x += min_tx * dx + nx * 0.1f;
 		y += min_ty * dy + ny * 0.4f;
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -123,6 +128,10 @@ void CSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						game->SwitchToScene(p->GetSceneId());
 					}
 				}
+			}
+			else if (dynamic_cast<CBrick*>(e->obj)) {
+				if (vy >= 0.35)
+					visible = false;
 			}
 			else if (dynamic_cast<CTank*>(e->obj)) {
 				isTouchTank = true;
