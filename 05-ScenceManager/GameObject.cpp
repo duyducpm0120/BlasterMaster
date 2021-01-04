@@ -10,6 +10,7 @@
 #include "EnemyBullet.h"
 #include "Ladder.h"
 #include "Rocket.h"
+#include "Flame.h"
 
 CGameObject::CGameObject()
 {
@@ -80,7 +81,7 @@ void CGameObject::CalcPotentialCollisions(
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		if (!(this->isPlayer == true && dynamic_cast<CLadder*>(coObjects->at(i)) ) && !(this->isPlayer== true && coObjects->at(i)->isPlayer == true) && !(dynamic_cast<CEnemyBullet*>(this)&&dynamic_cast<CBullet*>(coObjects->at(i)))) {
+		if (!(this->isPlayer == true && dynamic_cast<CFlame*>(coObjects->at(i)))&& !(this->isPlayer == true && dynamic_cast<CLadder*>(coObjects->at(i)) ) && !(this->isPlayer== true && coObjects->at(i)->isPlayer == true) && !(dynamic_cast<CEnemyBullet*>(this)&&dynamic_cast<CBullet*>(coObjects->at(i)))) {
 			LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 			if (e->t > 0 && e->t <= 1.0f)
 				coEvents.push_back(e);

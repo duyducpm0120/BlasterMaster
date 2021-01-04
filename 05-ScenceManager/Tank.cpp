@@ -81,6 +81,15 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (health <= 0)
 				visible = false;
 		}
+		else if (dynamic_cast<CFlame*>(e->obj)) {
+			if (untouchableTime == 0) {
+				health--;
+				Sound::GetInstance()->Play("PlayerInjured", 0, 1);
+				untouchableTime = 1;
+			}
+			if (health <= 0)
+				visible = false;
+		}
 		
 		if (!dynamic_cast<CBrick*>(e->obj)) {
 

@@ -242,8 +242,10 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			DebugOut(L"Pushback player again.");
 		}
 	}
-	if (player->visible == false)
-		return;
+	if (player != NULL) {
+		if (player->visible == false)
+			return;
+	}
 
 	if (dynamic_cast<CTank*>(player)) {				 // if player is tank
 		switch (KeyCode)

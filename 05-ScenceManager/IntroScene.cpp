@@ -294,7 +294,7 @@ void IntroScene::Update(DWORD dt)
 	switch (setEndding)
 	{
 	case 0:
-		this->moutainY += 0.1;
+		this->moutainY += 0.07;
 		break;
 	case 1:
 		if (this->posX < 230)this->posX += 0.4;
@@ -322,7 +322,8 @@ void IntroScene::Update(DWORD dt)
 	case ID_INTROENDING:
 		if (setEndding == 0 && this->moutainY < 30)
 		{
-			CGame::GetInstance()->SetCamPos(this->posX, (dt == 15  ? dt : 20) - 10 );
+			DebugOut(L"dt: %d \n ", dt);
+			CGame::GetInstance()->SetCamPos(this->posX, (dt >= 16 ? 16 : 20) - 10 );
 		}
 		else
 		{

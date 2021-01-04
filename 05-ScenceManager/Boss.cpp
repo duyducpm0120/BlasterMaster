@@ -16,7 +16,7 @@ CBoss::CBoss() :
 	/*ani = 0;
 	alpha = 255;*/
 	damage = 1;
-	health = 600;
+	health = 1000;
 	nx = -1;
 	SetState(BOSS_STATE_WALKING);
 	injured_state_time = 0;
@@ -251,8 +251,8 @@ void CBoss::HandleDieState()
 		dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->AddFirework(firework);
 		numOfFirework++;
 	}
-	alpha--;
-	if (alpha == 0) {
+	alpha-=0.1;
+	if (alpha <= 0) {
 		this->visible = false;
 		dynamic_cast<CPlayScene*> (CGame::GetInstance()->GetCurrentScene())->ClearFireworks();
 		dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->SetEndingCount(); //Call EndingScene

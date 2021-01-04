@@ -36,26 +36,28 @@ void CButterfly::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	};
 
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-	coEvents.clear();
-	// turn off collision when die 
-	CalcPotentialCollisions(coObjects, coEvents);
+	//vector<LPCOLLISIONEVENT> coEvents;
+	//vector<LPCOLLISIONEVENT> coEventsResult;
+	//coEvents.clear();
+	//// turn off collision when die 
+	//CalcPotentialCollisions(coObjects, coEvents);
 
-	float min_tx, min_ty, nx = 0, ny;
+	//float min_tx, min_ty, nx = 0, ny;
 
-	float rdx = 0;
-	float rdy = 0;
+	//float rdx = 0;
+	//float rdy = 0;
 
-	FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+	//FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-	// block 
-	x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-	y += min_ty * dy + ny * 0.4f;
+	//// block 
+	//x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+	//y += min_ty * dy + ny * 0.4f;
 
-	if (nx != 0) vx = 0;
-	if (ny != 0) vy = 0.00f;
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	//if (nx != 0) vx = 0;
+	//if (ny != 0) vy = 0.00f;
+	//for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	x += dx;
+	y += dy;
 
 }
 

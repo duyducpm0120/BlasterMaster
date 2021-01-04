@@ -16,6 +16,7 @@
 #include "EnemyBullet.h"
 #include "OHSophiaBullet.h"
 #include "Sound.h"
+#include "Boss.h"
 COHSophia::COHSophia(float x, float y)
 {
 	isPlayer = true;
@@ -76,6 +77,14 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (health <= 0)
 				visible = false;
 		}
+		else if (dynamic_cast<CFlame*>(e->obj)) {
+			if (untouchableTime == 0) {
+				health--;
+				untouchableTime = 1;
+			}
+			if (health <= 0)
+				visible = false;
+		}
 	}
 
 
@@ -105,7 +114,7 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
 
-			if (e->obj->IsEnemy()) {
+			if (e->obj->IsEnemy() && !dynamic_cast<CBoss*>(e->obj)) {
 				if (untouchableTime == 0) {
 					health -= e->obj->GetDamage();
 					untouchableTime = 1;
