@@ -35,7 +35,7 @@
 
 [OBJECTS]
 #TANK
-4	70	112	4
+4	70	122	4
 # BRICK 
 # --- fist broken bridge section
 1	0	0	2
