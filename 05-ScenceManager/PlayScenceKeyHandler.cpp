@@ -268,7 +268,6 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			}
 			break;
 		case DIK_Z:
-			Sound::GetInstance()->Play("PlayerFireUnderWorld", 0, 1);
 			dynamic_cast<CTank*>(player)->Shot();
 			break;
 		case DIK_V:

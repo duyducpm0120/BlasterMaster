@@ -180,7 +180,7 @@ void COHSophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else if (dynamic_cast<CBrick*>(e->obj)) {
 			this->visible = false;
-			Sound::GetInstance()->Play("PlayerBulletHitBrick", 0, 1);
+			//Sound::GetInstance()->Play("PlayerBulletHitBrick", 0, 1);
 		}
 
 	}

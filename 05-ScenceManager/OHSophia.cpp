@@ -118,6 +118,7 @@ void COHSophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					visible = false;
 			}
 			else if (dynamic_cast<CItem*>(e->obj)) {
+				Sound::GetInstance()->Play("PickingItems", 0, 1);
 				switch (dynamic_cast<CItem*>(e->obj)->GetType())
 				{
 				case ITEM_TYPE_HEALTH:
@@ -336,7 +337,7 @@ void COHSophia::CallSecondWeapon()
 
 void COHSophia::Shot()
 {
-	Sound::GetInstance()->Play("PlayerFireOverworld", 0, 1);
+	Sound::GetInstance()->Play("PlayerFireOverWorld", 0, 1);
 	vector<LPGAMEOBJECT>* objects = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->GetObjects();
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	if (GetBulletLevel() == 1 && bulletFullPower == 0) {

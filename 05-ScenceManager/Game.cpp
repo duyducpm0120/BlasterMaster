@@ -208,7 +208,7 @@ void CGame::ProcessKeyboard()
 }
 void CGame::LoadSound()
 {
-	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (5).wav", "PlayerBulletHitBrick");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (13).wav", "PlayerBulletHitBrick");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (7).wav", "PlayerFireUnderWorld");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (8).wav", "PlayerFireOverWorld");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (9).wav", "BossFire");
@@ -231,12 +231,13 @@ void CGame::LoadSound()
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (35).wav", "BossDie");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (29).wav", "TankDie");
 	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (22).wav", "Blink");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound/Blaster Master SFX (26).wav", "SwitchScene");
+	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound//Blaster Master SFX (17).wav", "Thunder");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/Opening.wav", "Opening");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarSplash.wav", "CarSplash");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Intro/CarBackground.wav", "CarBackground");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Ending.wav","Ending");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Boss.wav", "Boss");
-	Sound::GetInstance()->LoadSound("Sources/Sound/rawSound//Blaster Master SFX (13).wav", "Thunder");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Area2.wav", "Area2");
 	Sound::GetInstance()->LoadSound("Sources/Sound/Ending/Mountain.wav", "Mountain");
 }
@@ -678,6 +679,7 @@ void CGame::SwitchToSelectWeaponScene()
 
 void CGame::SwitchToScene(int nextSceneId)
 {
+	Sound::GetInstance()->Play("SwitchScene", 0, 1);
 	dynamic_cast<BlankScene*>(scenes[14])->SetNextSceneId(nextSceneId);
 	dynamic_cast<BlankScene*>(scenes[14])->SetLastSceneId(current_scene);
 	current_scene = 14;

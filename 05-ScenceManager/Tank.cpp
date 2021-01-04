@@ -370,6 +370,7 @@ void CTank::HandleUntouchableTime()
 }
 void CTank::Shot()
 {
+	Sound::GetInstance()->Play("PlayerFireUnderWorld", 0, 1);
 	int width3, height3;
 	GetDimension(width3, height3);
 	if (height3 == TANK_NORMAL_HEIGHT)

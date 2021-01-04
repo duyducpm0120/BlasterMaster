@@ -21,7 +21,7 @@
 50	textures\bullet.png	199	200	50
 60	textures\Destroyed.png	0	57	115
 70	textures\healthBar.png	255	255	255
-80	textures\item.png	181	165	213
+80	textures\item.png	111	491	52
 90	textures\sophia.png	216	225	53
 100	textures\boss.png	255	0	255
 101	textures\bossclaw.png	255	0	255
