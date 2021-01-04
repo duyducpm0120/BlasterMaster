@@ -36,6 +36,8 @@ CTank:: CTank(float x, float y)
 
 void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+
+	DebugOut(L"dt : %d \n",dt);
 	if (state == TANK_STATE_DIE)
 		return;
 	if (damage > 4)
@@ -65,6 +67,7 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				isJumping = true;
 			else {
 				isJumping = false;
+				vy += TANK_GRAVITY * dt;
 			}
 		}
 		else if (dynamic_cast<CEnemyBullet*>(e->obj)) {
@@ -117,11 +120,12 @@ void CTank::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					game->SwitchToScene(p->GetSceneId());
 				}
 			}
-			else if (dynamic_cast<CBrick*>(e->obj)) {
+			else if (dynamic_cast<CBrick*>(e->obj)) {				
 				if (e->ny != -1)
 					isJumping = true;
 				else {
 					isJumping = false;
+					vy += TANK_GRAVITY * dt;
 				}
 			}
 			else if (dynamic_cast<CItem*>(e->obj)) {

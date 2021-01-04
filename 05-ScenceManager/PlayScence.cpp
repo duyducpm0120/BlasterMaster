@@ -565,7 +565,7 @@ void CPlayScene::Update(DWORD dt)
 		{
 			//DebugOut(L"Objects size before: %d \n", objects.size());
 			CallDestroyed(objects.at(i));
-			delete objects.at(i);
+			//delete objects.at(i);
 			//objects.at(i) = NULL;
 			objects.erase(objects.begin() + i);
 			//DebugOut(L"Objects size after: %d \n \n \n", objects.size());
@@ -601,7 +601,6 @@ void CPlayScene::Update(DWORD dt)
 		// Update camera to follow player
 		float cx, cy;
 		player->GetPosition(cx, cy);
-
 		if (dynamic_cast<CTank*>(player)) {
 			int w, h;
 			player->GetDimension(w, h);

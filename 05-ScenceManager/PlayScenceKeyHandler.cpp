@@ -237,10 +237,13 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		if (player->visible == false) {
 			player->visible = true;
 			player->health = 3;
+			player->damage = CGame::GetInstance()->GetPlayerPower();
 			objects->push_back(player);
 			DebugOut(L"Pushback player again.");
 		}
 	}
+	if (player->visible == false)
+		return;
 
 	if (dynamic_cast<CTank*>(player)) {				 // if player is tank
 		switch (KeyCode)
@@ -268,9 +271,13 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			}
 			break;
 		case DIK_Z:
+			if (player->visible == false)
+				break;
 			dynamic_cast<CTank*>(player)->Shot();
 			break;
 		case DIK_V:
+			if (player->visible == false)
+				break;
 			dynamic_cast<CTank*>(player)->CallSecondWeapon();
 			break;
 		case DIK_SPACE:
@@ -341,6 +348,8 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		switch (KeyCode)
 		{
 		case DIK_Z:
+			if (player->visible == false)
+				break;
 			dynamic_cast<COHSophia*>(player)->Shot();
 			break;
 		}
