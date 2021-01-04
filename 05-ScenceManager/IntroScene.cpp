@@ -258,7 +258,7 @@ IntroScene::~IntroScene()
 }
 void IntroScene::Update(DWORD dt)
 {
-	DebugOut(L"dt: %d \n", dt);
+	//DebugOut(L"dt: %d \n", dt);
 
 	switch (setAnimation)
 	{

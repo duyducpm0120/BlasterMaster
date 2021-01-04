@@ -563,8 +563,12 @@ void CPlayScene::Update(DWORD dt)
 		//coObjects.push_back(objects[i]);
 		if (objects.at(i)->visible == false)
 		{
+			//DebugOut(L"Objects size before: %d \n", objects.size());
 			CallDestroyed(objects.at(i));
+			delete objects.at(i);
+			//objects.at(i) = NULL;
 			objects.erase(objects.begin() + i);
+			//DebugOut(L"Objects size after: %d \n \n \n", objects.size());
 		}
 
 	}
