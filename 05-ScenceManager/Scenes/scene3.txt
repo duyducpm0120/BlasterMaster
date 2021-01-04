@@ -22,7 +22,7 @@
 0	80	0	1
 
 #TANK
-4	64	128	4
+4	64	140	4
 # BRICK 
 # --- fist broken bridge section
 1	0	64	2
